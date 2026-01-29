@@ -7,6 +7,7 @@ import Courses from './components/Courses';
 import About from './components/About';
 import Counter from './components/Counter';
 import Footer from './components/Footer';
+import Login from './components/Login';
 
 // A simple layout wrapper for our interior pages
 const PageLayout = ({ children, title }) => (
@@ -57,6 +58,6 @@ export const TopPerformersPage = () => <PageLayout title="Top Performers" />;
 export const GalleryPage = () => <PageLayout title="Gallery" />;
 export const ServicesPage = () => <PageLayout title="Our Services" />;
 export const VerificationPage = () => <PageLayout title="Student Verification" />;
-export const LoginPage = () => <PageLayout title="Login" />;
+export const LoginPage = () => <Login />;
 
 export default Home;
