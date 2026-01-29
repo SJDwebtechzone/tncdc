@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import dashboardReducer from './dashboardSlice';
 
 const initialAppState = {
     courses: [],
@@ -22,5 +23,6 @@ export const { setData } = appSlice.actions;
 export const store = configureStore({
     reducer: {
         app: appSlice.reducer,
+        dashboard: dashboardReducer,
     },
 });

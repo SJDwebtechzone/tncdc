@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Smartphone } from 'lucide-react';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle login logic here
         console.log('Login attempt:', { email, password });
+        navigate('/dashboard');
     };
 
     return (
@@ -27,7 +31,7 @@ const Login = () => {
                             <img
                                 src="https://mum-objectstore.e2enetworks.net/hdi-multi-tenant/tncdc.in/website/logo/image_6979ce5039f69.png"
                                 alt="TNCDC Logo"
-                                className="h-16 object-contain mb-4"
+                                className="h-[7.5rem] object-contain mb-4"
                             />
                             <h3 className="text-2xl font-bold text-blue-900">TNCDC Academy</h3>
                             <p className="text-sm font-bold text-gray-800 tracking-widest mt-1">BUILDERS</p>
@@ -74,6 +78,7 @@ const Login = () => {
 
                         <div className="mt-8 pt-6 border-t border-gray-100">
                             <div className="flex items-center justify-center space-x-2 text-gray-600">
+                                <Smartphone size={20} className="text-purple-600" />
                                 <span className="text-sm">Install as Progressive Web App (Mobile App) for Students</span>
                                 <span className="bg-orange-100 text-orange-600 text-xs px-2 py-0.5 rounded font-bold">FREE</span>
                             </div>

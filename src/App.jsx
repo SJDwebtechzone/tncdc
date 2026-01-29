@@ -9,6 +9,10 @@ import Home, {
   VerificationPage,
   LoginPage
 } from './Pages';
+import DashboardLayout from './components/DashboardLayout';
+import Dashboard from './components/Dashboard';
+import DesignationsPage from '@/components/DesignationsPage';
+import PlaceholderPage from '@/components/PlaceholderPage';
 
 function App() {
   return (
@@ -22,6 +26,11 @@ function App() {
         <Route path="/our_services" element={<ServicesPage />} />
         <Route path="/student_verification" element={<VerificationPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="users/designations" element={<DesignationsPage />} />
+          <Route path="*" element={<PlaceholderPage />} />
+        </Route>
         {/* Fallback to home */}
         <Route path="*" element={<Home />} />
       </Routes>
