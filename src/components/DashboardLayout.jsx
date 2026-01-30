@@ -10,8 +10,8 @@ const DashboardLayout = () => {
             <Sidebar />
             <div className="flex-1 flex flex-col h-screen w-full">
                 <Header />
-                <div className="flex-1 ml-64 p-8 overflow-y-auto">
-                    <div className="max-w-7xl mx-auto">
+                <div className="flex-1 ml-64 p-2 overflow-y-auto">
+                    <div className="w-full">
                         {/* Render Dashboard by default if no child route matches, or Outlet for sub-routes */}
                         <Outlet />
                     </div>

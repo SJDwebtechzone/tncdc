@@ -13,6 +13,8 @@ import DashboardLayout from './components/DashboardLayout';
 import Dashboard from './components/Dashboard';
 import DesignationsPage from '@/components/DesignationsPage';
 import PlaceholderPage from '@/components/PlaceholderPage';
+import ExamGrade from '@/components/ExamGrade';
+import Subjects from '@/components/Subjects';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="exam-grade" element={<ExamGrade />} />
+          <Route path="subjects" element={<Subjects />} />
           <Route path="users/designations" element={<DesignationsPage />} />
           <Route path="*" element={<PlaceholderPage />} />
         </Route>

@@ -208,9 +208,8 @@ export function Sidebar() {
         <div className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 overflow-y-auto z-50 shadow-sm scrollbar-thin scrollbar-thumb-gray-200">
             {/* Logo Area */}
             <div className="flex items-center justify-between px-6 py-4">
-                <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 bg-green-600 rounded-md flex items-center justify-center text-white font-bold">V</div>
-                    <span className="font-bold text-xl tracking-tight text-gray-800">VIHO</span>
+                <div className="flex items-center gap-2 px-2">
+                    <img src="https://mum-objectstore.e2enetworks.net/hdi-multi-tenant/tncdc.in/website/logo/image_6979ce5039f69.png" alt="TNCDC Logo" className="h-12" />
                 </div>
                 <button className="text-gray-500 hover:text-gray-700">
                     <Menu size={20} />
@@ -265,11 +264,11 @@ export function Sidebar() {
                                     className={cn(
                                         "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
                                         pathname === item.href
-                                            ? "text-[#5d5fef] font-semibold bg-blue-50"
+                                            ? "bg-[#0f172a] text-white shadow-md font-medium"
                                             : "text-gray-600 hover:text-[#5d5fef] hover:bg-gray-50"
                                     )}
                                 >
-                                    <item.icon size={18} className="opacity-70" />
+                                    <item.icon size={18} className={cn("opacity-70", pathname === item.href && "opacity-100")} />
                                     <span>{item.label}</span>
                                 </Link>
                             ))}

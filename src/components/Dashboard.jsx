@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboardData } from "@/store/dashboardSlice";
 import { Card, CardContent } from "@/components/ui/card"
@@ -19,8 +19,20 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { TimeDisplay } from "@/components/TimeDisplay"
 
 export default function Dashboard() {
+    const [loginTime] = useState(new Date());
     const dispatch = useDispatch();
-    const { data, loading } = useSelector((state) => state.dashboard);
+    const { data: realData, loading } = useSelector((state) => state.dashboard);
+
+    // User requested all values to be 0
+    const data = {
+        wallet: { fees: 0, expense: 0, profit: 0, credits: 0 },
+        stats: { admissions: 0, enquiries: 0, franchises: 0, courses: 0 },
+        topCards: { franchiseAdmission: 0, remainingAdmission: 0, registeredToday: 0 },
+        fees: { total: 0, pending: 0, paid: 0 },
+        examRequests: { total: 0, pending: 0, approved: 0 },
+        certificates: { total: 0, pending: 0, approved: 0 },
+        enquiryStatus: { total: 0, pending: 0, today: 0 }
+    };
 
     useEffect(() => {
         dispatch(fetchDashboardData());
@@ -53,7 +65,9 @@ export default function Dashboard() {
                     <div className="flex items-center gap-4">
                         <div className="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-3 border border-white/10">
                             <p className="text-xs text-blue-100 uppercase tracking-wider mb-1">Last Updated</p>
-                            <TimeDisplay />
+                            <span className="font-mono text-xl font-bold text-white">
+                                {loginTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase()}
+                            </span>
                         </div>
                         <div className="h-12 w-12 bg-white/20 backdrop-blur-sm rounded-xl border border-white/10"></div>
                     </div>
