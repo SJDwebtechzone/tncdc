@@ -2,12 +2,21 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Marquee from './components/Marquee';
 import Hero from './components/Hero';
+import BrandSlider from './components/BrandSlider';
 import Categories from './components/Categories';
 import Courses from './components/Courses';
 import About from './components/About';
 import Counter from './components/Counter';
+import Team from './components/Team';
+import Testimonials from './components/Testimonials';
+import Events from './components/Events';
+import Blog from './components/Blog';
+import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import Login from './components/Login';
+import CoursesPageContent from './components/CoursesPage';
+
+import AboutPage from './components/AboutPage';
 
 // A simple layout wrapper for our interior pages
 const PageLayout = ({ children, title }) => (
@@ -39,10 +48,16 @@ const Home = () => (
         <Marquee />
         <main>
             <Hero />
+            <BrandSlider />
             <Categories />
             <Courses />
             <About />
             <Counter />
+            <Team />
+            <Testimonials />
+            <Events />
+            <Blog />
+            <FAQ />
         </main>
         <Footer />
 
@@ -51,9 +66,11 @@ const Home = () => (
     </div>
 );
 
+
+
 // Define interior pages
-export const CoursesPage = () => <PageLayout title="Courses" />;
-export const AboutUsPage = () => <PageLayout title="About Us" />;
+export const CoursesPage = () => <CoursesPageContent />;
+export const AboutUsPage = () => <AboutPage />;
 export const TopPerformersPage = () => <PageLayout title="Top Performers" />;
 export const GalleryPage = () => <PageLayout title="Gallery" />;
 export const ServicesPage = () => <PageLayout title="Our Services" />;

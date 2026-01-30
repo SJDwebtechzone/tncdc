@@ -15,21 +15,23 @@ const Footer = () => {
                                         <img src="https://mum-objectstore.e2enetworks.net/hdi-multi-tenant/tncdc.in/website/logo/image_6979ce5039f69.png" alt="Logo" className="h-16" />
                                     </Link>
                                 </div>
-                                <div className="contact-btn mt-8">
-                                    <Link className="rbt-btn btn-gradient radius-round" to="/contactus">
-                                        <span className="icon-reverse-wrapper flex items-center gap-2">
-                                            <span className="btn-text">Contact With Us</span>
-                                            <span className="btn-icon">→</span>
-                                        </span>
-                                    </Link>
-                                </div>
-                                <div className="flex flex-wrap gap-4">
-                                    <a href="#" className="app-store-link">
-                                        <img src="https://tncdc.in/website/assets/images/app/google-play.png" alt="Google Play" className="h-10" />
-                                    </a>
-                                    <a href="#" className="play-store-link">
-                                        <img src="https://tncdc.in/website/assets/images/app/app-store.png" alt="App Store" className="h-10" />
-                                    </a>
+                                <div className="flex flex-col gap-6 mt-8">
+                                    <div className="contact-btn">
+                                        <Link className="rbt-btn btn-gradient radius-round" to="/contactus">
+                                            <span className="icon-reverse-wrapper flex items-center gap-2">
+                                                <span className="btn-text">Contact With Us</span>
+                                                <span className="btn-icon">→</span>
+                                            </span>
+                                        </Link>
+                                    </div>
+                                    <div className="flex flex-wrap gap-4">
+                                        <a href="#" className="app-store-link">
+                                            <img src="https://tncdc.in/website/assets/images/app/google-play.png" alt="Google Play" className="h-10" />
+                                        </a>
+                                        <a href="#" className="play-store-link">
+                                            <img src="https://tncdc.in/website/assets/images/app/app-store.png" alt="App Store" className="h-10" />
+                                        </a>
+                                    </div>
                                 </div>
 
                             </div>
