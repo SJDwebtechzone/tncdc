@@ -17,13 +17,14 @@ import Login from './components/Login';
 import CoursesPageContent from './components/CoursesPage';
 
 import AboutPage from './components/AboutPage';
+import GalleryPageContent from './components/GalleryPage';
 
 // A simple layout wrapper for our interior pages
 const PageLayout = ({ children, title }) => (
     <div className="min-h-screen bg-white">
         {/* Navbar moved above Marquee */}
         <Navbar />
-        <Marquee />
+
         <main className="py-24">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
@@ -72,7 +73,7 @@ const Home = () => (
 export const CoursesPage = () => <CoursesPageContent />;
 export const AboutUsPage = () => <AboutPage />;
 export const TopPerformersPage = () => <PageLayout title="Top Performers" />;
-export const GalleryPage = () => <PageLayout title="Gallery" />;
+export const GalleryPage = () => <GalleryPageContent />;
 export const ServicesPage = () => <PageLayout title="Our Services" />;
 export const VerificationPage = () => <PageLayout title="Student Verification" />;
 export const LoginPage = () => <Login />;

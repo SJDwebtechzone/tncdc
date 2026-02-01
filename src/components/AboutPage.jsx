@@ -1,14 +1,14 @@
 import React from 'react';
-import { Trophy, ArrowRight, Play, MessageCircle } from 'lucide-react';
+import { Trophy, ArrowRight, Play, MessageCircle, Heart, BookOpen, Monitor } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import Marquee from './Marquee';
+
 
 const AboutPage = () => {
     return (
         <div className="min-h-screen bg-white font-sans flex flex-col">
             <Navbar />
-            <Marquee />
+
 
             <main className="flex-grow container mx-auto px-4 py-16 flex flex-col items-center text-center">
 
@@ -137,14 +137,103 @@ const AboutPage = () => {
                     </div>
                 </div>
 
+
+                {/* Our Mission Section */}
+                <div className="w-full mt-24 py-10 bg-gray-50/50">
+                    <div className="container mx-auto px-4">
+                        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch">
+
+                            {/* Left Content (Text) */}
+                            <div className="w-full lg:w-1/2 text-left flex flex-col justify-center order-2 lg:order-1">
+                                <span className="inline-block bg-orange-100 text-orange-600 px-4 py-1 rounded-md text-xs font-bold tracking-wider mb-6 w-fit">
+                                    OUR MISSION
+                                </span>
+                                <h2 className="text-4xl font-extrabold text-[#0f172a] mb-6 leading-tight">
+                                    Know About Histudy <br /> Learning Platform
+                                </h2>
+                                <p className="text-gray-500 text-lg mb-10 leading-relaxed">
+                                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.
+                                </p>
+
+                                {/* Features List */}
+                                <div className="space-y-8">
+                                    {/* Feature 1 */}
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 text-pink-500">
+                                            <Heart size={20} fill="currentColor" className="text-pink-500" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xl font-bold text-gray-900 mb-2">Flexible Classes</h4>
+                                            <p className="text-gray-500">It is a long established fact that a reader will be distracted by this on readable content of when looking at its layout.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Feature 2 */}
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 text-purple-600">
+                                            <BookOpen size={20} />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xl font-bold text-gray-900 mb-2">Learn From Anywhere</h4>
+                                            <p className="text-gray-500">Sed distinctio repudiandae eos recusandae laborum eaque non eius iure suscipit laborum eaque non eius iure suscipit.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Feature 3 */}
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 text-orange-500">
+                                            <Monitor size={20} />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xl font-bold text-gray-900 mb-2">Experienced Teacher's service.</h4>
+                                            <p className="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Right Column: Image Collage */}
+                            <div className="w-full lg:w-1/2 relative min-h-[600px] hidden md:block order-1 lg:order-2">
+                                {/* Image 1: 396x530 - Left Large - Moved to Right relative position */}
+                                <div className="absolute right-0 top-10 w-[45%] h-[80%] rounded-2xl overflow-hidden shadow-2xl z-10">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80"
+                                        alt="Students studying"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+
+                                {/* Image 2: 308x250 - Right Top Small - Moved to Left relative position */}
+                                <div className="absolute left-0 top-0 w-[45%] h-[40%] rounded-2xl overflow-hidden shadow-xl">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80"
+                                        alt="Classroom"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+
+                                {/* Image 3: 405x490 - Right Bottom Medium - Moved to Left relative position */}
+                                <div className="absolute left-[5%] bottom-0 w-[48%] h-[55%] rounded-2xl overflow-hidden shadow-2xl z-20">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?auto=format&fit=crop&w=400&q=80"
+                                        alt="Teacher"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </main>
 
             {/* WhatsApp Floating Icon */}
-            < div className="fixed bottom-8 left-8 z-50" >
+            <div className="fixed bottom-8 left-8 z-50">
                 <button className="bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-300 flex items-center justify-center">
                     <MessageCircle size={32} fill="white" className="text-white" />
                 </button>
-            </div >
+            </div>
 
             <Footer />
         </div >
