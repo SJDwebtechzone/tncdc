@@ -18,6 +18,7 @@ import CoursesPageContent from './components/CoursesPage';
 
 import AboutPage from './components/AboutPage';
 import GalleryPageContent from './components/GalleryPage';
+import ServicesPageContent from './components/ServicesPage';
 
 // A simple layout wrapper for our interior pages
 const PageLayout = ({ children, title }) => (
@@ -74,7 +75,7 @@ export const CoursesPage = () => <CoursesPageContent />;
 export const AboutUsPage = () => <AboutPage />;
 export const TopPerformersPage = () => <PageLayout title="Top Performers" />;
 export const GalleryPage = () => <GalleryPageContent />;
-export const ServicesPage = () => <PageLayout title="Our Services" />;
+export const ServicesPage = () => <ServicesPageContent />;
 export const VerificationPage = () => <PageLayout title="Student Verification" />;
 export const LoginPage = () => <Login />;
 
