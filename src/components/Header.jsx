@@ -1,4 +1,5 @@
 import { LogOut, Sparkles, User as UserIcon } from "lucide-react"
+import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 
 export function Header() {
@@ -11,9 +12,11 @@ export function Header() {
             </div>
 
             <div className="flex items-center gap-4">
-                <Button variant="outline" size="sm" className="bg-gray-100 border-none text-gray-700 hover:bg-gray-200 gap-2 rounded-lg">
-                    <UserIcon size={16} />
-                    <span>Profile</span>
+                <Button variant="outline" size="sm" className="bg-gray-100 border-none text-gray-700 hover:bg-gray-200 gap-2 rounded-lg" asChild>
+                    <Link to="/dashboard/profile" target="_blank">
+                        <UserIcon size={16} />
+                        <span>Profile</span>
+                    </Link>
                 </Button>
                 <Button variant="outline" size="sm" className="bg-gray-100 border-none text-gray-700 hover:bg-gray-200 gap-2 rounded-lg">
                     <LogOut size={16} />
