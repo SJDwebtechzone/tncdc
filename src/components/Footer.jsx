@@ -78,7 +78,7 @@ const Footer = () => {
             <div className="copyright-area py-8 bg-gray-50">
                 <div className="container mx-auto px-4">
                     <div className="row flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-gray-500 text-sm">Copyright © 2026 <a href="https://ditrpindia.org/" className="text-primary font-bold">DITRP INDIA.</a></p>
+                        <p className="text-gray-500 text-sm">Copyright 2026-27 © <a href="https://ditrpindia.org/" className="text-primary font-bold">DITRP INDIA</a> All rights reserved.</p>
                         <ul className="flex flex-wrap gap-8 text-sm text-gray-500">
                             <li><Link to="/privacy_policy" className="hover:text-primary">Privacy policy</Link></li>
                             <li><Link to="/terms_conditions" className="hover:text-primary">Term and conditions</Link></li>

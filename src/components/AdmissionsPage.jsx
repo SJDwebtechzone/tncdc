@@ -1,0 +1,249 @@
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import {
+    Plus,
+    Download,
+    Search,
+    RotateCcw,
+    Banknote,
+    CheckCircle2,
+    Tag,
+    Hourglass,
+    AlertTriangle,
+    Users,
+    FileText,
+    CreditCard,
+    Eye,
+    Edit,
+    Phone,
+    User,
+    Trash2
+} from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+
+export default function AdmissionsPage() {
+    return (
+        <div className="space-y-6">
+            {/* Stats Components - Row 1 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <StatsCard
+                    icon={Banknote}
+                    label="TOTAL AMOUNT"
+                    value="₹18,000.00"
+                    color="text-blue-600"
+                    iconColor="text-blue-600"
+                    iconBg="bg-blue-50"
+                    borderColor="border-l-blue-500"
+                />
+                <StatsCard
+                    icon={CheckCircle2}
+                    label="PAID AMOUNT"
+                    value="₹0.00"
+                    color="text-green-600"
+                    iconColor="text-green-600"
+                    iconBg="bg-green-50"
+                    borderColor="border-l-green-500"
+                />
+                <StatsCard
+                    icon={Tag}
+                    label="DISCOUNT AMOUNT"
+                    value="₹0.00"
+                    color="text-orange-500"
+                    iconColor="text-orange-500"
+                    iconBg="bg-orange-50"
+                    borderColor="border-l-orange-500"
+                />
+                <StatsCard
+                    icon={Hourglass}
+                    label="REMAINING BALANCE"
+                    value="₹18,000.00"
+                    color="text-red-500"
+                    iconColor="text-red-500"
+                    iconBg="bg-red-50"
+                    borderColor="border-l-red-500"
+                />
+            </div>
+
+            {/* Stats Components - Row 2 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-gray-400 flex items-start gap-4">
+                    <div className="bg-gray-100 p-3 rounded-lg flex items-center justify-center">
+                        <AlertTriangle size={20} className="text-gray-600" />
+                    </div>
+                    <div>
+                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">TOTAL LATE FEES</div>
+                        <div className="text-lg font-bold text-gray-700">₹0.00</div>
+                        <Button variant="outline" className="h-6 text-[10px] mt-1 border-blue-900 text-blue-900 px-2">View Details</Button>
+                    </div>
+                </div>
+
+                <StatsCard
+                    icon={Users}
+                    label="TOTAL ADMISSIONS"
+                    value="1"
+                    color="text-gray-800"
+                    iconColor="text-blue-500"
+                    iconBg="bg-blue-50"
+                    borderColor="border-l-blue-400"
+                />
+            </div>
+
+            {/* Main Content */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
+                <div className="flex justify-between items-center">
+                    <h2 className="text-lg font-bold text-gray-800">Manage Admissions</h2>
+                    <div className="flex gap-2">
+                        <Button className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white gap-2 text-xs">
+                            <Plus size={14} /> Add Admission
+                        </Button>
+                        <Button className="bg-[#065f46] hover:bg-[#065f46]/90 text-white gap-2 text-xs">
+                            <Download size={14} /> Export
+                        </Button>
+                    </div>
+                </div>
+
+                {/* Filters */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div className="md:col-span-3 relative">
+                        <Search className="absolute left-3 top-2.5 text-gray-400" size={14} />
+                        <Input className="pl-9 h-10 w-full text-xs" placeholder="Search...." />
+                    </div>
+                    <div className="md:col-span-2">
+                        <select className="w-full h-10 rounded-lg border border-gray-200 px-3 text-xs text-gray-600 bg-white">
+                            <option>All Batches</option>
+                        </select>
+                    </div>
+                    <div className="md:col-span-2 relative">
+                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                            <span className="text-gray-400 text-xs">📅</span>
+                        </div>
+                        <input type="text" className="w-full h-10 rounded-lg border border-gray-200 pl-8 px-3 text-xs text-gray-400" placeholder="dd-mm-yyyy" />
+                    </div>
+                    <div className="md:col-span-2 relative">
+                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                            <span className="text-gray-400 text-xs">📅</span>
+                        </div>
+                        <input type="text" className="w-full h-10 rounded-lg border border-gray-200 pl-8 px-3 text-xs text-gray-400" placeholder="dd-mm-yyyy" />
+                    </div>
+                    <div className="md:col-span-1">
+                        <Button variant="outline" className="w-full h-10 border-blue-900 text-blue-900 hover:bg-blue-50 text-xs">
+                            Submit
+                        </Button>
+                    </div>
+                    <div className="md:col-span-1 px-0">
+                        {/* Using px-0 to fit simpler grid */}
+                        <Button variant="outline" className="w-full h-10 border-orange-200 text-orange-500 hover:bg-orange-50 text-xs">
+                            Reset
+                        </Button>
+                    </div>
+                </div>
+
+                {/* Table */}
+                <div className="overflow-x-auto border border-gray-100 rounded-lg">
+                    <Table>
+                        <TableHeader className="bg-gray-50/50">
+                            <TableRow>
+                                <TableHead className="w-[30px] font-bold text-gray-800 text-[10px] uppercase">#</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[150px]">Student Name</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Student Image</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[150px]">Course Name</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Batch Name</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Admission Date</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Admission Fees</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Referred By</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[120px]">Fees Details</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[120px]">Payment Details</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Final Amount</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Details</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Downloads</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Status</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[100px]">Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            <TableRow className="border-b border-gray-50 hover:bg-gray-50">
+                                <TableCell className="text-blue-600 font-medium text-xs align-top">1</TableCell>
+                                <TableCell className="align-top">
+                                    <div className="flex flex-col">
+                                        <span className="text-xs font-medium text-gray-700">Sathish S/O Mani Kanna</span>
+                                        <span className="text-[10px] text-gray-500 bg-gray-100 px-1 rounded w-fit mt-1">28 Jan 2026</span>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="align-top">
+                                    <div className="w-8 h-8 bg-gray-200 rounded overflow-hidden">
+                                        <div className="flex items-center justify-center w-full h-full text-[8px] text-gray-500 text-center leading-tight">Sathish S/O</div>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="align-top text-[10px] text-gray-600 uppercase">
+                                    ADVANCE DIPLOMA IN COMPUTER SCIENCE(M-CS-7090)
+                                </TableCell>
+                                <TableCell className="align-top">
+                                    <span className="bg-[#1e3a8a] text-white text-[10px] px-2 py-0.5 rounded">Premium</span>
+                                </TableCell>
+                                <TableCell className="align-top text-[10px] text-gray-600">
+                                    28 Jan 2026
+                                </TableCell>
+                                <TableCell className="align-top text-[10px] text-gray-600">-</TableCell>
+                                <TableCell className="align-top text-[10px] text-gray-600">-</TableCell>
+                                <TableCell className="align-top">
+                                    <div className="flex flex-col text-[10px] text-gray-600">
+                                        <span>Course Fees:</span>
+                                        <span className="font-bold">₹18000.00</span>
+                                        <span>GST: ₹0.00</span>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="align-top">
+                                    <div className="flex flex-col text-[10px]">
+                                        <span className="text-green-600">Paid: ₹0</span>
+                                        <span className="text-orange-500">Discount: ₹0</span>
+                                        <span className="text-red-500">Remaining:</span>
+                                        <span className="text-red-500 font-bold">₹18000</span>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="align-top text-xs font-bold text-gray-700">
+                                    18000
+                                </TableCell>
+                                <TableCell className="align-top">
+                                    <div className="flex flex-col gap-1">
+                                        <Button variant="outline" className="h-5 text-[9px] border-blue-900 text-blue-900 px-1">View</Button>
+                                        <Button variant="outline" className="h-5 text-[9px] border-blue-900 text-blue-900 px-1">Manage</Button>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="align-top">
+                                    <div className="flex gap-1">
+                                        <div className="bg-gray-800 p-1 rounded text-white cursor-pointer"><FileText size={12} /></div>
+                                        <div className="bg-gray-800 p-1 rounded text-white cursor-pointer"><CreditCard size={12} /></div>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="align-top">
+                                    <Switch checked={true} className="data-[state=checked]:bg-[#1e3a8a]" />
+                                </TableCell>
+                                <TableCell className="align-top">
+                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-[#1e3a8a]">
+                                        <Edit size={14} />
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function StatsCard({ icon: Icon, label, value, color, iconColor, iconBg, borderColor }) {
+    return (
+        <div className={`bg-white p-4 rounded-lg shadow-sm border-l-4 ${borderColor} flex items-start gap-4`}>
+            <div className={`${iconBg} p-3 rounded-lg flex items-center justify-center`}>
+                <Icon size={20} className={iconColor} />
+            </div>
+            <div>
+                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{label}</div>
+                <div className={`text-lg font-bold ${color}`}>{value}</div>
+            </div>
+        </div>
+    )
+}

@@ -37,7 +37,7 @@ import {
     Printer,
     HelpCircle,
     Cake,
-    History,
+    History as HistoryIcon,
     Wallet,
     ChartBar,
     Clock,
@@ -104,7 +104,7 @@ const menuGroups = [
         items: [
             { href: "/dashboard/fees/upcoming", label: "Upcoming Installments", icon: DollarSign },
             { href: "/dashboard/fees/paid", label: "Paid Installments", icon: FileText },
-            { href: "/dashboard/fees/history", label: "Payment History", icon: History },
+            { href: "/dashboard/fees/history", label: "Payment History", icon: HistoryIcon },
             { href: "/dashboard/fees/wallet", label: "Student Wallet", icon: Wallet },
         ]
     },
