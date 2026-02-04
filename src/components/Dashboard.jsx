@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboardData } from "@/store/dashboardSlice";
 import { Card, CardContent } from "@/components/ui/card"
@@ -126,55 +127,61 @@ export default function Dashboard() {
             {/* 1. Top Colored Cards Section */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Franchise Admission - Purple/Blue */}
-                <Card className="bg-gradient-to-r from-[#5b4fcbe6] to-[#7c6fd8] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
-                    <div className="absolute top-0 right-0 p-10 opacity-10 transform scale-150 translate-x-4 -translate-y-4">
-                        <UserPlus size={120} />
-                    </div>
-                    <CardContent className="p-6 flex flex-col justify-between h-full relative z-10">
-                        <div className="flex items-center gap-3 mb-2">
-                            <div className="p-2 bg-white/20 rounded-lg">
-                                <UserPlus size={20} className="text-white" />
+                <Link to="/dashboard/students/admissions" className="block transform hover:scale-[1.02] transition-all">
+                    <Card className="bg-gradient-to-r from-[#5b4fcbe6] to-[#7c6fd8] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
+                        <div className="absolute top-0 right-0 p-10 opacity-10 transform scale-150 translate-x-4 -translate-y-4">
+                            <UserPlus size={120} />
+                        </div>
+                        <CardContent className="p-6 flex flex-col justify-between h-full relative z-10">
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="p-2 bg-white/20 rounded-lg">
+                                    <UserPlus size={20} className="text-white" />
+                                </div>
+                                <span className="font-semibold text-lg">Franchise Admission</span>
                             </div>
-                            <span className="font-semibold text-lg">Franchise Admission</span>
-                        </div>
-                        <div>
-                            <h2 className="text-5xl font-bold mb-2">{data.topCards.franchiseAdmission}</h2>
-                            <p className="text-white/80 text-sm">Total admissions in franchises</p>
-                        </div>
-                    </CardContent>
-                </Card>
+                            <div>
+                                <h2 className="text-5xl font-bold mb-2">{data.topCards.franchiseAdmission}</h2>
+                                <p className="text-white/80 text-sm">Total admissions in franchises</p>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Link>
 
                 {/* Remaining Admission - Pink */}
-                <Card className="bg-gradient-to-r from-[#f472b6] to-[#fb7185] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
-                    <div className="absolute top-0 right-0 p-10 opacity-10 transform scale-150 rotate-12">
-                        <FileText size={120} />
-                    </div>
-                    <CardContent className="p-6 flex flex-col justify-between h-full relative z-10">
-                        <div className="mb-2">
-                            <span className="font-semibold text-lg">Remaining Admission</span>
+                <Link to="/dashboard/students/list" className="block transform hover:scale-[1.02] transition-all">
+                    <Card className="bg-gradient-to-r from-[#f472b6] to-[#fb7185] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
+                        <div className="absolute top-0 right-0 p-10 opacity-10 transform scale-150 rotate-12">
+                            <FileText size={120} />
                         </div>
-                        <div>
-                            <h2 className="text-5xl font-bold mb-2">{data.topCards.remainingAdmission}</h2>
-                            <p className="text-white/80 text-sm">Pending applications</p>
-                        </div>
-                    </CardContent>
-                </Card>
+                        <CardContent className="p-6 flex flex-col justify-between h-full relative z-10">
+                            <div className="mb-2">
+                                <span className="font-semibold text-lg">Remaining Admission</span>
+                            </div>
+                            <div>
+                                <h2 className="text-5xl font-bold mb-2">{data.topCards.remainingAdmission}</h2>
+                                <p className="text-white/80 text-sm">Pending applications</p>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Link>
 
                 {/* Registered Today - Cyan/Blue */}
-                <Card className="bg-gradient-to-r from-[#22d3ee] to-[#0ea5e9] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
-                    <div className="absolute top-0 right-0 p-8 opacity-10 transform scale-150">
-                        <CalendarCheck size={120} />
-                    </div>
-                    <CardContent className="p-6 flex flex-col justify-between h-full relative z-10">
-                        <div className="mb-2">
-                            <span className="font-semibold text-lg">Registered Today</span>
+                <Link to="/dashboard/students/list" className="block transform hover:scale-[1.02] transition-all">
+                    <Card className="bg-gradient-to-r from-[#22d3ee] to-[#0ea5e9] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 transform scale-150">
+                            <CalendarCheck size={120} />
                         </div>
-                        <div>
-                            <h2 className="text-5xl font-bold mb-2">{data.topCards.registeredToday}</h2>
-                            <p className="text-white/80 text-sm">Today's registrations</p>
-                        </div>
-                    </CardContent>
-                </Card>
+                        <CardContent className="p-6 flex flex-col justify-between h-full relative z-10">
+                            <div className="mb-2">
+                                <span className="font-semibold text-lg">Registered Today</span>
+                            </div>
+                            <div>
+                                <h2 className="text-5xl font-bold mb-2">{data.topCards.registeredToday}</h2>
+                                <p className="text-white/80 text-sm">Today's registrations</p>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </Link>
             </div>
 
             {/* 2. Quick Access Section */}
@@ -188,14 +195,18 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                     {[
-                        { label: "New Admission", icon: UserPlus, color: "text-[#6366f1]" },
-                        { label: "Add Course", icon: Plus, color: "text-gray-600" },
-                        { label: "Fees Details", icon: FileText, color: "text-gray-600" },
-                        { label: "Attendance", icon: CalendarCheck, color: "text-gray-600" },
-                        { label: "Settings", icon: Settings, color: "text-[#8b5cf6]" },
-                        { label: "Batches", icon: Users, color: "text-[#06b6d4]" },
+                        { label: "New Admission", icon: UserPlus, color: "text-[#6366f1]", href: "/dashboard/students/admissions" },
+                        { label: "Add Course", icon: Plus, color: "text-gray-600", href: "/dashboard/courses" },
+                        { label: "Fees Details", icon: FileText, color: "text-gray-600", href: "/dashboard/fees/upcoming" },
+                        { label: "Attendance", icon: CalendarCheck, color: "text-gray-600", href: "/dashboard/attendance/add" },
+                        { label: "Settings", icon: Settings, color: "text-[#8b5cf6]", href: "/dashboard/settings/general" },
+                        { label: "Batches", icon: Users, color: "text-[#06b6d4]", href: "/dashboard/batches" },
                     ].map((item, i) => (
-                        <div key={i} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-pointer flex flex-col items-center justify-center gap-3 h-28">
+                        <Link
+                            key={i}
+                            to={item.href}
+                            className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-100 transition-all cursor-pointer flex flex-col items-center justify-center gap-3 h-28 transform active:scale-95"
+                        >
                             {item.icon === UserPlus ? (
                                 <div className="flex relative">
                                     <UserPlus size={28} className={item.color} />
@@ -206,7 +217,7 @@ export default function Dashboard() {
                             <span className={`text-sm font-semibold ${item.color === 'text-gray-600' ? 'text-gray-600' : 'text-[#5d5fef]'}`}>
                                 {item.label}
                             </span>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
@@ -260,52 +271,56 @@ export default function Dashboard() {
             {/* 4. Exam Requests & Certificates Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Exam Requests */}
-                <Card className="border-none shadow-sm rounded-xl overflow-hidden bg-white">
-                    <div className="p-6 pb-2">
-                        <h3 className="text-lg font-bold text-gray-800">Exam Requests</h3>
-                    </div>
-                    <CardContent className="p-6 space-y-6">
-                        <div className="bg-gray-50 p-4 rounded-xl">
-                            <p className="text-gray-500 text-sm mb-1">Total Requests</p>
-                            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">{data.examRequests.total}</div>
+                <Link to="/dashboard/exams/requests" className="block transform hover:scale-[1.01] transition-all">
+                    <Card className="border-none shadow-sm rounded-xl overflow-hidden bg-white h-full">
+                        <div className="p-6 pb-2">
+                            <h3 className="text-lg font-bold text-gray-800">Exam Requests</h3>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-amber-100/30 p-4 rounded-xl border-l-4 border-amber-300">
-                                <p className="text-gray-500 text-sm mb-1">Pending</p>
-                                <h4 className="text-2xl font-bold text-amber-600">{data.examRequests.pending}</h4>
+                        <CardContent className="p-6 space-y-6">
+                            <div className="bg-gray-50 p-4 rounded-xl">
+                                <p className="text-gray-500 text-sm mb-1">Total Requests</p>
+                                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">{data.examRequests.total}</div>
                             </div>
-                            <div className="bg-green-100/30 p-4 rounded-xl border-l-4 border-green-300">
-                                <p className="text-gray-500 text-sm mb-1">Approved</p>
-                                <h4 className="text-2xl font-bold text-green-600">{data.examRequests.approved}</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-amber-100/30 p-4 rounded-xl border-l-4 border-amber-300">
+                                    <p className="text-gray-500 text-sm mb-1">Pending</p>
+                                    <h4 className="text-2xl font-bold text-amber-600">{data.examRequests.pending}</h4>
+                                </div>
+                                <div className="bg-green-100/30 p-4 rounded-xl border-l-4 border-green-300">
+                                    <p className="text-gray-500 text-sm mb-1">Approved</p>
+                                    <h4 className="text-2xl font-bold text-green-600">{data.examRequests.approved}</h4>
+                                </div>
                             </div>
-                        </div>
-                    </CardContent>
-                </Card>
+                        </CardContent>
+                    </Card>
+                </Link>
 
                 {/* Certificates */}
-                <Card className="border-none shadow-sm rounded-xl overflow-hidden bg-white">
-                    <div className="p-6 pb-2">
-                        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                            <span className="text-purple-600">●</span> Certificates
-                        </h3>
-                    </div>
-                    <CardContent className="p-6 space-y-6">
-                        <div className="bg-gray-50 p-4 rounded-xl">
-                            <p className="text-gray-500 text-sm mb-1">Total Certificates</p>
-                            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">{data.certificates.total}</div>
+                <Link to="/dashboard/certificates/requested" className="block transform hover:scale-[1.01] transition-all">
+                    <Card className="border-none shadow-sm rounded-xl overflow-hidden bg-white h-full">
+                        <div className="p-6 pb-2">
+                            <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                                <span className="text-purple-600">●</span> Certificates
+                            </h3>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-amber-100/30 p-4 rounded-xl border-l-4 border-amber-300">
-                                <p className="text-gray-500 text-sm mb-1">Pending</p>
-                                <h4 className="text-2xl font-bold text-amber-600">{data.certificates.pending}</h4>
+                        <CardContent className="p-6 space-y-6">
+                            <div className="bg-gray-50 p-4 rounded-xl">
+                                <p className="text-gray-500 text-sm mb-1">Total Certificates</p>
+                                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">{data.certificates.total}</div>
                             </div>
-                            <div className="bg-green-100/30 p-4 rounded-xl border-l-4 border-green-300">
-                                <p className="text-gray-500 text-sm mb-1">Approved</p>
-                                <h4 className="text-2xl font-bold text-green-600">{data.certificates.approved}</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-amber-100/30 p-4 rounded-xl border-l-4 border-amber-300">
+                                    <p className="text-gray-500 text-sm mb-1">Pending</p>
+                                    <h4 className="text-2xl font-bold text-amber-600">{data.certificates.pending}</h4>
+                                </div>
+                                <div className="bg-green-100/30 p-4 rounded-xl border-l-4 border-green-300">
+                                    <p className="text-gray-500 text-sm mb-1">Approved</p>
+                                    <h4 className="text-2xl font-bold text-green-600">{data.certificates.approved}</h4>
+                                </div>
                             </div>
-                        </div>
-                    </CardContent>
-                </Card>
+                        </CardContent>
+                    </Card>
+                </Link>
             </div>
 
             {/* 5. Wallet & Enquiry Status Section */}

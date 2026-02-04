@@ -4,17 +4,18 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Search } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function StudentWalletPage() {
     const navigate = useNavigate();
+    const students = useSelector((state) => state.students.students || []);
+
+    const totalBalance = students.reduce((sum, student) => sum + (Number(student.walletBalance) || 0), 0);
 
     return (
         <div className="space-y-6">
             <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
                 <div className="relative w-full">
-                    {/* Search bar looking like the screenshot (full width?) */}
-                    {/* Screenshot 0 shows a search bar at the very top, separate from content? No, it looks like part of layout. */}
-                    {/* The screenshot has "Search by name, email, or mobile" */}
                     <div className="flex gap-2">
                         <div className="relative flex-1">
                             <Input
@@ -31,9 +32,8 @@ export default function StudentWalletPage() {
 
             {/* Total Balance Card */}
             <div className="bg-[#6b5b95] bg-gradient-to-r from-[#5d5fef] to-[#8b5cf6] rounded-xl p-8 text-center text-white shadow-lg relative overflow-hidden">
-                {/* Check screenshot 0 for color. It matches the deep purple/blue gradient */}
                 <h2 className="text-xl font-medium opacity-90 mb-2">Total Wallet Balance</h2>
-                <div className="text-5xl font-bold mb-2">₹100.00</div>
+                <div className="text-5xl font-bold mb-2">₹{totalBalance.toFixed(2)}</div>
                 <p className="text-sm opacity-80">Across all students</p>
             </div>
 
@@ -70,41 +70,53 @@ export default function StudentWalletPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow className="border-b border-gray-50">
-                                <TableCell className="text-orange-400 font-medium">1</TableCell>
-                                <TableCell>
-                                    <div>
-                                        <div className="font-medium text-gray-800">Sathish S/O Mani Kanna</div>
-                                        <div className="text-xs text-gray-500">ID: 1</div>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <div>
-                                        <div className="text-gray-800">9500396045</div>
-                                        <div className="text-xs text-gray-400">priyajass33@gmail.com</div>
-                                    </div>
-                                </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>
-                                    <div>
-                                        <div className="font-bold text-green-600">100.00</div>
-                                        <div className="text-xs text-gray-400">Current Balance</div>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <span className="bg-green-100 text-green-600 px-2 py-0.5 rounded text-xs font-medium">Active</span>
-                                </TableCell>
-                                <TableCell>
-                                    <Button className="bg-[#1a237e] hover:bg-blue-900 text-white h-8 text-xs">
-                                        Manage Wallet
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
+                            {students.length === 0 ? (
+                                <TableRow>
+                                    <TableCell colSpan={7} className="h-32 text-center text-gray-500">
+                                        No students found.
+                                    </TableCell>
+                                </TableRow>
+                            ) : (
+                                students.map((student, index) => (
+                                    <TableRow key={student.id} className="border-b border-gray-50">
+                                        <TableCell className="text-orange-400 font-medium">{index + 1}</TableCell>
+                                        <TableCell>
+                                            <div>
+                                                <div className="font-medium text-gray-800">{student.name}</div>
+                                                <div className="text-xs text-gray-500">ID: {student.id}</div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div>
+                                                <div className="text-gray-800">{student.mobile}</div>
+                                                <div className="text-xs text-gray-400">{student.email}</div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="text-gray-600 text-sm">{student.location || '-'}</div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div>
+                                                <div className="font-bold text-green-600">{Number(student.walletBalance || 0).toFixed(2)}</div>
+                                                <div className="text-xs text-gray-400">Current Balance</div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="bg-green-100 text-green-600 px-2 py-0.5 rounded text-xs font-medium">Active</span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button className="bg-[#1a237e] hover:bg-blue-900 text-white h-8 text-xs">
+                                                Manage Wallet
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            )}
                         </TableBody>
                     </Table>
                 </div>
                 <div className="mt-4 text-xs text-gray-400">
-                    Showing 1 student(s) <span className="float-right">Total Active Students: 1</span>
+                    Showing {students.length} student(s) <span className="float-right">Total Active Students: {students.length}</span>
                 </div>
             </div>
         </div>

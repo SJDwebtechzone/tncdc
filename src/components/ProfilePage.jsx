@@ -1,28 +1,19 @@
-import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateProfile } from '@/store/profileSlice';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, User, MapPin, FileText, Image as ImageIcon, Phone, Calendar, Trash2 } from "lucide-react";
 
 export default function ProfilePage() {
-    const [formData, setFormData] = useState({
-        instituteName: "Tamil Nadu career development council",
-        ownerName: "SivaSankar",
-        designation: "DIRECTOR",
-        email: "tndc@gmail.com",
-        dob: "07-06-1995",
-        mobile: "9877641824",
-        alternateMobile: "8056047333",
-        address: "",
-        state: "Tamil Nadu",
-        city: "Chennai",
-        pincode: "600122",
-        controllerName: "SivaSankar",
-        showController: true,
-        showDirector: true,
-        controllerSignatureFile: null,
-        logoFile: null,
-        signatureFile: null
-    });
+    const profile = useSelector((state) => state.profile);
+    const dispatch = useDispatch();
+
+    const [formData, setFormData] = useState(profile);
+
+    useEffect(() => {
+        setFormData(profile);
+    }, [profile]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -41,6 +32,11 @@ export default function ProfilePage() {
                 [name]: file
             }));
         }
+    };
+
+    const handleUpdate = () => {
+        dispatch(updateProfile(formData));
+        // Optional: Show success toast
     };
 
     return (
@@ -390,7 +386,7 @@ export default function ProfilePage() {
                 </section>
 
                 <div className="pt-4 flex items-center gap-4">
-                    <Button className="bg-[#1e293b] hover:bg-[#0f172a] text-white px-8 py-2 h-11 rounded-lg">
+                    <Button onClick={handleUpdate} className="bg-[#1e293b] hover:bg-[#0f172a] text-white px-8 py-2 h-11 rounded-lg">
                         <FileText size={16} className="mr-2" />
                         Update Profile
                     </Button>

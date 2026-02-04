@@ -3,8 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Download, Filter, RotateCw, Wallet, Bell } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useSelector } from 'react-redux';
 
 export default function UpcomingInstallmentsPage() {
+    const upcomingInstallments = useSelector((state) => state.fees.upcomingInstallments || []);
+
+    // Calculate total amount
+    const totalAmount = upcomingInstallments.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+
     return (
         <div className="space-y-6">
             <h1 className="text-xl font-medium text-gray-800">Upcoming Installments</h1>
@@ -19,7 +25,7 @@ export default function UpcomingInstallmentsPage() {
                         </div>
                         <div>
                             <div className="text-xs text-gray-500 uppercase font-semibold">Total Upcoming Amount</div>
-                            <div className="text-lg font-bold text-gray-800">₹18000</div>
+                            <div className="text-lg font-bold text-gray-800">₹{totalAmount.toFixed(2)}</div>
                         </div>
                     </div>
 
@@ -73,68 +79,45 @@ export default function UpcomingInstallmentsPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow className="bg-red-50/50 hover:bg-red-50 border-b border-red-100">
-                                <TableCell className="text-blue-600 font-medium align-top">1</TableCell>
-                                <TableCell className="text-gray-600 text-sm align-top">Computer Science</TableCell>
-                                <TableCell className="text-gray-800 text-sm font-medium align-top">Sathish S/O Mani Kanna</TableCell>
-                                <TableCell className="text-gray-500 text-sm align-top">RN000001</TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col gap-1">
-                                        <span className="font-bold text-gray-800">₹9000.00</span>
-                                        <button className="bg-white border border-gray-300 text-gray-700 text-[10px] px-2 py-0.5 rounded-full w-fit hover:bg-gray-50">
-                                            ₹ Pay Now
-                                        </button>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col">
-                                        <span className="text-gray-800 text-xs font-semibold">30 Jan 2026</span>
-                                        <span className="text-red-500 text-[10px] flex items-center gap-1">
-                                            ⚠️ 5 days overdue
-                                        </span>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="text-gray-600 text-sm align-top">₹0</TableCell>
-                                <TableCell className="align-top">
-                                    <span className="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px]">Monthly</span>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <Button size="sm" className="bg-[#dc2626] hover:bg-red-700 text-white h-7 w-8 p-0 rounded-lg">
-                                        <Bell size={14} />
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow className="hover:bg-gray-50 border-b border-gray-100">
-                                <TableCell className="text-blue-600 font-medium align-top">2</TableCell>
-                                <TableCell className="text-gray-600 text-sm align-top">Computer Science</TableCell>
-                                <TableCell className="text-gray-800 text-sm font-medium align-top">Sathish S/O Mani Kanna</TableCell>
-                                <TableCell className="text-gray-500 text-sm align-top">RN000001</TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col gap-1">
-                                        <span className="font-bold text-gray-800">₹9000.00</span>
-                                        <button className="bg-[#d1d5db] text-white text-[10px] px-2 py-0.5 rounded-full w-fit">
-                                            Upcoming
-                                        </button>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col">
-                                        <span className="text-gray-800 text-xs font-semibold">02 Mar 2026</span>
-                                        <span className="text-blue-400 text-[10px]">
-                                            26 days remaining
-                                        </span>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="text-gray-600 text-sm align-top">₹0</TableCell>
-                                <TableCell className="align-top">
-                                    <span className="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px]">Monthly</span>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <Button size="sm" className="bg-[#dc2626] hover:bg-red-700 text-white h-7 w-8 p-0 rounded-lg">
-                                        <Bell size={14} />
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
+                            {upcomingInstallments.length === 0 ? (
+                                <TableRow>
+                                    <TableCell colSpan={9} className="h-32 text-center text-gray-500">
+                                        No upcoming installments.
+                                    </TableCell>
+                                </TableRow>
+                            ) : (
+                                upcomingInstallments.map((item, index) => (
+                                    <TableRow key={item.id} className="hover:bg-gray-50 border-b border-gray-100">
+                                        <TableCell className="text-blue-600 font-medium align-top">{index + 1}</TableCell>
+                                        <TableCell className="text-gray-600 text-sm align-top">{item.courseName}</TableCell>
+                                        <TableCell className="text-gray-800 text-sm font-medium align-top">{item.studentName}</TableCell>
+                                        <TableCell className="text-gray-500 text-sm align-top">{item.rollNumber}</TableCell>
+                                        <TableCell className="align-top">
+                                            <div className="flex flex-col gap-1">
+                                                <span className="font-bold text-gray-800">₹{item.amount}</span>
+                                                <button className="bg-white border border-gray-300 text-gray-700 text-[10px] px-2 py-0.5 rounded-full w-fit hover:bg-gray-50">
+                                                    ₹ Pay Now
+                                                </button>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            <div className="flex flex-col">
+                                                <span className="text-gray-800 text-xs font-semibold">{item.dueDate}</span>
+                                                {/* Logic for overdue warning could be added here */}
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-gray-600 text-sm align-top">₹{item.lateFee || 0}</TableCell>
+                                        <TableCell className="align-top">
+                                            <span className="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-[10px]">{item.frequency || 'Monthly'}</span>
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            <Button size="sm" className="bg-[#dc2626] hover:bg-red-700 text-white h-7 w-8 p-0 rounded-lg">
+                                                <Bell size={14} />
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            )}
                         </TableBody>
                     </Table>
                 </div>

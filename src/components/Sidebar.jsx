@@ -32,6 +32,7 @@ import {
     Bell,
     AppWindow,
     MessageCircle,
+    ArrowLeftRight,
     ArrowUpRight,
     UserPlus,
     Printer,
@@ -51,7 +52,21 @@ import {
     FileInput, // Exam Request
     PenTool, // Update Marks
     FileBadge, // Apply Cert
-    FileOutput // Requested Cert
+    FileOutput, // Requested Cert
+    Smartphone,
+    Target,
+    Link as LinkIcon,
+    Share2,
+    Info,
+    Hash,
+    MessageSquareQuote,
+    Images,
+    Handshake,
+    Book,
+    ClipboardList,
+    Shield,
+    CreditCard,
+    Mail
 } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
@@ -201,8 +216,43 @@ const menuGroups = [
     }
 ]
 
+const websiteMenuGroups = [
+    {
+        title: "WEBSITE CONTENT",
+        items: [
+            { href: "/dashboard/website/top-performers", label: "Top Performers", icon: Star },
+            { href: "/dashboard/website/services", label: "Our Services", icon: Settings2 },
+            { href: "/dashboard/website/faqs", label: "FAQs", icon: HelpCircle },
+            { href: "/dashboard/website/testimonials", label: "Testimonials", icon: MessageSquareQuote },
+            { href: "/dashboard/website/teachers", label: "Teachers", icon: Users },
+            { href: "/dashboard/website/counters", label: "Counters", icon: Hash },
+            { href: "/dashboard/website/events", label: "Events", icon: Calendar },
+            { href: "/dashboard/website/about", label: "About", icon: Info },
+            { href: "/dashboard/website/banner", label: "Banner", icon: ImageIcon },
+            { href: "/dashboard/website/mobile-banner", label: "Mobile Banner", icon: Smartphone },
+            { href: "/dashboard/website/mission-vision", label: "Mission & Vision", icon: Target },
+            { href: "/dashboard/website/contact", label: "Contact", icon: Mail },
+            { href: "/dashboard/website/posts", label: "Posts", icon: FileText },
+            { href: "/dashboard/website/gallery", label: "Gallery", icon: Images },
+            { href: "/dashboard/website/partners", label: "Partners", icon: Handshake },
+            { href: "/dashboard/website/site-setting", label: "Site Setting", icon: Settings },
+            { href: "/dashboard/website/study-materials", label: "Study Materials", icon: Book },
+            { href: "/dashboard/website/jobs", label: "Jobs", icon: Briefcase },
+            { href: "/dashboard/website/job-applications", label: "Job Applications", icon: ClipboardList },
+            { href: "/dashboard/website/sample-certificates", label: "Sample Certificates", icon: Award },
+            { href: "/dashboard/website/affiliations", label: "Affiliations", icon: LinkIcon },
+            { href: "/dashboard/website/payment-details", label: "Payment Details", icon: CreditCard },
+            { href: "/dashboard/website/policies", label: "Policies", icon: Shield },
+            { href: "/dashboard/website/social-media", label: "Social Media", icon: Share2 },
+        ]
+    }
+]
+
 export function Sidebar() {
     const { pathname } = useLocation()
+    const [mode, setMode] = useState('academic') // 'academic' or 'website'
+
+    const currentMenu = mode === 'academic' ? menuGroups : websiteMenuGroups
 
     return (
         <div className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 overflow-y-auto z-50 shadow-sm scrollbar-thin scrollbar-thumb-gray-200">
@@ -218,9 +268,17 @@ export function Sidebar() {
 
             {/* Switch Button */}
             <div className="px-4 mb-4">
-                <button className="w-full bg-[#5d5fef] hover:bg-[#4b4dcf] text-white py-3 px-4 rounded-xl text-xs font-semibold shadow-md transition-colors flex flex-col items-center justify-center text-center">
-                    <span>Switch to Website</span>
-                    <span>Management</span>
+                <button
+                    onClick={() => setMode(mode === 'academic' ? 'website' : 'academic')}
+                    className="w-full bg-[#6366f1] hover:bg-[#4f46e5] text-white py-3 px-4 rounded-xl text-xs font-bold shadow-md transition-all flex items-center justify-center gap-3 active:scale-95"
+                >
+                    <div className="bg-white/20 p-1 rounded-lg">
+                        <ArrowLeftRight size={16} />
+                    </div>
+                    <div className="flex flex-col items-start leading-tight">
+                        <span>Switch to {mode === 'academic' ? 'Website' : 'Academic'}</span>
+                        <span>Management</span>
+                    </div>
                 </button>
             </div>
 
@@ -252,8 +310,8 @@ export function Sidebar() {
             </div>
 
             {/* Menu Items */}
-            <nav className="flex-1 px-4 space-y-6 pb-8">
-                {menuGroups.map((group) => (
+            <nav className="flex-1 px-4 space-y-6 pb-8 overflow-y-auto scrollbar-none">
+                {currentMenu.map((group) => (
                     <div key={group.title}>
                         <h3 className="text-xs font-bold text-blue-900 mb-3 px-2 uppercase tracking-wide">{group.title}</h3>
                         <div className="space-y-1">

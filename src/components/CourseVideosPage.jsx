@@ -1,28 +1,43 @@
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Pencil, Plus, Search, RotateCcw, Download } from "lucide-react"
+import { Pencil, Plus, Search, RotateCcw, Download, X, Video } from "lucide-react"
 import { useState } from "react"
-import { Video } from "lucide-react"
-
-const initialVideos = []
+import { Input } from "@/components/ui/input"
+import { useSelector, useDispatch } from 'react-redux';
+import { addVideo } from '@/store/courseSlice';
 
 export default function CourseVideosPage() {
-    const [data, setData] = useState(initialVideos)
+    const videos = useSelector((state) => state.courses.videos || []);
+    const dispatch = useDispatch();
     const [searchCourse, setSearchCourse] = useState("")
     const [searchTitle, setSearchTitle] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({ course: '', subject: '', title: '', link: '' });
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        dispatch(addVideo({ ...formData, id: Date.now(), createdAt: new Date().toLocaleDateString() }));
+        setIsModalOpen(false);
+        setFormData({ course: '', subject: '', title: '', link: '' });
+    };
+
+    const filteredVideos = videos.filter(video =>
+        video.course.toLowerCase().includes(searchCourse.toLowerCase()) &&
+        video.title.toLowerCase().includes(searchTitle.toLowerCase())
+    );
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 relative">
             <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 border-b border-gray-100/50">
                     <h1 className="text-xl font-medium text-gray-800">Manage Course Videos</h1>
                     <div className="flex gap-2">
-                        <Button className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
-                            <Download size={14} /> Export
+                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
+                            <Plus size={14} /> Add New Video
                         </Button>
                         <Button className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
-                            <Plus size={14} /> Add New Video
+                            <Download size={14} /> Export
                         </Button>
                     </div>
                 </div>
@@ -73,7 +88,7 @@ export default function CourseVideosPage() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data.length === 0 ? (
+                        {filteredVideos.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={7} className="h-64 text-center border-b border-gray-200">
                                     <div className="flex flex-col items-center justify-center text-gray-400">
@@ -83,15 +98,61 @@ export default function CourseVideosPage() {
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            data.map((row, index) => (
-                                <TableRow key={index}>
-                                    {/* ... implementation for rows when data exists ... */}
+                            filteredVideos.map((row, index) => (
+                                <TableRow key={row.id}>
+                                    <TableCell className="font-medium text-blue-600 py-4 pl-6 border-r border-gray-200">{index + 1}</TableCell>
+                                    <TableCell className="font-medium text-gray-700 text-sm border-r border-gray-200">{row.course}</TableCell>
+                                    <TableCell className="text-gray-600 text-sm border-r border-gray-200">{row.subject}</TableCell>
+                                    <TableCell className="text-gray-600 text-sm border-r border-gray-200 font-medium">{row.title}</TableCell>
+                                    <TableCell className="text-blue-500 text-xs border-r border-gray-200 max-w-[200px] truncate underline cursor-pointer">{row.link}</TableCell>
+                                    <TableCell className="text-gray-600 text-sm border-r border-gray-200">{row.createdAt}</TableCell>
+                                    <TableCell className="text-center pr-6">
+                                        <Button size="icon" variant="ghost" className="h-8 w-8 text-blue-600"><Pencil size={14} /></Button>
+                                    </TableCell>
                                 </TableRow>
                             ))
                         )}
                     </TableBody>
                 </Table>
             </div>
+
+            {/* Add Video Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                    <div className="bg-white w-full max-w-md rounded-xl shadow-2xl p-6 relative">
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        <h2 className="text-xl font-bold text-gray-800 mb-4">Add Course Video</h2>
+                        <form onSubmit={handleSave} className="space-y-4">
+                            <div>
+                                <label className="text-sm font-bold text-gray-700">Course</label>
+                                <Input required value={formData.course} onChange={e => setFormData({ ...formData, course: e.target.value })} placeholder="e.g. Diploma in CS" />
+                            </div>
+                            <div>
+                                <label className="text-sm font-bold text-gray-700">Subject/Semester</label>
+                                <Input required value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} placeholder="e.g. Sem 1 / C++" />
+                            </div>
+                            <div>
+                                <label className="text-sm font-bold text-gray-700">Video Title</label>
+                                <Input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Introduction to Programming" />
+                            </div>
+                            <div>
+                                <label className="text-sm font-bold text-gray-700">Video Link (YouTube/Vimeo)</label>
+                                <Input required type="url" value={formData.link} onChange={e => setFormData({ ...formData, link: e.target.value })} placeholder="https://youtube.com/..." />
+                            </div>
+                            <div className="flex justify-end gap-3 mt-6">
+                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                                <Button type="submit" className="bg-[#1a237e] text-white">Save Video</Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
