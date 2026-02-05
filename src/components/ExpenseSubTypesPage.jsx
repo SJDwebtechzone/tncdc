@@ -2,74 +2,59 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Search, RotateCcw, ArrowLeft } from "lucide-react";
+import { Plus, Search, RotateCcw } from "lucide-react";
 
 export default function ExpenseSubTypesPage() {
-    const [view, setView] = useState('list');
-
-    if (view === 'add') {
-        return (
-            <div className="space-y-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <h1 className="text-2xl font-bold text-gray-800">Add Expense Sub Type</h1>
-                    <Button
-                        onClick={() => setView('list')}
-                        className="bg-white/90 hover:bg-white text-gray-800 px-6 py-2 rounded-xl flex items-center gap-2 shadow-lg border-none"
-                    >
-                        <ArrowLeft size={18} />
-                        Back to List
-                    </Button>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                    <form className="space-y-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Expense Type <span className="text-red-500">*</span></label>
-                                <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50">
-                                    <option>Select Expense Type</option>
-                                </select>
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Expense Sub Type <span className="text-red-500">*</span></label>
-                                <Input placeholder="Enter Sub Type" required className="h-11 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Status</label>
-                                <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50">
-                                    <option>Active</option>
-                                    <option>Inactive</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="flex justify-end gap-4 pt-8 border-t border-gray-100">
-                            <Button type="button" variant="outline" onClick={() => setView('list')} className="px-10 h-11 border-gray-200">
-                                Cancel
-                            </Button>
-                            <Button type="submit" className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-10 h-11">
-                                <Plus size={18} className="mr-2" />
-                                Create Sub Type
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        );
-    }
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <h1 className="text-2xl font-bold text-gray-800">Manage Expenses Sub Types</h1>
                 <Button
-                    onClick={() => setView('add')}
+                    onClick={() => setIsModalOpen(true)}
                     className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none transition-all transform hover:scale-105"
                 >
                     <Plus size={18} />
                     Add Sub Type
                 </Button>
             </div>
+
+            {/* Add Expense Sub Type Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white w-full max-w-md rounded-sm shadow-2xl relative">
+                        <div className="flex items-center justify-between p-4 border-b">
+                            <h2 className="text-sm font-normal text-gray-800">Add New Expense Sub Type</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                                <Plus size={20} className="rotate-45" />
+                            </button>
+                        </div>
+
+                        <form className="p-6 space-y-6">
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700">Expense Type</label>
+                                <select className="w-full h-9 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white">
+                                    <option>Select Expense Type</option>
+                                </select>
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700">Expense Sub Type</label>
+                                <Input placeholder="Enter Expense Sub Type" className="h-9 rounded-sm border-gray-200 text-xs" />
+                            </div>
+
+                            <div className="flex justify-center gap-3 pt-2">
+                                <Button type="button" onClick={() => setIsModalOpen(false)} className="bg-[#b45309] hover:bg-[#8e420b] text-white border-none h-9 text-xs font-bold px-8 rounded-sm">
+                                    Cancel
+                                </Button>
+                                <Button type="submit" className="bg-[#1e463a] hover:bg-[#153229] text-white h-9 text-xs font-bold px-8 rounded-sm">
+                                    Add Expense Sub Type
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
 
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">

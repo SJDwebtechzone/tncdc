@@ -12,10 +12,11 @@ import {
     CalendarCheck,
     Clock,
     X,
-    ArrowLeft,
     CheckCircle2,
     Trash2,
-    Settings2
+    ArrowLeft,
+    Info,
+    Layout
 } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { addHoliday, deleteHoliday } from '@/store/attendanceSlice';
@@ -51,50 +52,58 @@ export default function HolidaysPage() {
 
     if (view === 'add') {
         return (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-in fade-in duration-500 font-sans pb-10">
                 {/* Header Banner */}
-                <div className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] p-6 rounded-2xl text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="bg-[#6366f1] p-8 rounded-sm text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-white/20 rounded-xl backdrop-blur-md">
-                            <Plus size={32} />
+                        <div className="p-3 bg-white/20 rounded-full flex items-center justify-center">
+                            <Plus size={24} strokeWidth={3} />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold">Add New Holiday</h1>
-                            <p className="text-blue-100 text-sm opacity-90">Create a new holiday entry for your institution calendar</p>
+                            <h1 className="text-2xl font-bold tracking-tight">Add New Holiday</h1>
+                            <p className="text-blue-100 text-[11px] font-medium opacity-90 uppercase tracking-widest mt-1 text-xs">Create a new holiday entry for your institution calendar</p>
                         </div>
                     </div>
                     <Button
                         onClick={() => setView('list')}
-                        className="bg-white/90 hover:bg-white text-gray-800 px-6 py-2 rounded-xl flex items-center gap-2 shadow-lg border-none"
+                        className="bg-white hover:bg-gray-100 text-gray-800 px-6 h-9 rounded-sm flex items-center gap-2 border-none font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all"
                     >
-                        <ArrowLeft size={18} />
+                        <ArrowLeft size={16} />
                         Back to Holidays
                     </Button>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-8">
-                    <form onSubmit={handleCreate} className="space-y-8">
-                        {/* Basic Information */}
-                        <section className="space-y-6">
-                            <div className="flex items-center gap-2 font-bold text-gray-800 border-b pb-4">
-                                <CheckCircle2 size={18} className="text-blue-600" />
-                                <span>Basic Information</span>
+                <div className="bg-white rounded-sm shadow-sm border border-gray-100 p-10 space-y-12">
+                    <form onSubmit={handleCreate} className="space-y-12">
+                        {/* Basic Information Section */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-3 text-gray-800 border-b border-gray-50 pb-4">
+                                <div className="p-1.5 bg-[#1e3a8a]/10 rounded-full text-[#1e3a8a]">
+                                    <Info size={16} />
+                                </div>
+                                <h3 className="text-sm font-bold uppercase tracking-wider">Basic Information</h3>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Holiday Title <span className="text-red-500">*</span></label>
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        Holiday Title <span className="text-red-500">*</span>
+                                    </label>
                                     <Input
                                         required
                                         placeholder="Enter holiday title"
                                         value={formData.title}
                                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e3a8a] transition-all"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Holiday Type <span className="text-red-500">*</span></label>
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        Holiday Type <span className="text-red-500">*</span>
+                                    </label>
                                     <select
                                         required
-                                        className="w-full h-10 rounded-md border border-gray-200 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-500 transition-all cursor-pointer font-sans"
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                                     >
@@ -105,100 +114,135 @@ export default function HolidaysPage() {
                                         <option value="Institute">Institute</option>
                                         <option value="Optional">Optional</option>
                                     </select>
-                                    <p className="text-[10px] text-gray-400">National: Government declared holidays | Regional: State/Local holidays | Institute: Internal holidays | Optional: Flexible</p>
+                                    <p className="text-[10px] text-gray-400 font-medium italic mt-1 leading-relaxed">
+                                        National: Government declared holidays | Regional: State/Local holidays | Institute: Internal holidays | Optional: Flexible holidays
+                                    </p>
                                 </div>
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Description</label>
-                                <textarea
-                                    className="w-full h-24 rounded-md border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                                    placeholder="Brief description about the holiday"
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                />
-                            </div>
-                        </section>
-
-                        {/* Date Information */}
-                        <section className="space-y-6">
-                            <div className="flex items-center gap-2 font-bold text-gray-800 border-b pb-4">
-                                <Calendar size={18} className="text-blue-600" />
-                                <span>Date Information</span>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Start Date <span className="text-red-500">*</span></label>
-                                    <Input
-                                        required
-                                        type="date"
-                                        value={formData.startDate}
-                                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">End Date <span className="text-red-500">*</span></label>
-                                    <Input
-                                        required
-                                        type="date"
-                                        value={formData.endDate}
-                                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                                <div className="md:col-span-2 space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        Description
+                                    </label>
+                                    <textarea
+                                        className="w-full h-24 rounded-sm border border-gray-200 p-4 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none resize-none bg-white transition-all shadow-sm font-sans"
+                                        placeholder="Brief description about the holiday"
+                                        value={formData.description}
+                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                     />
                                 </div>
                             </div>
                         </section>
 
-                        {/* Display Settings */}
-                        <section className="space-y-6">
-                            <div className="flex items-center gap-2 font-bold text-gray-800 border-b pb-4">
-                                <Settings2 size={18} className="text-blue-600" />
-                                <span>Display Settings</span>
+                        {/* Date Information Section */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-3 text-gray-800 border-b border-gray-50 pb-4">
+                                <div className="p-1.5 bg-[#1e3a8a]/10 rounded-full text-[#1e3a8a]">
+                                    <Calendar size={16} />
+                                </div>
+                                <h3 className="text-sm font-bold uppercase tracking-wider">Date Information</h3>
                             </div>
-                            <div className="max-w-xs space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Status <span className="text-red-500">*</span></label>
-                                <select
-                                    required
-                                    className="w-full h-10 rounded-md border border-gray-200 px-3 text-sm"
-                                    value={formData.status}
-                                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                                >
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                </select>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        Start Date <span className="text-red-500">*</span>
+                                    </label>
+                                    <div className="relative">
+                                        <Input
+                                            required
+                                            type="text"
+                                            placeholder="dd-mm-yyyy"
+                                            value={formData.startDate}
+                                            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e3a8a] transition-all pr-10"
+                                        />
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                                            <Calendar size={14} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        End Date <span className="text-red-500">*</span>
+                                    </label>
+                                    <div className="relative">
+                                        <Input
+                                            required
+                                            type="text"
+                                            placeholder="dd-mm-yyyy"
+                                            value={formData.endDate}
+                                            onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e3a8a] transition-all pr-10"
+                                        />
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                                            <Calendar size={14} />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </section>
 
-                        {/* Recurring Settings */}
-                        <section className="space-y-6">
-                            <div className="flex items-center gap-2 font-bold text-gray-800 border-b pb-4">
-                                <RotateCcw size={18} className="text-blue-600" />
-                                <span>Recurring Settings</span>
+                        {/* Display Information Section */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-3 text-gray-800 border-b border-gray-50 pb-4">
+                                <div className="p-1.5 bg-[#1e3a8a]/10 rounded-full text-[#1e3a8a]">
+                                    <Layout size={16} />
+                                </div>
+                                <h3 className="text-sm font-bold uppercase tracking-wider">Display Settings</h3>
                             </div>
-                            <label className="flex items-center gap-3 cursor-pointer group">
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        Status <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        className="w-full h-10 rounded-sm border border-gray-200 px-4 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-600 transition-all cursor-pointer font-sans"
+                                        value={formData.status}
+                                        onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                                    >
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Recurring Settings Section */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-3 text-gray-800 border-b border-gray-50 pb-4">
+                                <div className="p-1.5 bg-[#1e3a8a]/10 rounded-full text-[#1e3a8a]">
+                                    <RotateCcw size={16} />
+                                </div>
+                                <h3 className="text-sm font-bold uppercase tracking-wider">Recurring Settings</h3>
+                            </div>
+
+                            <div className="flex items-center gap-3">
                                 <input
                                     type="checkbox"
-                                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                    id="recurring"
+                                    className="w-4 h-4 rounded border-gray-300 text-[#1e3a8a] accent-[#1e3a8a] cursor-pointer"
                                     checked={formData.isRecurring}
                                     onChange={(e) => setFormData({ ...formData, isRecurring: e.target.checked })}
                                 />
-                                <span className="text-sm font-medium text-gray-700">This is a recurring holiday</span>
-                            </label>
+                                <label htmlFor="recurring" className="text-xs font-bold text-gray-600 cursor-pointer">This is a recurring holiday</label>
+                            </div>
                         </section>
 
-                        <div className="flex justify-end gap-4 pt-8 border-t border-gray-100">
+                        {/* Footer Buttons */}
+                        <div className="flex items-center justify-end gap-3 pt-6 border-t border-gray-50">
                             <Button
                                 type="button"
-                                variant="outline"
                                 onClick={() => setView('list')}
-                                className="bg-orange-600 hover:bg-orange-700 text-white border-none px-10 h-11"
+                                className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-10 h-10 rounded-sm text-[11px] font-bold uppercase tracking-widest border-none transition-all shadow-md active:scale-95 flex items-center justify-center p-0"
                             >
-                                <X size={18} className="mr-2" />
+                                <X size={16} className="mr-2" />
                                 Cancel
                             </Button>
                             <Button
                                 type="submit"
-                                className="bg-[#6366f1] hover:bg-[#4f46e5] text-white px-10 h-11"
+                                className="bg-[#1e3a8a] hover:bg-[#152e6e] text-white px-10 h-10 rounded-sm text-[11px] font-bold uppercase tracking-widest border-none transition-all shadow-md active:scale-95 flex items-center justify-center p-0"
                             >
-                                <Plus size={18} className="mr-2" />
+                                <CheckCircle2 size={16} className="mr-2" />
                                 Create Holiday
                             </Button>
                         </div>
@@ -209,21 +253,21 @@ export default function HolidaysPage() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 animate-in fade-in duration-500 font-sans">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] p-6 rounded-2xl text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] p-8 rounded-sm text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                     <div className="p-3 bg-white/20 rounded-xl backdrop-blur-md">
                         <Palmtree size={32} />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold">Holiday Management</h1>
-                        <p className="text-blue-100 text-sm opacity-90">Manage institutional holidays, events, and special occasions</p>
+                        <h1 className="text-2xl font-bold tracking-tight uppercase">Holiday Management</h1>
+                        <p className="text-blue-100 text-[11px] font-bold uppercase tracking-widest mt-1 opacity-90">Manage institutional holidays, events, and special occasions</p>
                     </div>
                 </div>
                 <Button
                     onClick={() => setView('add')}
-                    className="bg-[#22c55e] hover:bg-[#16a34a] text-white px-6 py-2 rounded-xl flex items-center gap-2 shadow-lg transition-all transform hover:scale-105 border-none"
+                    className="bg-[#1e463a] hover:bg-[#163028] text-white px-8 h-12 rounded-sm flex items-center gap-2 shadow-lg transition-all active:scale-95 border-none font-bold uppercase tracking-widest text-xs"
                 >
                     <Plus size={18} />
                     Add New Holiday
@@ -239,109 +283,113 @@ export default function HolidaysPage() {
                             <div className={`${stat.bg} ${stat.color} p-2 rounded-lg w-fit mb-4 group-hover:scale-110 transition-transform`}>
                                 <stat.icon size={20} />
                             </div>
-                            <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">{stat.label}</span>
+                            <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-[0.2em]">{stat.label}</span>
                             <span className="text-3xl font-bold text-gray-800 mt-1">{stat.value}</span>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-10">
                 {/* Main Content */}
                 <div className="lg:col-span-9 space-y-6">
                     {/* Filters & Search */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <div className="flex items-center gap-2 mb-6 text-gray-800 font-bold border-b pb-4">
+                    <div className="bg-white p-8 rounded-sm shadow-sm border border-gray-100">
+                        <div className="flex items-center gap-3 mb-8 text-[#1e3a8a] font-bold border-b border-gray-50 pb-4 uppercase tracking-[0.1em] text-sm">
                             <Filter size={18} />
-                            <span>Filters & Search</span>
+                            <span>Filters & Quick Search</span>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold text-gray-500 uppercase">Type</label>
-                                <select className="w-full h-10 rounded-lg border border-gray-200 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Holiday Type</label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white transition-all cursor-pointer">
                                     <option>All Types</option>
                                 </select>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold text-gray-500 uppercase">Status</label>
-                                <select className="w-full h-10 rounded-lg border border-gray-200 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Status</label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white transition-all cursor-pointer">
                                     <option>All Status</option>
                                 </select>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold text-gray-500 uppercase">Year</label>
-                                <select className="w-full h-10 rounded-lg border border-gray-200 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Year</label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white transition-all cursor-pointer">
                                     <option>All Years</option>
                                 </select>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-semibold text-gray-500 uppercase">Search</label>
-                                <Input placeholder="Title, description..." className="h-10 rounded-lg" />
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Search Keywords</label>
+                                <Input placeholder="Title, description..." className="h-10 rounded-sm italic border-gray-200" />
                             </div>
                         </div>
-                        <div className="flex gap-3 mt-6">
-                            <Button className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white min-w-[120px] rounded-lg">
+                        <div className="flex gap-4 mt-8">
+                            <Button className="bg-[#1e3a8a] hover:bg-[#1a365d] text-white min-w-[140px] h-10 rounded-sm font-bold uppercase tracking-widest text-xs transition-all active:scale-95 shadow-md border-none p-0">
                                 <Search size={16} className="mr-2" />
                                 Apply Filters
                             </Button>
-                            <Button variant="outline" className="text-orange-600 border-orange-200 hover:bg-orange-50 min-w-[100px] rounded-lg">
-                                <X size={16} className="mr-2" />
-                                Clear
+                            <Button variant="outline" className="border-orange-100 text-[#b9875a] hover:bg-orange-50 min-w-[120px] h-10 rounded-sm font-bold uppercase tracking-widest text-xs transition-all active:scale-95 bg-orange-50/10 p-0">
+                                <RotateCcw size={16} className="mr-2" />
+                                Reset
                             </Button>
                         </div>
                     </div>
 
                     {/* Holidays List */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] p-4 flex items-center gap-2 text-white font-bold">
-                            <div className="bg-white/20 p-1.5 rounded-lg">
-                                <Search size={16} />
+                    <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] p-5 flex items-center gap-3 text-white font-bold uppercase tracking-widest text-xs">
+                            <div className="bg-white/20 p-2 rounded-lg">
+                                <Calendar size={18} />
                             </div>
-                            <span>Holidays List</span>
+                            <span>Registered Holidays List</span>
                         </div>
                         <div className="overflow-x-auto min-h-[300px]">
                             <Table>
                                 <TableHeader>
-                                    <TableRow className="bg-gray-50/50 hover:bg-gray-50/50">
-                                        <TableHead className="font-bold text-gray-800 text-xs uppercase py-5 px-6">Holiday Details</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-xs uppercase py-5">Date Range</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-xs uppercase py-5">Type</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-xs uppercase py-5">Status</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-xs uppercase py-5 text-center">Actions</TableHead>
+                                    <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-200">
+                                        <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 px-6 tracking-wider border-r border-gray-100">Holiday Details</TableHead>
+                                        <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100 text-center">Date Range</TableHead>
+                                        <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100 text-center">Type</TableHead>
+                                        <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100 text-center">Status</TableHead>
+                                        <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 text-center tracking-wider">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
                                     {holidays.length === 0 ? (
                                         <TableRow>
-                                            <TableCell colSpan={5} className="py-20 text-center">
-                                                <div className="flex flex-col items-center justify-center text-gray-400">
-                                                    <div className="bg-gray-100 p-4 rounded-2xl mb-4 text-gray-400">
-                                                        <Calendar size={48} />
+                                            <TableCell colSpan={5} className="py-24 text-center">
+                                                <div className="flex flex-col items-center justify-center text-gray-400 gap-6">
+                                                    <div className="bg-gray-50 p-6 rounded-3xl">
+                                                        <Calendar size={48} className="text-gray-300" />
                                                     </div>
-                                                    <h3 className="text-lg font-bold text-gray-600">No Holidays Found</h3>
-                                                    <p className="text-sm">No holidays match your current filters. Try adjusting your search criteria.</p>
+                                                    <div className="space-y-1">
+                                                        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest">No Holidays Found</h3>
+                                                        <p className="text-[11px] font-medium italic">Start building your institution calendar by adding holidays.</p>
+                                                    </div>
                                                 </div>
                                             </TableCell>
                                         </TableRow>
                                     ) : (
                                         holidays.map((h) => (
-                                            <TableRow key={h.id}>
-                                                <TableCell className="px-6">
+                                            <TableRow key={h.id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                                                <TableCell className="px-6 py-4">
                                                     <div>
-                                                        <p className="font-bold text-gray-800">{h.title}</p>
-                                                        <p className="text-xs text-gray-500 overflow-hidden text-ellipsis whitespace-nowrap max-w-xs">{h.description}</p>
+                                                        <p className="font-bold text-gray-800 text-sm tracking-tight">{h.title}</p>
+                                                        <p className="text-[10px] text-gray-400 font-medium italic overflow-hidden text-ellipsis whitespace-nowrap max-w-xs mt-0.5">{h.description || 'No description provided'}</p>
                                                     </div>
                                                 </TableCell>
-                                                <TableCell className="text-sm text-gray-600">
-                                                    {h.startDate} to {h.endDate}
+                                                <TableCell className="text-center font-bold text-gray-600 text-[11px]">
+                                                    <span className="bg-gray-100 px-3 py-1 rounded-sm border border-gray-200">
+                                                        {h.startDate} <span className="text-gray-400 px-2 font-normal">→</span> {h.endDate}
+                                                    </span>
                                                 </TableCell>
-                                                <TableCell>
-                                                    <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold border border-blue-100">
+                                                <TableCell className="text-center">
+                                                    <span className="bg-[#dcf0fb] text-[#0284c7] px-3 py-1 rounded-sm text-[10px] font-bold border border-[#bae6fd] uppercase tracking-widest">
                                                         {h.type}
                                                     </span>
                                                 </TableCell>
-                                                <TableCell>
-                                                    <span className={`px-3 py-1 rounded-full text-xs font-bold border ${h.status === 'Active' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'
+                                                <TableCell className="text-center">
+                                                    <span className={`px-3 py-1 rounded-sm text-[10px] font-bold border uppercase tracking-widest ${h.status === 'Active' ? 'bg-[#f0fdf4] text-[#16a34a] border-[#bbf7d0]' : 'bg-[#fef2f2] text-[#dc2626] border-[#fecaca]'
                                                         }`}>
                                                         {h.status}
                                                     </span>
@@ -350,7 +398,7 @@ export default function HolidaysPage() {
                                                     <Button
                                                         variant="ghost"
                                                         size="sm"
-                                                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                        className="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full w-8 h-8 p-0"
                                                         onClick={() => dispatch(deleteHoliday(h.id))}
                                                     >
                                                         <Trash2 size={16} />
@@ -367,16 +415,19 @@ export default function HolidaysPage() {
 
                 {/* Sidebar Content */}
                 <div className="lg:col-span-3 space-y-6">
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
-                        <div className="flex items-center gap-2 mb-6 font-bold text-gray-800 border-b pb-4 text-sm">
-                            <CalendarCheck size={16} className="text-blue-600" />
+                    <div className="bg-white p-8 rounded-sm shadow-sm border border-gray-100 min-h-[400px]">
+                        <div className="flex items-center gap-3 mb-8 font-bold text-gray-800 border-b border-gray-50 pb-4 text-xs uppercase tracking-widest">
+                            <Clock size={16} className="text-[#6366f1]" />
                             <span>Upcoming Holidays</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center py-10 text-center text-gray-400">
-                            <div className="bg-gray-50 p-3 rounded-lg mb-3">
-                                <RotateCcw size={24} />
+                        <div className="flex flex-col items-center justify-center py-12 text-center text-gray-400 gap-4">
+                            <div className="bg-gray-50 p-4 rounded-full">
+                                <Calendar size={28} className="text-gray-200" />
                             </div>
-                            <p className="text-sm font-medium">No upcoming holidays</p>
+                            <div className="space-y-1">
+                                <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 opacity-70">No upcoming events</p>
+                                <p className="text-[10px] italic">Check back later for updates</p>
+                            </div>
                         </div>
                     </div>
                 </div>

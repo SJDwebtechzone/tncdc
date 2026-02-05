@@ -122,15 +122,32 @@ export default function CourseAwardCategoriesPage() {
                             <X size={20} />
                         </button>
 
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">Add Award Category</h2>
-                        <form onSubmit={handleSave} className="space-y-4">
-                            <div>
-                                <label className="text-sm font-bold text-gray-700">Category Name</label>
-                                <Input required value={formData.name} onChange={e => setFormData({ name: e.target.value })} placeholder="e.g. Certificate" />
+                        <h2 className="text-lg font-bold text-gray-800 uppercase tracking-tight text-[15px]">Add New Category</h2>
+                        <form onSubmit={handleSave} className="p-8 space-y-6">
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Category Name <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.name}
+                                    onChange={e => setFormData({ name: e.target.value })}
+                                    placeholder="Enter Category Name"
+                                    className="h-10 rounded-sm border-gray-200 text-xs font-medium focus:ring-1 focus:ring-blue-900 transition-all"
+                                />
                             </div>
-                            <div className="flex justify-end gap-3 mt-6">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button type="submit" className="bg-[#1a237e] text-white">Save Category</Button>
+                            <div className="flex justify-end gap-3 pt-6 border-t font-bold">
+                                <Button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-8 rounded-sm h-10 text-[11px] uppercase tracking-widest transition-all active:scale-95 shadow-md font-bold"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white px-8 rounded-sm h-10 text-[11px] uppercase tracking-widest transition-all active:scale-95 shadow-md font-bold"
+                                >
+                                    Add Category
+                                </Button>
                             </div>
                         </form>
                     </div>

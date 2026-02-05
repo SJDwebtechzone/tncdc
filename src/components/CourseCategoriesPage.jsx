@@ -32,6 +32,7 @@ export default function CourseCategoriesPage() {
     const [searchQuery, setSearchQuery] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({ name: '', icon: '' });
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const filteredData = categories ? categories.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -42,6 +43,7 @@ export default function CourseCategoriesPage() {
         dispatch(addCategory({ ...formData, count: 0, status: true }));
         setIsModalOpen(false);
         setFormData({ name: '', icon: '' });
+        setSelectedFile(null);
     };
 
     return (
@@ -51,10 +53,10 @@ export default function CourseCategoriesPage() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 border-b border-gray-100/50">
                     <h1 className="text-xl font-medium text-gray-800">Manage Course Categories</h1>
                     <div className="flex gap-2">
-                        <Button className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
+                        <Button className="bg-[#1e463a] hover:bg-[#153229] text-white gap-2 rounded-sm px-4 h-9 text-[11px] uppercase tracking-widest font-bold shadow-md transition-all active:scale-95">
                             <Download size={14} /> Export
                         </Button>
-                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
+                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#1e463a] hover:bg-[#153229] text-white gap-2 rounded-sm px-4 h-9 text-[11px] uppercase tracking-widest font-bold shadow-md transition-all active:scale-95">
                             <Plus size={14} /> Add New Category
                         </Button>
                     </div>
@@ -62,58 +64,58 @@ export default function CourseCategoriesPage() {
 
                 {/* Filters */}
                 <div className="p-6 bg-gray-50/50 border-b border-gray-100 flex flex-col md:flex-row gap-4 items-center">
-                    <div className="bg-white border border-gray-200 rounded-lg flex items-center px-3 h-10 w-full md:w-80">
+                    <div className="bg-white border border-gray-200 rounded-lg flex items-center px-3 h-10 w-full md:w-80 shadow-sm">
                         <Search className="text-gray-400 mr-2" size={18} />
                         <input
                             placeholder="Search categories..."
-                            className="bg-transparent border-none outline-none text-sm w-full text-gray-600 placeholder:text-gray-400"
+                            className="bg-transparent border-none outline-none text-sm w-full text-gray-600 placeholder:text-gray-400 font-medium"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
-                    <Button variant="outline" className="border-blue-900 text-blue-900 hover:bg-blue-50 h-10 px-8">
+                    <Button className="bg-[#1e3a8a] hover:bg-blue-900 text-white h-10 px-8 rounded-sm font-bold shadow-md transition-all active:scale-95">
                         Search
                     </Button>
-                    <Button variant="outline" className="border-orange-300 text-orange-400 hover:bg-orange-50 h-10 px-8" onClick={() => setSearchQuery("")}>
+                    <Button variant="outline" className="border-orange-300 text-orange-400 hover:bg-orange-50 h-10 px-8 rounded-sm font-bold transition-all active:scale-95" onClick={() => setSearchQuery("")}>
                         Reset
                     </Button>
                 </div>
 
                 {/* Table */}
                 <Table>
-                    <TableHeader className="bg-[#f1f5f9] border-b border-gray-200">
+                    <TableHeader className="bg-gray-50/50 border-b border-gray-100">
                         <TableRow>
-                            <TableHead className="w-[80px] font-bold text-gray-700 pl-6 text-xs uppercase tracking-wider border-r border-gray-200">#</TableHead>
-                            <TableHead className="font-bold text-gray-700 text-xs uppercase tracking-wider w-[30%] border-r border-gray-200">Category Name</TableHead>
-                            <TableHead className="font-bold text-gray-700 text-xs uppercase tracking-wider border-r border-gray-200">Icon</TableHead>
-                            <TableHead className="font-bold text-gray-700 text-xs uppercase tracking-wider border-r border-gray-200">Total Courses</TableHead>
-                            <TableHead className="font-bold text-gray-700 text-xs uppercase tracking-wider border-r border-gray-200">Status</TableHead>
-                            <TableHead className="text-center font-bold text-gray-700 pr-8 text-xs uppercase tracking-wider">Actions</TableHead>
+                            <TableHead className="w-[80px] font-bold text-gray-800 text-[10px] uppercase tracking-wider text-center border-r border-gray-50 pl-0">#</TableHead>
+                            <TableHead className="font-bold text-gray-800 text-[10px] uppercase tracking-wider w-[30%] border-r border-gray-50">Category Name</TableHead>
+                            <TableHead className="font-bold text-gray-800 text-[10px] uppercase tracking-wider border-r border-gray-50">Icon</TableHead>
+                            <TableHead className="font-bold text-gray-800 text-[10px] uppercase tracking-wider border-r border-gray-50 px-4">Total Courses</TableHead>
+                            <TableHead className="font-bold text-gray-800 text-[10px] uppercase tracking-wider border-r border-gray-50 pr-4">Status</TableHead>
+                            <TableHead className="text-center font-bold text-gray-800 text-[10px] uppercase tracking-wider w-[100px]">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {filteredData.map((row, index) => (
-                            <TableRow key={row.id} className="hover:bg-gray-50/50 border-b border-gray-200">
-                                <TableCell className="font-medium text-blue-600 py-4 pl-6 border-r border-gray-200">{index + 1}</TableCell>
-                                <TableCell className="font-medium text-gray-700 text-sm border-r border-gray-200">{row.name}</TableCell>
-                                <TableCell className="border-r border-gray-200">
-                                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden border border-gray-200">
-                                        <Code className="text-gray-500" size={20} />
+                            <TableRow key={row.id} className="hover:bg-gray-50/50 border-b border-gray-50">
+                                <TableCell className="text-center font-bold text-gray-500 py-4 border-r border-gray-50">{index + 1}</TableCell>
+                                <TableCell className="font-bold text-gray-800 text-xs border-r border-gray-50">{row.name}</TableCell>
+                                <TableCell className="border-r border-gray-50">
+                                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden border border-gray-100 flex-shrink-0">
+                                        <Code className="text-gray-400" size={20} />
                                     </div>
                                 </TableCell>
-                                <TableCell className="border-r border-gray-200">
-                                    <div className="bg-[#1a237e] text-white text-xs font-bold px-2 py-1 rounded w-fit h-6 flex items-center justify-center px-3">
+                                <TableCell className="border-r border-gray-50">
+                                    <div className="bg-[#1e3a8a] text-white text-[11px] font-bold px-3 py-1 rounded w-fit h-6 flex items-center justify-center ml-2 shadow-sm">
                                         {row.count || 0}
                                     </div>
                                 </TableCell>
-                                <TableCell className="border-r border-gray-200">
+                                <TableCell className="border-r border-gray-50">
                                     <CustomBlueSwitch
                                         checked={row.status !== false}
                                         onCheckedChange={() => { }}
                                     />
                                 </TableCell>
-                                <TableCell className="text-center pr-6">
-                                    <Button size="icon" className="h-8 w-8 bg-[#1a85ff] hover:bg-[#1a85ff]/90 text-white rounded-md shadow-sm">
+                                <TableCell className="text-center">
+                                    <Button size="icon" className="h-8 w-8 bg-[#1a85ff] hover:bg-blue-600 text-white rounded-sm shadow-sm transition-all active:scale-95">
                                         <Pencil size={14} />
                                     </Button>
                                 </TableCell>
@@ -125,24 +127,75 @@ export default function CourseCategoriesPage() {
 
             {/* Add Category Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white w-full max-w-sm rounded-xl shadow-2xl p-6 relative">
-                        <button
-                            onClick={() => setIsModalOpen(false)}
-                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
-                        >
-                            <X size={20} />
-                        </button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+                    <div className="bg-white w-full max-w-2xl rounded-sm shadow-2xl relative animate-in fade-in zoom-in duration-300">
+                        {/* Modal Header */}
+                        <div className="flex items-center justify-between p-4 border-b">
+                            <h2 className="text-lg font-bold text-gray-800 uppercase tracking-tight text-[15px]">Add New Category</h2>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="text-gray-400 hover:text-gray-600 transition-colors bg-gray-50 rounded-full p-1"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
 
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">Add Course Category</h2>
-                        <form onSubmit={handleSave} className="space-y-4">
-                            <div>
-                                <label className="text-sm font-bold text-gray-700">Category Name</label>
-                                <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Programming" />
+                        <form onSubmit={handleSave} className="p-8 space-y-6">
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Category Name <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.name}
+                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                    placeholder="Enter Category Name"
+                                    className="h-10 rounded-sm border-gray-200 text-xs font-medium focus:ring-1 focus:ring-blue-900 transition-all"
+                                />
                             </div>
-                            <div className="flex justify-end gap-3 mt-6">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button type="submit" className="bg-[#1a237e] text-white">Save Category</Button>
+
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Category Icon <span className="text-red-500">*</span></label>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-2 border border-gray-200 rounded-sm p-1 pr-3 h-10">
+                                        <input
+                                            type="file"
+                                            id="category-icon"
+                                            className="hidden"
+                                            accept=".svg,.png"
+                                            onChange={(e) => setSelectedFile(e.target.files[0])}
+                                        />
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            className="h-8 text-[11px] font-bold px-4 rounded-sm bg-gray-100 border-gray-300 hover:bg-gray-200 text-gray-700"
+                                            onClick={() => document.getElementById('category-icon').click()}
+                                        >
+                                            Choose File
+                                        </Button>
+                                        <span className="text-[11px] text-gray-500 font-medium truncate flex-1">
+                                            {selectedFile ? selectedFile.name : "No file chosen"}
+                                        </span>
+                                        {selectedFile && (
+                                            <button type="button" onClick={() => setSelectedFile(null)} className="text-gray-400 hover:text-red-500 transition-colors"><X size={14} /></button>
+                                        )}
+                                    </div>
+                                    <p className="text-[10px] text-gray-400 font-medium italic ml-1">Only SVG or PNG files are allowed.</p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end gap-3 pt-6 border-t font-bold">
+                                <Button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-8 rounded-sm h-10 text-[11px] uppercase tracking-widest transition-all active:scale-95 shadow-md font-bold"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white px-8 rounded-sm h-10 text-[11px] uppercase tracking-widest transition-all active:scale-95 shadow-md font-bold"
+                                >
+                                    Add Category
+                                </Button>
                             </div>
                         </form>
                     </div>

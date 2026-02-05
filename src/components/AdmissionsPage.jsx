@@ -4,6 +4,7 @@ import { addStudent } from '@/store/studentSlice';
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from 'react-router-dom';
 import {
     Plus,
     Download,
@@ -23,37 +24,7 @@ import { Switch } from "@/components/ui/switch";
 
 export default function AdmissionsPage() {
     const students = useSelector((state) => state.students.students);
-    const dispatch = useDispatch();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // Form State
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        mobile: '',
-        course: '',
-        dob: '',
-        batch: 'Batch-A'
-    });
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const newStudent = {
-            id: Date.now(),
-            ...formData,
-            initials: formData.name.charAt(0).toUpperCase(),
-            admissionDate: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
-            photo: null
-        };
-        dispatch(addStudent(newStudent));
-        setIsModalOpen(false);
-        setFormData({ name: '', email: '', mobile: '', course: '', dob: '', batch: 'Batch-A' });
-    };
+    const navigate = useNavigate();
 
     return (
         <div className="space-y-6 relative">
@@ -85,7 +56,7 @@ export default function AdmissionsPage() {
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-bold text-gray-800">Manage Admissions</h2>
                     <div className="flex gap-2">
-                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white gap-2 text-xs">
+                        <Button onClick={() => navigate('/dashboard/students/admissions/add')} className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white gap-2 text-xs">
                             <Plus size={14} /> Add Admission
                         </Button>
                         <Button className="bg-[#065f46] hover:bg-[#065f46]/90 text-white gap-2 text-xs">
@@ -175,50 +146,6 @@ export default function AdmissionsPage() {
                     </Table>
                 </div>
             </div>
-
-            {/* Add Admission Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white w-full max-w-md rounded-xl shadow-2xl p-6 relative animate-in fade-in zoom-in duration-200">
-                        <button
-                            onClick={() => setIsModalOpen(false)}
-                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
-                        >
-                            <X size={20} />
-                        </button>
-
-                        <h2 className="text-xl font-bold text-gray-800 mb-1">Add New Student</h2>
-                        <p className="text-sm text-gray-500 mb-6">Enter student details to create a new admission.</p>
-
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-700 uppercase">Student Name</label>
-                                <Input required name="name" value={formData.name} onChange={handleInputChange} placeholder="e.g. Rahul Sharma" />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-700 uppercase">Date of Birth</label>
-                                <Input required type="date" name="dob" value={formData.dob} onChange={handleInputChange} />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-700 uppercase">Email</label>
-                                <Input required type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="student@example.com" />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-700 uppercase">Course</label>
-                                <Input required name="course" value={formData.course} onChange={handleInputChange} placeholder="e.g. Python Programming" />
-                            </div>
-
-                            <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button type="submit" className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90">Add Student</Button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

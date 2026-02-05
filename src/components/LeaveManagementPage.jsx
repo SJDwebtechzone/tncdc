@@ -5,14 +5,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import {
     Plus,
     CalendarX,
-    FileText,
     Search,
-    ArrowLeft,
-    Info,
+    X,
+    Save,
+    Clock,
     Trash2,
-    CheckCircle2,
-    Calendar,
-    Settings2
+    Calendar
 } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { addLeave, deleteLeave } from '@/store/attendanceSlice';
@@ -20,11 +18,10 @@ import { addLeave, deleteLeave } from '@/store/attendanceSlice';
 export default function LeaveManagementPage() {
     const leaves = useSelector((state) => state.attendance.leaves || []);
     const dispatch = useDispatch();
-    const [view, setView] = useState('list'); // 'list' or 'add'
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         studentName: '',
-        type: 'Sick Leave',
         startDate: '',
         endDate: '',
         reason: ''
@@ -32,182 +29,180 @@ export default function LeaveManagementPage() {
 
     const handleCreate = (e) => {
         e.preventDefault();
-        dispatch(addLeave(formData));
-        setView('list');
-        setFormData({ studentName: '', type: 'Sick Leave', startDate: '', endDate: '', reason: '' });
+        dispatch(addLeave({ ...formData, id: Date.now(), type: 'Sick Leave' }));
+        setIsModalOpen(false);
+        setFormData({ studentName: '', startDate: '', endDate: '', reason: '' });
     };
-
-    if (view === 'add') {
-        return (
-            <div className="space-y-6">
-                <div className="bg-[#1e293b] p-6 rounded-2xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <div className="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
-                            <Plus size={28} />
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-bold">Add New Leave</h2>
-                            <p className="text-gray-400 text-sm">Submit a new leave request for a student</p>
-                        </div>
-                    </div>
-                    <Button
-                        onClick={() => setView('list')}
-                        className="bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-lg flex items-center gap-2 border border-white/20"
-                    >
-                        <ArrowLeft size={18} />
-                        Back to List
-                    </Button>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                    <form onSubmit={handleCreate} className="space-y-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div className="space-y-6">
-                                <div className="flex items-center gap-2 font-bold text-gray-800 border-b pb-2">
-                                    <CheckCircle2 size={18} className="text-blue-600" />
-                                    <span>Student Information</span>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Student Name <span className="text-red-500">*</span></label>
-                                    <Input
-                                        required
-                                        placeholder="Enter full name"
-                                        value={formData.studentName}
-                                        onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Leave Type <span className="text-red-500">*</span></label>
-                                    <select
-                                        className="w-full h-10 rounded-md border border-gray-200 px-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                                        value={formData.type}
-                                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                                    >
-                                        <option>Sick Leave</option>
-                                        <option>Personal Leave</option>
-                                        <option>Emergency Leave</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="flex items-center gap-2 font-bold text-gray-800 border-b pb-2">
-                                    <Calendar size={18} className="text-blue-600" />
-                                    <span>Duration</span>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-600 uppercase">Start Date</label>
-                                        <Input
-                                            required
-                                            type="date"
-                                            value={formData.startDate}
-                                            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-600 uppercase">End Date</label>
-                                        <Input
-                                            required
-                                            type="date"
-                                            value={formData.endDate}
-                                            onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-600 uppercase">Reason for Leave</label>
-                            <textarea
-                                className="w-full h-32 rounded-md border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                                placeholder="State the reason for leave"
-                                value={formData.reason}
-                                onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                            />
-                        </div>
-
-                        <div className="flex justify-end gap-3 pt-6 border-t border-gray-100">
-                            <Button type="button" variant="outline" onClick={() => setView('list')} className="px-8 border-gray-200">Cancel</Button>
-                            <Button type="submit" className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-10">Create Leave Request</Button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="space-y-6">
-            <h1 className="text-2xl font-bold text-gray-800">Leave Management</h1>
+            <h1 className="text-2xl font-bold text-gray-800 font-sans tracking-tight uppercase">Leave Management</h1>
 
-            {/* Header Banner */}
-            <div className="bg-[#1e293b] p-6 rounded-2xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Header Banner - Dark Theme */}
+            <div className="bg-[#0f172a] p-6 rounded-sm text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 font-sans">
                 <div className="flex items-center gap-4">
-                    <div className="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
-                        <CalendarX size={28} />
+                    <div className="p-2 border border-white/20 rounded-md">
+                        <CalendarX size={24} />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold">Leave Management</h2>
-                        <p className="text-gray-400 text-sm">View and manage leave requests</p>
+                        <h2 className="text-lg font-bold tracking-wide">Leave Management</h2>
+                        <p className="text-gray-400 text-xs mt-0.5">View and manage leave requests</p>
                     </div>
                 </div>
                 <Button
-                    onClick={() => setView('add')}
-                    className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-all transform hover:scale-105 border-none font-semibold"
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-[#1e3a8a] hover:bg-[#1a365d] text-white px-6 h-10 rounded-sm flex items-center gap-2 border-none transition-all active:scale-95 shadow-md uppercase text-xs font-bold tracking-widest"
                 >
                     <Plus size={18} />
                     Add Leave
                 </Button>
             </div>
 
+            {/* Add Leave Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-md rounded-sm shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                        {/* Modal Header - Dark */}
+                        <div className="bg-[#0f172a] flex items-center justify-between p-3 px-4 text-white">
+                            <h2 className="text-[13px] font-bold uppercase tracking-widest flex items-center gap-2">
+                                <Plus size={16} strokeWidth={3} /> Add New Leave
+                            </h2>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="text-white/70 hover:text-white transition-colors"
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleCreate} className="p-8 space-y-6 font-sans">
+                            <div className="space-y-1.5 focus-within:text-[#1e3a8a] transition-colors">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Select Student <span className="text-red-500">*</span>
+                                </label>
+                                <select
+                                    required
+                                    className="w-full h-10 rounded-sm border border-gray-200 px-3 text-[11px] focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-500 transition-all cursor-pointer"
+                                    value={formData.studentName}
+                                    onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
+                                >
+                                    <option value="">Choose a student...</option>
+                                    <option>John Doe</option>
+                                    <option>Jane Smith</option>
+                                </select>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="space-y-1.5 focus-within:text-[#1e3a8a] transition-colors">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        From Date <span className="text-red-500">*</span>
+                                    </label>
+                                    <Input
+                                        placeholder="dd-mm-yyyy"
+                                        required
+                                        className="h-10 rounded-sm border-gray-200 text-[11px] focus:ring-1 focus:ring-[#1e3a8a] transition-all"
+                                        value={formData.startDate}
+                                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                                    />
+                                </div>
+                                <div className="space-y-1.5 focus-within:text-[#1e3a8a] transition-colors">
+                                    <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                        To Date <span className="text-red-500">*</span>
+                                    </label>
+                                    <Input
+                                        placeholder="dd-mm-yyyy"
+                                        required
+                                        className="h-10 rounded-sm border-gray-200 text-[11px] focus:ring-1 focus:ring-[#1e3a8a] transition-all"
+                                        value={formData.endDate}
+                                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-1.5 focus-within:text-[#1e3a8a] transition-colors">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Reason <span className="text-red-500">*</span>
+                                </label>
+                                <textarea
+                                    placeholder="Enter reason for leave"
+                                    required
+                                    className="w-full h-24 rounded-sm border border-gray-200 p-3 text-[11px] focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white resize-none transition-all"
+                                    value={formData.reason}
+                                    onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+                                />
+                            </div>
+
+                            {/* Modal Footer Buttons */}
+                            <div className="flex items-center justify-center gap-3 pt-4">
+                                <Button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-10 h-10 rounded-sm text-[11px] font-bold uppercase tracking-widest border-none transition-all shadow-md active:scale-95 p-0"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white px-10 h-10 rounded-sm text-[11px] font-bold flex items-center justify-center gap-2 shadow-md border-none uppercase tracking-widest transition-all p-0"
+                                >
+                                    <Save size={16} />
+                                    Submit
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             {/* Table Area */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[500px] flex flex-col">
+            <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden min-h-[500px] flex flex-col font-sans">
                 <div className="overflow-x-auto flex-1">
                     <Table>
                         <TableHeader>
-                            <TableRow className="bg-gray-50/50 hover:bg-gray-50/50">
-                                <TableHead className="font-bold text-gray-800 text-xs uppercase py-5 px-6">Leave Details</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-xs uppercase py-5">Date Range</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-xs uppercase py-5">Type</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-xs uppercase py-5">Status</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-xs uppercase py-5 text-center">Actions</TableHead>
+                            <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-200 font-sans">
+                                <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 px-6 tracking-wider border-r border-gray-100">Leave Details</TableHead>
+                                <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100">Date Range</TableHead>
+                                <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100">Type</TableHead>
+                                <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100 text-center">Status</TableHead>
+                                <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 text-center tracking-wider">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {leaves.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={5} className="py-32 text-center">
-                                        <div className="flex flex-col items-center justify-center text-gray-400">
-                                            <div className="bg-gray-100 p-6 rounded-3xl mb-4 text-gray-300">
-                                                <CalendarX size={64} />
+                                    <TableCell colSpan={5} className="py-40 text-center">
+                                        <div className="flex flex-col items-center justify-center gap-6">
+                                            <div className="bg-gray-50 p-6 rounded-3xl">
+                                                <CalendarX size={64} className="text-gray-300" />
                                             </div>
-                                            <h3 className="text-xl font-bold text-gray-600 mb-2">No Leaves Found</h3>
-                                            <p className="max-w-xs mx-auto text-gray-400">There are no leave requests at the moment. When students apply for leave, they will appear here.</p>
+                                            <div className="space-y-1">
+                                                <h3 className="text-base font-bold text-gray-400 uppercase tracking-widest">No Leave Records Found</h3>
+                                                <p className="text-[11px] text-gray-300 font-medium italic">New leave applications will appear here once submitted.</p>
+                                            </div>
                                         </div>
                                     </TableCell>
                                 </TableRow>
                             ) : (
                                 leaves.map((l) => (
-                                    <TableRow key={l.id}>
-                                        <TableCell className="px-6">
+                                    <TableRow key={l.id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                                        <TableCell className="px-6 py-4">
                                             <div>
-                                                <p className="font-bold text-gray-800">{l.studentName}</p>
-                                                <p className="text-xs text-gray-500 italic">" {l.reason} "</p>
+                                                <p className="font-bold text-gray-800 text-sm tracking-tight">{l.studentName}</p>
+                                                <p className="text-[10px] text-gray-400 font-medium italic mt-0.5">" {l.reason} "</p>
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-sm text-gray-600">
-                                            {l.startDate} to {l.endDate}
-                                        </TableCell>
-                                        <TableCell>
-                                            <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold border border-blue-100">
-                                                {l.type}
+                                        <TableCell className="font-bold text-gray-600 text-[11px]">
+                                            <span className="bg-gray-100 px-3 py-1 rounded-sm border border-gray-200">
+                                                {l.startDate} <span className="text-gray-400 px-2 font-normal">→</span> {l.endDate}
                                             </span>
                                         </TableCell>
                                         <TableCell>
-                                            <span className="bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold border border-yellow-100 flex items-center gap-1 w-fit">
+                                            <span className="bg-[#dcf0fb] text-[#0284c7] px-3 py-1 rounded-sm text-[10px] font-bold border border-[#bae6fd] uppercase tracking-widest">
+                                                Sick Leave
+                                            </span>
+                                        </TableCell>
+                                        <TableCell className="text-center">
+                                            <span className="bg-yellow-50 text-yellow-700 px-3 py-1 rounded-sm text-[10px] font-bold border border-yellow-100 inline-flex items-center gap-1 uppercase tracking-widest">
                                                 <Clock size={12} />
                                                 Pending
                                             </span>
@@ -216,7 +211,7 @@ export default function LeaveManagementPage() {
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
-                                                className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                className="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full w-8 h-8 p-0"
                                                 onClick={() => dispatch(deleteLeave(l.id))}
                                             >
                                                 <Trash2 size={16} />

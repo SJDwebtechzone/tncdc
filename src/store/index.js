@@ -7,6 +7,7 @@ import feeReducer from './feeSlice';
 import profileReducer from './profileSlice';
 import attendanceReducer from './attendanceSlice';
 import websiteReducer from './websiteSlice';
+import roleReducer from './roleSlice';
 
 
 const initialAppState = {
@@ -39,6 +40,7 @@ export const store = configureStore({
         profile: profileReducer,
         attendance: attendanceReducer,
         website: websiteReducer,
+        roles: roleReducer,
     },
 });
 

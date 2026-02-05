@@ -10,6 +10,8 @@ export default function StudentEnquiriesPage() {
     const enquiries = useSelector((state) => state.students.enquiries || []);
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [profileImage, setProfileImage] = useState(null);
+    const [signature, setSignature] = useState(null);
     const [formData, setFormData] = useState({ name: '', dob: '', mobile: '', email: '', course: '', source: 'Unknown', assignedTo: 'Unassigned' });
 
     const handleSave = (e) => {
@@ -226,66 +228,237 @@ export default function StudentEnquiriesPage() {
 
             {/* Add Enquiry Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white w-full max-w-lg rounded-xl shadow-2xl p-6 relative">
-                        <button
-                            onClick={() => setIsModalOpen(false)}
-                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
-                        >
-                            <X size={20} />
-                        </button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+                    <div className="bg-white w-full max-w-4xl rounded-sm shadow-2xl relative my-8">
+                        <div className="flex items-center justify-between p-4 border-b">
+                            <h2 className="text-lg font-normal text-gray-800">Add New Enquiry</h2>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
 
-                        <h2 className="text-xl font-bold text-gray-800 mb-6">Add New Enquiry</h2>
-                        <form onSubmit={handleSave} className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="text-sm font-bold text-gray-700">Student Name</label>
-                                    <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="Full Name" />
-                                </div>
-                                <div>
-                                    <label className="text-sm font-bold text-gray-700">Date of Birth</label>
-                                    <Input required type="date" value={formData.dob} onChange={e => setFormData({ ...formData, dob: e.target.value })} />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="text-sm font-bold text-gray-700">Mobile Number</label>
-                                    <Input required value={formData.mobile} onChange={e => setFormData({ ...formData, mobile: e.target.value })} placeholder="10-digit mobile" />
-                                </div>
-                                <div>
-                                    <label className="text-sm font-bold text-gray-700">Email Address</label>
-                                    <Input required type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="email@example.com" />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="text-sm font-bold text-gray-700">Course Interested</label>
-                                <Input required value={formData.course} onChange={e => setFormData({ ...formData, course: e.target.value })} placeholder="e.g. Java Full Stack" />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="text-sm font-bold text-gray-700">Source</label>
-                                    <select
-                                        className="w-full h-10 rounded-lg border border-gray-200 px-3 text-sm bg-white"
-                                        value={formData.source}
-                                        onChange={e => setFormData({ ...formData, source: e.target.value })}
-                                    >
-                                        <option value="Unknown">Unknown</option>
-                                        <option value="Social Media">Social Media</option>
-                                        <option value="Referral">Referral</option>
-                                        <option value="Walk-in">Walk-in</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="text-sm font-bold text-gray-700">Assign To</label>
-                                    <Input value={formData.assignedTo} onChange={e => setFormData({ ...formData, assignedTo: e.target.value })} placeholder="Employee Name" />
+                        <form onSubmit={handleSave} className="p-6 space-y-8 max-h-[80vh] overflow-y-auto">
+                            {/* Personal Information */}
+                            <div className="space-y-4">
+                                <h3 className="text-sm font-bold text-gray-700 flex items-center gap-2">
+                                    <User size={16} /> Personal Information
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-red-500 uppercase">First Name *</label>
+                                        <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="h-9 rounded-sm border-gray-200" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-red-500 uppercase">Relationship *</label>
+                                        <select className="w-full h-9 rounded-sm border border-gray-200 px-2 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white">
+                                            <option>Select</option>
+                                            <option>Father</option>
+                                            <option>Mother</option>
+                                            <option>Self</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Father/Husband Name</label>
+                                        <Input className="h-9 rounded-sm border-gray-200" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Surname Name</label>
+                                        <Input className="h-9 rounded-sm border-gray-200" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-red-500 uppercase">Date of Birth *</label>
+                                        <Input required type="date" value={formData.dob} onChange={e => setFormData({ ...formData, dob: e.target.value })} className="h-9 rounded-sm border-gray-200" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-red-500 uppercase">Gender *</label>
+                                        <select className="w-full h-9 rounded-sm border border-gray-200 px-2 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white">
+                                            <option>Select</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-red-500 uppercase">PIN Code *</label>
+                                        <Input required className="h-9 rounded-sm border-gray-200" />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="flex justify-end gap-3 mt-6">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button type="submit" className="bg-[#1e3a8a] text-white">Save Enquiry</Button>
+                            {/* Contact Information */}
+                            <div className="space-y-4">
+                                <h3 className="text-sm font-bold text-gray-700 flex items-center gap-2">
+                                    <Phone size={16} /> Contact Information
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-red-500 uppercase">Mobile Number *</label>
+                                        <Input required value={formData.mobile} onChange={e => setFormData({ ...formData, mobile: e.target.value })} className="h-9 rounded-sm border-gray-200" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Alternate Mobile</label>
+                                        <Input className="h-9 rounded-sm border-gray-200" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Email Address</label>
+                                        <Input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} className="h-9 rounded-sm border-gray-200" />
+                                    </div>
+                                    <div className="space-y-1 md:col-span-3">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Address</label>
+                                        <textarea className="w-full h-20 rounded-sm border border-gray-200 p-2 text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Course & Assignment */}
+                            <div className="space-y-4">
+                                <h3 className="text-sm font-bold text-gray-700 flex items-center gap-2">
+                                    <Calendar size={16} /> Course & Assignment
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-red-500 uppercase">Course *</label>
+                                        <select
+                                            className="w-full h-9 rounded-sm border border-gray-200 px-2 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white"
+                                            value={formData.course}
+                                            onChange={e => setFormData({ ...formData, course: e.target.value })}
+                                        >
+                                            <option>Select Course</option>
+                                            <option value="Java Full Stack">Java Full Stack</option>
+                                            <option value="Python Full Stack">Python Full Stack</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Source</label>
+                                        <select
+                                            className="w-full h-9 rounded-sm border border-gray-200 px-2 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white"
+                                            value={formData.source}
+                                            onChange={e => setFormData({ ...formData, source: e.target.value })}
+                                        >
+                                            <option value="Select Source">Select Source</option>
+                                            <option value="Social Media">Social Media</option>
+                                            <option value="Referral">Referral</option>
+                                            <option value="Walk-in">Walk-in</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Assign To</label>
+                                        <select
+                                            className="w-full h-9 rounded-sm border border-gray-200 px-2 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white"
+                                            value={formData.assignedTo}
+                                            onChange={e => setFormData({ ...formData, assignedTo: e.target.value })}
+                                        >
+                                            <option value="Select Employee">Select Employee</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Documents */}
+                            <div className="space-y-4 pb-4">
+                                <h3 className="text-sm font-bold text-gray-700 flex items-center gap-2">
+                                    <Upload size={16} /> Documents
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-2">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Profile Image</label>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className="hidden"
+                                                    id="profile-image-input"
+                                                    onChange={(e) => setProfileImage(e.target.files[0])}
+                                                />
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    className="h-8 text-xs px-3 rounded-sm bg-gray-50 border-gray-200"
+                                                    onClick={() => document.getElementById('profile-image-input').click()}
+                                                >
+                                                    Choose File
+                                                </Button>
+                                                <span className="text-[10px] text-gray-400 truncate max-w-[150px]">
+                                                    {profileImage ? profileImage.name : "No file chosen"}
+                                                </span>
+                                                {profileImage && (
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-6 w-6 text-red-500"
+                                                        onClick={() => setProfileImage(null)}
+                                                    >
+                                                        <X size={14} />
+                                                    </Button>
+                                                )}
+                                            </div>
+                                            {profileImage && (
+                                                <div className="w-16 h-16 rounded border overflow-hidden bg-gray-50">
+                                                    <img src={URL.createObjectURL(profileImage)} alt="Preview" className="w-full h-full object-cover" />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <p className="text-[9px] text-gray-400">Max size: 2MB, Format: JPG, PNG</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[11px] font-bold text-gray-600 uppercase">Signature</label>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className="hidden"
+                                                    id="signature-input"
+                                                    onChange={(e) => setSignature(e.target.files[0])}
+                                                />
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    className="h-8 text-xs px-3 rounded-sm bg-gray-50 border-gray-200"
+                                                    onClick={() => document.getElementById('signature-input').click()}
+                                                >
+                                                    Choose File
+                                                </Button>
+                                                <span className="text-[10px] text-gray-400 truncate max-w-[150px]">
+                                                    {signature ? signature.name : "No file chosen"}
+                                                </span>
+                                                {signature && (
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-6 w-6 text-red-500"
+                                                        onClick={() => setSignature(null)}
+                                                    >
+                                                        <X size={14} />
+                                                    </Button>
+                                                )}
+                                            </div>
+                                            {signature && (
+                                                <div className="w-16 h-16 rounded border overflow-hidden bg-gray-50">
+                                                    <img src={URL.createObjectURL(signature)} alt="Preview" className="w-full h-full object-cover" />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <p className="text-[9px] text-gray-400">Max size: 1MB, Format: JPG, PNG</p>
+                                    </div>
+                                </div>
                             </div>
                         </form>
+
+                        <div className="flex justify-end gap-3 p-4 border-t bg-gray-50/50">
+                            <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="bg-[#b45309] hover:bg-[#8e420b] text-white border-none h-9 text-xs font-bold px-6 rounded-sm">
+                                Cancel
+                            </Button>
+                            <Button type="submit" onClick={handleSave} className="bg-[#1e463a] hover:bg-[#153229] text-white h-9 text-xs font-bold px-6 rounded-sm">
+                                Add Enquiry
+                            </Button>
+                        </div>
                     </div>
                 </div>
             )}

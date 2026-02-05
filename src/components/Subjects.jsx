@@ -2,32 +2,17 @@ import React, { useState } from 'react';
 import { Plus, Download, Search, Eye, FileEdit, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useSelector, useDispatch } from 'react-redux';
-import { addSubject } from '@/store/courseSlice';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Subjects = () => {
     const subjects = useSelector((state) => state.courses.subjects);
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({ name: '' });
 
     const filteredSubjects = subjects ? subjects.filter(subject =>
         subject.name.toLowerCase().includes(searchTerm.toLowerCase())
     ) : [];
-
-    const handleSave = (e) => {
-        e.preventDefault();
-        dispatch(addSubject({
-            ...formData,
-            totalQuestions: 0,
-            status: true,
-            createdAt: new Date().toLocaleDateString('en-GB'),
-            dateObj: new Date().toISOString()
-        }));
-        setIsModalOpen(false);
-        setFormData({ name: '' });
-    };
 
     return (
         <div className="w-full missing-demos space-y-6 relative">
@@ -36,7 +21,7 @@ const Subjects = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                 {/* Top Actions */}
                 <div className="flex justify-between items-center mb-6">
-                    <Button onClick={() => setIsModalOpen(true)} className="bg-[#0f172a] hover:bg-[#1e293b] text-white">
+                    <Button onClick={() => navigate('/dashboard/add-subject')} className="bg-[#0f172a] hover:bg-[#1e293b] text-white">
                         <Plus className="w-4 h-4 mr-2" />
                         Add Subject
                     </Button>
@@ -114,31 +99,6 @@ const Subjects = () => {
                 </div>
             </div>
 
-            {/* Add Subject Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                    <div className="bg-white w-full max-w-sm rounded-xl shadow-2xl p-6 relative">
-                        <button
-                            onClick={() => setIsModalOpen(false)}
-                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
-                        >
-                            <X size={20} />
-                        </button>
-
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">Add Subject</h2>
-                        <form onSubmit={handleSave} className="space-y-4">
-                            <div>
-                                <label className="text-sm font-bold text-gray-700">Subject Name</label>
-                                <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Computer Fundamentals" />
-                            </div>
-                            <div className="flex justify-end gap-3 mt-6">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button type="submit" className="bg-[#0f172a] text-white">Save</Button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

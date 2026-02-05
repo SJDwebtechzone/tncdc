@@ -134,7 +134,7 @@ export default function WebsiteStudyMaterialsPage() {
                         </button>
                         <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                             <Plus size={24} className="text-indigo-600" />
-                            Add Study Material
+                            Add New Material
                         </h2>
                         <form onSubmit={handleSave} className="space-y-4">
                             <div className="space-y-2">

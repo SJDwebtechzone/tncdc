@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, RotateCcw, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Plus, RotateCcw, ArrowLeft, Clock } from "lucide-react";
 
 export default function StaffLecturesPage() {
     const [view, setView] = useState('list');
@@ -10,64 +10,123 @@ export default function StaffLecturesPage() {
     if (view === 'add') {
         return (
             <div className="space-y-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <h1 className="text-2xl font-bold text-gray-800">Add Staff Lecture</h1>
-                    <Button
-                        onClick={() => setView('list')}
-                        className="bg-white/90 hover:bg-white text-gray-800 px-6 py-2 rounded-xl flex items-center gap-2 shadow-lg border-none"
-                    >
-                        <ArrowLeft size={18} />
-                        Back to Records
-                    </Button>
-                </div>
+                <div className="bg-white rounded-sm shadow-sm border border-gray-100 p-8">
+                    <div className="flex items-center justify-between mb-8 border-b pb-4">
+                        <h2 className="text-xl font-medium text-gray-800 tracking-tight">Add Lecture Record</h2>
+                        <Button
+                            variant="outline"
+                            onClick={() => setView('list')}
+                            className="h-8 text-[11px] font-medium text-white border-none bg-[#b9875a] hover:bg-[#a6764a] rounded-sm flex items-center gap-1.5 px-4 uppercase tracking-wider"
+                        >
+                            <ArrowLeft size={14} className="mr-1" /> Back to List
+                        </Button>
+                    </div>
 
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                    <form className="space-y-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Select Staff <span className="text-red-500">*</span></label>
-                                <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50">
-                                    <option>Choose Staff...</option>
+                    <form className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                            {/* Staff Selection */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">
+                                    Select Staff <span className="text-red-500">*</span>
+                                </label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white text-gray-400 font-sans">
+                                    <option>Select Staff Member</option>
                                 </select>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Lecture Date <span className="text-red-500">*</span></label>
-                                <Input type="date" required className="h-11 rounded-xl" />
+
+                            {/* Lecture Date */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">
+                                    Lecture Date <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <Input
+                                        type="date"
+                                        defaultValue="2026-02-05"
+                                        className="h-10 rounded-sm border-gray-200 bg-white text-xs focus:ring-1 focus:ring-blue-500"
+                                    />
+                                </div>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Subject <span className="text-red-500">*</span></label>
-                                <Input placeholder="Enter Subject" required className="h-11 rounded-xl" />
+
+                            {/* Subject */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">Subject</label>
+                                <Input
+                                    placeholder="e.g., Mathematics, Physics"
+                                    className="h-10 rounded-sm border-gray-200 bg-white text-xs focus:ring-1 focus:ring-blue-500"
+                                />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Batch <span className="text-red-500">*</span></label>
-                                <Input placeholder="Enter Batch Name" required className="h-11 rounded-xl" />
+
+                            {/* Batch/Class */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">Batch/Class</label>
+                                <Input
+                                    placeholder="e.g., Grade 10-A, Batch 2024"
+                                    className="h-10 rounded-sm border-gray-200 bg-white text-xs focus:ring-1 focus:ring-blue-500"
+                                />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Start Time <span className="text-red-500">*</span></label>
-                                <Input type="time" required className="h-11 rounded-xl" />
+
+                            {/* Start Time */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">Start Time</label>
+                                <div className="relative">
+                                    <Input
+                                        type="time"
+                                        className="h-10 rounded-sm border-gray-200 bg-white text-xs focus:ring-1 focus:ring-blue-500 pr-10"
+                                    />
+                                    <Clock size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                </div>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Duration (Minutes) <span className="text-red-500">*</span></label>
-                                <Input type="number" placeholder="60" required className="h-11 rounded-xl" />
+
+                            {/* End Time */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">End Time</label>
+                                <div className="relative">
+                                    <Input
+                                        type="time"
+                                        className="h-10 rounded-sm border-gray-200 bg-white text-xs focus:ring-1 focus:ring-blue-500 pr-10"
+                                    />
+                                    <Clock size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                </div>
+                                <p className="text-[10px] text-gray-400 mt-1 italic">Duration will be calculated automatically</p>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Lecture Type <span className="text-red-500">*</span></label>
-                                <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50">
-                                    <option>Normal</option>
+
+                            {/* Lecture Type */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">Lecture Type</label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white text-gray-700 font-sans">
+                                    <option>Regular Lecture</option>
                                     <option>Extra Class</option>
-                                    <option>Practical</option>
-                                    <option>Viva</option>
+                                    <option>Practical Session</option>
+                                    <option>Seminar/Guest Lecture</option>
                                 </select>
+                                <p className="text-[10px] text-gray-400 mt-1 italic">Extra lectures are counted separately for hybrid salary mode</p>
+                            </div>
+
+                            {/* Remarks */}
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider block">Remarks</label>
+                                <textarea
+                                    placeholder="Optional remarks or notes"
+                                    className="w-full h-20 rounded-sm border border-gray-200 p-3 text-xs focus:ring-1 focus:ring-blue-500 outline-none bg-white resize-none font-sans"
+                                />
                             </div>
                         </div>
 
-                        <div className="flex justify-end gap-4 pt-8 border-t border-gray-100">
-                            <Button type="button" variant="outline" onClick={() => setView('list')} className="px-10 h-11 border-gray-200">
-                                Cancel
+                        <div className="flex items-center gap-3 pt-6 border-t font-sans">
+                            <Button
+                                type="submit"
+                                className="bg-[#1e3a8a] hover:bg-[#1e40af] text-white px-8 h-10 rounded-sm text-[11px] font-bold flex items-center gap-2 shadow-sm border-none uppercase tracking-wide"
+                            >
+                                <Plus size={16} />
+                                Add Lecture
                             </Button>
-                            <Button type="submit" className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-10 h-11">
-                                <Plus size={18} className="mr-2" />
-                                Save Lecture
+                            <Button
+                                type="button"
+                                onClick={() => setView('list')}
+                                className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-8 h-10 rounded-sm text-[11px] font-bold border-none transition-colors uppercase tracking-wide flex items-center gap-2"
+                            >
+                                <span className="text-sm">×</span> Cancel
                             </Button>
                         </div>
                     </form>
@@ -79,10 +138,10 @@ export default function StaffLecturesPage() {
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <h1 className="text-2xl font-bold text-gray-800">Staff Lecture Records</h1>
+                <h1 className="text-2xl font-bold text-gray-800 font-sans tracking-tight">Staff Lecture Records</h1>
                 <Button
                     onClick={() => setView('add')}
-                    className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none transition-all transform hover:scale-105"
+                    className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none transition-all transform active:scale-95 shadow-lg"
                 >
                     <Plus size={18} />
                     Add Lecture

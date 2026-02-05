@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Filter, RotateCcw, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Plus, RotateCcw, ArrowLeft } from "lucide-react";
 
 export default function StaffLeavesPage() {
     const [view, setView] = useState('list');

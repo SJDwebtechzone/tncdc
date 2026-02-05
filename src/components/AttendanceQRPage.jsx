@@ -52,8 +52,8 @@ export default function AttendanceQRPage() {
                 <button
                     onClick={() => setScanMode('camera')}
                     className={`flex items-center gap-2 px-8 py-2.5 rounded-xl text-sm font-bold transition-all ${scanMode === 'camera'
-                            ? "bg-[#5c7cff] text-white shadow-lg shadow-blue-200"
-                            : "text-[#64748b] hover:bg-gray-50"
+                        ? "bg-[#5c7cff] text-white shadow-lg shadow-blue-200"
+                        : "text-[#64748b] hover:bg-gray-50"
                         }`}
                 >
                     <Camera size={18} />
@@ -62,8 +62,8 @@ export default function AttendanceQRPage() {
                 <button
                     onClick={() => setScanMode('usb')}
                     className={`flex items-center gap-2 px-8 py-2.5 rounded-xl text-sm font-bold transition-all ${scanMode === 'usb'
-                            ? "bg-[#5c7cff] text-white shadow-lg shadow-blue-200"
-                            : "text-[#64748b] hover:bg-gray-50"
+                        ? "bg-[#5c7cff] text-white shadow-lg shadow-blue-200"
+                        : "text-[#64748b] hover:bg-gray-50"
                         }`}
                 >
                     <Zap size={18} />

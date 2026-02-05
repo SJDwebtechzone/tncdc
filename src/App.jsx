@@ -16,10 +16,12 @@ import DesignationsPage from '@/components/DesignationsPage';
 import PlaceholderPage from '@/components/PlaceholderPage';
 import ExamGrade from '@/components/ExamGrade';
 import Subjects from '@/components/Subjects';
+import AddSubjectPage from '@/components/AddSubjectPage';
 import BirthdayListPage from '@/components/BirthdayListPage';
 import HelpSupportPage from '@/components/HelpSupportPage';
 import IdCardPrintPage from '@/components/IdCardPrintPage';
 import AdmissionsPage from '@/components/AdmissionsPage';
+import AddAdmissionPage from '@/components/AddAdmissionPage';
 
 import StudentWalletPage from '@/components/StudentWalletPage';
 import UpcomingInstallmentsPage from '@/components/UpcomingInstallmentsPage';
@@ -32,6 +34,7 @@ import LanguagesPage from '@/components/LanguagesPage';
 import CourseCategoriesPage from '@/components/CourseCategoriesPage';
 import CourseAwardCategoriesPage from '@/components/CourseAwardCategoriesPage';
 import ManageCoursesPage from '@/components/ManageCoursesPage';
+import AddCoursePage from '@/components/AddCoursePage';
 
 import CourseVideosPage from '@/components/CourseVideosPage';
 import CourseNotesPage from '@/components/CourseNotesPage';
@@ -40,6 +43,7 @@ import OnlineClassesPage from '@/components/OnlineClassesPage';
 import ManageBatchesPage from '@/components/ManageBatchesPage';
 
 import StudentListPage from '@/components/StudentListPage';
+import AddStudentPage from '@/components/AddStudentPage';
 import StudentEnquiriesPage from '@/components/StudentEnquiriesPage';
 import PopupsPage from '@/components/PopupsPage';
 import StudentNotificationsPage from '@/components/StudentNotificationsPage';
@@ -123,6 +127,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="exam-grade" element={<ExamGrade />} />
           <Route path="subjects" element={<Subjects />} />
+          <Route path="add-subject" element={<AddSubjectPage />} />
           <Route path="users/designations" element={<DesignationsPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="languages" element={<LanguagesPage />} />
@@ -134,6 +139,7 @@ function App() {
           <Route path="fees/wallet" element={<StudentWalletPage />} />
           <Route path="fees/wallet/transactions" element={<WalletTransactionsPage />} />
           <Route path="courses" element={<ManageCoursesPage />} />
+          <Route path="courses/add" element={<AddCoursePage />} />
           <Route path="course/videos" element={<CourseVideosPage />} />
           <Route path="course/notes" element={<CourseNotesPage />} />
           <Route path="course/reviews" element={<CourseReviewsPage />} />
@@ -143,7 +149,9 @@ function App() {
           <Route path="students/help-support" element={<HelpSupportPage />} />
           <Route path="students/id-card-print" element={<IdCardPrintPage />} />
           <Route path="students/admissions" element={<AdmissionsPage />} />
+          <Route path="students/admissions/add" element={<AddAdmissionPage />} />
           <Route path="students/list" element={<StudentListPage />} />
+          <Route path="students/list/add" element={<AddStudentPage />} />
           <Route path="students/enquiries" element={<StudentEnquiriesPage />} />
           <Route path="students/enquiry-followups" element={<EnquiriesFollowUpsPage />} />
           <Route path="students/popups" element={<PopupsPage />} />

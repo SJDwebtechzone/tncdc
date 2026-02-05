@@ -2,79 +2,135 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Search, RotateCcw, ArrowLeft, Download, Filter, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { Plus, Search, RotateCcw, Download, Filter, TrendingUp, TrendingDown, DollarSign, X, ArrowLeft, Save } from "lucide-react";
 
 export default function ExpensesPage() {
-    const [view, setView] = useState('list');
+    const [view, setView] = useState('list'); // 'list' or 'add'
 
     if (view === 'add') {
         return (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-in fade-in duration-300">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <h1 className="text-2xl font-bold text-gray-800">Add Expense</h1>
+                    <h1 className="text-[20px] font-bold text-gray-800 font-sans tracking-tight">Add Expense</h1>
                     <Button
                         onClick={() => setView('list')}
-                        className="bg-white/90 hover:bg-white text-gray-800 px-6 py-2 rounded-xl flex items-center gap-2 shadow-lg border-none"
+                        className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-6 h-9 rounded-sm flex items-center gap-2 border-none transition-all shadow-md font-sans text-xs font-bold uppercase tracking-wider"
                     >
-                        <ArrowLeft size={18} />
+                        <ArrowLeft size={16} />
                         Back to List
                     </Button>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                <div className="bg-white rounded-sm shadow-sm border border-gray-100 p-10 font-sans">
                     <form className="space-y-8">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
+                            {/* Expense Type */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Expense Type <span className="text-red-500">*</span></label>
-                                <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Expense Type <span className="text-red-500">*</span>
+                                </label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-500 transition-all cursor-pointer">
                                     <option>Select Expense Type</option>
                                 </select>
                             </div>
+
+                            {/* Expense Sub Type */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Expense Sub Type <span className="text-red-500">*</span></label>
-                                <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Expense Sub Type <span className="text-red-500">*</span>
+                                </label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-500 transition-all cursor-pointer">
                                     <option>Select Expense Type First</option>
                                 </select>
                             </div>
+
+                            {/* Receiver Name */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Receiver Name</label>
-                                <Input placeholder="Enter Receiver Name" className="h-11 rounded-xl" />
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Receiver Name
+                                </label>
+                                <Input
+                                    placeholder="Enter Receiver Name"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e3a8a] transition-all"
+                                />
                             </div>
+
+                            {/* Issue Person Name */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Issue Person Name</label>
-                                <Input placeholder="Enter Issue Person Name" className="h-11 rounded-xl" />
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Issue Person Name
+                                </label>
+                                <Input
+                                    placeholder="Enter Issue Person Name"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e3a8a] transition-all"
+                                />
                             </div>
+
+                            {/* Amount */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Amount <span className="text-red-500">*</span></label>
-                                <Input type="number" placeholder="Enter Amount" required className="h-11 rounded-xl" />
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Amount <span className="text-red-500">*</span>
+                                </label>
+                                <Input
+                                    type="number"
+                                    placeholder="Enter Amount"
+                                    required
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e3a8a] transition-all"
+                                />
                             </div>
+
+                            {/* Payment Mode */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Payment Mode <span className="text-red-500">*</span></label>
-                                <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Expense Type <span className="text-red-500">*</span>
+                                </label>
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-500 transition-all cursor-pointer">
                                     <option>Select Payment Mode</option>
-                                    <option>Cash</option>
-                                    <option>Online</option>
-                                    <option>Cheque</option>
                                 </select>
                             </div>
-                            <div className="space-y-2 md:col-span-1">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Date <span className="text-red-500">*</span></label>
-                                <Input type="date" required className="h-11 rounded-xl" />
+
+                            {/* Date */}
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                    Date
+                                </label>
+                                <div className="relative">
+                                    <Input
+                                        type="text"
+                                        placeholder="dd-mm-yyyy"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e3a8a] transition-all pr-10"
+                                    />
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        {/* Remark */}
                         <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-600 uppercase">Remark</label>
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
+                                Remark
+                            </label>
                             <textarea
-                                className="w-full h-32 rounded-xl border border-gray-200 p-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50/50 resize-none"
                                 placeholder="Enter your remark"
+                                className="w-full h-32 rounded-sm border border-gray-200 p-4 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none resize-none bg-white transition-all shadow-sm"
                             />
                         </div>
 
-                        <div className="flex justify-start gap-4 pt-8 border-t border-gray-100">
-                            <Button type="submit" className="bg-[#1e293b] hover:bg-[#0f172a] text-white px-10 h-11">
+                        {/* Footer Buttons */}
+                        <div className="flex items-center gap-3 pt-6 border-t border-gray-50">
+                            <Button
+                                type="submit"
+                                className="bg-[#1e3a8a] hover:bg-[#152e6e] text-white px-10 h-9 rounded-sm text-[11px] font-bold uppercase tracking-widest border-none transition-all shadow-md active:scale-95 flex items-center justify-center p-0"
+                            >
                                 Submit
                             </Button>
-                            <Button type="button" variant="outline" onClick={() => setView('list')} className="px-10 h-11 border-gray-200 bg-[#c08457] hover:bg-[#a66d43] text-white border-none">
+                            <Button
+                                type="button"
+                                onClick={() => setView('list')}
+                                className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-10 h-9 rounded-sm text-[11px] font-bold uppercase tracking-widest border-none transition-all shadow-md active:scale-95 flex items-center justify-center p-0"
+                            >
                                 Cancel
                             </Button>
                         </div>
@@ -85,13 +141,13 @@ export default function ExpensesPage() {
     }
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <h1 className="text-2xl font-bold text-gray-800">Financial Management</h1>
+                <h1 className="text-2xl font-bold text-gray-800 font-sans tracking-tight">Financial Management</h1>
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-sans">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-green-500 border-x border-b border-gray-100 flex items-center justify-between group hover:shadow-md transition-all">
                     <div>
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Income</p>
@@ -130,19 +186,19 @@ export default function ExpensesPage() {
 
             <div className="space-y-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 className="text-xl font-bold text-gray-800">Expense Records</h2>
-                        <p className="text-sm text-gray-500 font-medium italic">Manage and track all your business expenses</p>
+                    <div className="font-sans">
+                        <h2 className="text-xl font-bold text-gray-800 tracking-tight">Expense Records</h2>
+                        <p className="text-[11px] text-gray-500 font-bold uppercase tracking-widest mt-1 opacity-70">Manage and track your business expenditures</p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 font-sans">
                         <Button
                             onClick={() => setView('add')}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none shadow-md"
+                            className="bg-[#1e3a8a] hover:bg-[#1a365d] text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none shadow-md transition-all active:scale-95 uppercase text-xs font-bold tracking-wider"
                         >
                             <Plus size={18} />
                             Add New Expense
                         </Button>
-                        <Button className="bg-[#1e463a] hover:bg-[#153229] text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none shadow-md">
+                        <Button className="bg-[#1e463a] hover:bg-[#153229] text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none shadow-md transition-all active:scale-95 uppercase text-xs font-bold tracking-wider">
                             <Download size={18} />
                             Export
                         </Button>
@@ -150,84 +206,86 @@ export default function ExpensesPage() {
                 </div>
 
                 {/* Filters */}
-                <div className="bg-[#f8fafc] p-6 rounded-2xl border border-gray-100 space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="bg-[#f8fafc] p-8 rounded-sm border border-gray-100 space-y-6 font-sans">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Search</label>
-                            <Input placeholder="Receipt, name, remark..." className="h-11 bg-white border-gray-200 rounded-xl text-sm" />
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block ml-1">Search Keywords</label>
+                            <Input placeholder="Receipt, name, remark..." className="h-10 bg-white border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1e3a8a]" />
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Expense Type</label>
-                            <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block ml-1">Expense Type</label>
+                            <select className="w-full h-10 rounded-sm border border-gray-200 px-4 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-600 transition-all cursor-pointer">
                                 <option>All Types</option>
                             </select>
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Sub Type</label>
-                            <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white font-medium italic text-gray-400">
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block ml-1">Sub Type</label>
+                            <select className="w-full h-10 rounded-sm border border-gray-200 px-4 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-400 italic">
                                 <option>All Sub Types</option>
                             </select>
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">Payment Mode</label>
-                            <select className="w-full h-11 rounded-xl border border-gray-200 px-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block ml-1">Payment Mode</label>
+                            <select className="w-full h-10 rounded-sm border border-gray-200 px-4 text-xs focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white text-gray-600 transition-all cursor-pointer">
                                 <option>All Modes</option>
                             </select>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">From Date</label>
-                            <Input type="date" className="h-11 bg-white border-gray-200 rounded-xl text-sm" />
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block ml-1">From Date</label>
+                            <Input type="date" className="h-10 bg-white border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1e3a8a]" />
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1">To Date</label>
-                            <Input type="date" className="h-11 bg-white border-gray-200 rounded-xl text-sm" />
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block ml-1">To Date</label>
+                            <Input type="date" className="h-10 bg-white border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1e3a8a]" />
                         </div>
                         <div className="md:col-span-1">
-                            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white h-11 rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm">
+                            <Button className="w-full bg-[#1e3a8a] hover:bg-[#1a365d] text-white h-10 rounded-sm font-bold flex items-center justify-center gap-2 shadow-md transition-all active:scale-95 uppercase text-xs tracking-widest p-0">
                                 <Filter size={16} />
-                                Apply Filters
+                                Filter Records
                             </Button>
                         </div>
                         <div className="md:col-span-1">
-                            <Button variant="outline" className="w-full border-orange-200 text-orange-600 hover:bg-orange-50 h-11 rounded-xl font-bold bg-orange-50/30">
-                                Reset All
+                            <Button variant="outline" className="w-full border-orange-200 text-[#b9875a] hover:bg-orange-50 h-10 rounded-sm font-bold bg-orange-50/10 uppercase text-xs tracking-widest p-0 transition-all active:scale-95">
+                                Reset Filters
                             </Button>
                         </div>
                     </div>
                 </div>
 
                 {/* Table */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden font-sans">
                     <div className="overflow-x-auto">
                         <Table>
                             <TableHeader>
-                                <TableRow className="bg-gray-50/50 hover:bg-gray-50/50 border-b border-gray-200">
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5 px-4">#</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Receipt No.</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Type</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Sub Type</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Receiver Name</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Issued By</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Amount</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Payment Mode</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Date</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5">Remark</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[10px] uppercase py-5 text-center px-4">Actions</TableHead>
+                                <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-200">
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 px-6 tracking-wider border-r border-gray-100">#</TableHead>
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100">Receipt No.</TableHead>
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100">Expense Type</TableHead>
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100">Person Details</TableHead>
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100 text-right">Amount</TableHead>
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100 text-center">Mode</TableHead>
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 tracking-wider border-r border-gray-100 text-center">Date</TableHead>
+                                    <TableHead className="font-bold text-gray-700 text-[11px] uppercase py-5 text-center tracking-wider">Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell colSpan={11} className="py-24 text-center">
-                                        <div className="flex flex-col items-center justify-center space-y-4">
-                                            <p className="text-xl font-bold text-gray-400 italic">No Expenses Found</p>
-                                            <p className="text-sm text-gray-400 font-medium italic">Start tracking your business expenses by adding your first expense record.</p>
+                                    <TableCell colSpan={8} className="py-32 text-center">
+                                        <div className="flex flex-col items-center justify-center space-y-6">
+                                            <div className="bg-gray-50 p-6 rounded-3xl">
+                                                <DollarSign size={48} className="text-gray-300" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <p className="text-sm font-bold text-gray-400 uppercase tracking-[0.2em]">No Expenses Recorded</p>
+                                                <p className="text-[11px] text-gray-300 font-medium italic">Start tracking your business expenditures today</p>
+                                            </div>
                                             <Button
                                                 onClick={() => setView('add')}
-                                                className="bg-blue-600 hover:bg-blue-700 text-white px-8 h-12 rounded-xl font-bold shadow-lg mt-4"
+                                                className="bg-[#1e3a8a] hover:bg-[#1a365d] text-white px-10 h-10 rounded-sm font-bold shadow-lg mt-4 uppercase text-xs tracking-widest transition-all active:scale-95 p-0"
                                             >
-                                                <Plus size={20} className="mr-2" />
+                                                <Plus size={18} className="mr-2" />
                                                 Add Your First Expense
                                             </Button>
                                         </div>
