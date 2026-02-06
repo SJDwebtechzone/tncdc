@@ -93,7 +93,7 @@ export default function WebsiteAddPostPage() {
                                 value={formData.title}
                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
                                 placeholder="Enter post title"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
 
@@ -107,7 +107,7 @@ export default function WebsiteAddPostPage() {
                                 value={formData.subheading}
                                 onChange={e => setFormData({ ...formData, subheading: e.target.value })}
                                 placeholder="Enter post subheading"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
 
@@ -192,7 +192,7 @@ export default function WebsiteAddPostPage() {
                             <Button
                                 type="button"
                                 onClick={addImageField}
-                                className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm px-6 h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider"
+                                className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm px-6 h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider"
                             >
                                 <Plus size={14} /> Add Another Image
                             </Button>
@@ -212,7 +212,7 @@ export default function WebsiteAddPostPage() {
                                                 value={tag}
                                                 onChange={e => handleTagChange(index, e.target.value)}
                                                 placeholder="Enter tag"
-                                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                             />
                                         </div>
                                         <Button
@@ -228,7 +228,7 @@ export default function WebsiteAddPostPage() {
                             <Button
                                 type="button"
                                 onClick={addTagField}
-                                className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm px-6 h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider"
+                                className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm px-6 h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider"
                             >
                                 <Plus size={14} /> Add Another Tag
                             </Button>
@@ -257,3 +257,9 @@ export default function WebsiteAddPostPage() {
         </div>
     );
 }
+
+
+
+
+
+

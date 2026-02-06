@@ -80,7 +80,7 @@ export default function WebsiteBannersPage() {
                                 value={formData.badgeText}
                                 onChange={e => setFormData({ ...formData, badgeText: e.target.value })}
                                 placeholder="The Leader in Online Learning"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
                     </div>
@@ -94,7 +94,7 @@ export default function WebsiteBannersPage() {
                             value={formData.badgeIcon}
                             onChange={e => setFormData({ ...formData, badgeIcon: e.target.value })}
                             placeholder="👤"
-                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] max-w-sm"
+                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] max-w-sm"
                         />
                         <p className="text-[9px] text-gray-400 italic px-1 font-bold">
                             Enter an emoji (e.g., 👤, ⭐, 🎓).
@@ -110,7 +110,7 @@ export default function WebsiteBannersPage() {
                             value={formData.title}
                             onChange={e => setFormData({ ...formData, title: e.target.value })}
                             placeholder="Build The Skills <br /> To Drive Your Career."
-                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                         />
                         <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;br /&gt; for line breaks.</p>
                     </div>
@@ -124,7 +124,7 @@ export default function WebsiteBannersPage() {
                             value={formData.description}
                             onChange={e => setFormData({ ...formData, description: e.target.value })}
                             placeholder="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. <strong>Velit officia consequat.</strong>"
-                            className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                            className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                         />
                         <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;strong&gt; for bold text.</p>
                     </div>
@@ -143,3 +143,9 @@ export default function WebsiteBannersPage() {
         </div>
     );
 }
+
+
+
+
+
+

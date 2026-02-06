@@ -157,7 +157,7 @@ export default function WebsiteSampleCertificatesPage() {
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                                     placeholder="Enter certificate name"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter a descriptive name for the certificate.</p>
                             </div>
@@ -207,3 +207,9 @@ export default function WebsiteSampleCertificatesPage() {
         </div>
     );
 }
+
+
+
+
+
+

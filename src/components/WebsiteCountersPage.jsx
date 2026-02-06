@@ -76,7 +76,7 @@ export default function WebsiteCountersPage() {
                                 resetForm();
                                 setIsModalOpen(true);
                             }}
-                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                            className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
                         >
                             <Plus size={16} /> Add New Counter
                         </Button>
@@ -90,12 +90,12 @@ export default function WebsiteCountersPage() {
                                 </div>
                                 <Input
                                     placeholder="Search by subtitle..."
-                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a]"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
                                 />
                             </div>
-                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                            <Button className="bg-[#0f172a] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
                                 Search
                             </Button>
                             <Button
@@ -142,7 +142,7 @@ export default function WebsiteCountersPage() {
                                                     <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
                                                     <TableCell className="py-4 px-6 text-center">
                                                         <div className="flex items-center justify-center gap-2">
-                                                            <button onClick={() => handleEditCounter(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                            <button onClick={() => handleEditCounter(row)} className="h-8 w-8 text-[#0f172a] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
                                                                 <Edit2 size={14} />
                                                             </button>
                                                             <button onClick={() => handleDeleteCounter(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
@@ -199,7 +199,7 @@ export default function WebsiteCountersPage() {
                                     value={formData.value}
                                     onChange={e => setFormData({ ...formData, value: e.target.value })}
                                     placeholder="500"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -210,7 +210,7 @@ export default function WebsiteCountersPage() {
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                                     placeholder="Learners & counting"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -236,3 +236,9 @@ export default function WebsiteCountersPage() {
         </div>
     );
 }
+
+
+
+
+
+

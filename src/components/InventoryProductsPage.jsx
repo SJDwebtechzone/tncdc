@@ -235,3 +235,9 @@ export default function InventoryProductsPage() {
         </div>
     );
 }
+
+
+
+
+
+

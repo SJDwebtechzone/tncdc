@@ -281,7 +281,7 @@ export default function WebsitePaymentDetailsPage() {
                                                     value={formData.accountHolder}
                                                     onChange={e => setFormData({ ...formData, accountHolder: e.target.value })}
                                                     placeholder="Enter the account holder's full name"
-                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                                 />
                                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter the account holder's full name</p>
                                             </div>
@@ -292,7 +292,7 @@ export default function WebsitePaymentDetailsPage() {
                                                     value={formData.bankName}
                                                     onChange={e => setFormData({ ...formData, bankName: e.target.value })}
                                                     placeholder="Enter the bank name"
-                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                                 />
                                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter the bank name</p>
                                             </div>
@@ -303,7 +303,7 @@ export default function WebsitePaymentDetailsPage() {
                                                     value={formData.accountNumber}
                                                     onChange={e => setFormData({ ...formData, accountNumber: e.target.value })}
                                                     placeholder="Enter the bank account number"
-                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                                 />
                                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter the bank account number</p>
                                             </div>
@@ -314,7 +314,7 @@ export default function WebsitePaymentDetailsPage() {
                                                     value={formData.ifscCode}
                                                     onChange={e => setFormData({ ...formData, ifscCode: e.target.value })}
                                                     placeholder="Enter the IFSC code"
-                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                                 />
                                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter the IFSC code</p>
                                             </div>
@@ -325,7 +325,7 @@ export default function WebsitePaymentDetailsPage() {
                                                     value={formData.branchName || ''}
                                                     onChange={e => setFormData({ ...formData, branchName: e.target.value })}
                                                     placeholder="Enter the branch name"
-                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                                 />
                                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter the branch name</p>
                                             </div>
@@ -345,7 +345,7 @@ export default function WebsitePaymentDetailsPage() {
                                                 value={formData.upiId}
                                                 onChange={e => setFormData({ ...formData, upiId: e.target.value })}
                                                 placeholder="example@upi"
-                                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                             />
                                             <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter your UPI ID (e.g., yourname@paytm, yourname@googlepay)</p>
                                         </div>
@@ -423,3 +423,9 @@ export default function WebsitePaymentDetailsPage() {
         </div>
     );
 }
+
+
+
+
+
+

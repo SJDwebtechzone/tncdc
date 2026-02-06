@@ -73,7 +73,7 @@ export default function WebsiteAddJobPage() {
                                 value={formData.title}
                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
                                 placeholder="e.g. Software Engineer"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter the job title (e.g., Software Engineer).</p>
                         </div>
@@ -88,7 +88,7 @@ export default function WebsiteAddJobPage() {
                                 value={formData.description}
                                 onChange={e => setFormData({ ...formData, description: e.target.value })}
                                 placeholder="Provide a detailed description of the job."
-                                className="min-h-[150px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] resize-none"
+                                className="min-h-[150px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] resize-none"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold lowercase">Provide a detailed description of the job.</p>
                         </div>
@@ -125,7 +125,7 @@ export default function WebsiteAddJobPage() {
                                 value={formData.salary}
                                 onChange={e => setFormData({ ...formData, salary: e.target.value })}
                                 placeholder="e.g., 20,000 - 30,000"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold lowercase">Enter the salary range (optional).</p>
                         </div>
@@ -140,7 +140,7 @@ export default function WebsiteAddJobPage() {
                                 value={formData.companyName}
                                 onChange={e => setFormData({ ...formData, companyName: e.target.value })}
                                 placeholder="Enter Company Name"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold lowercase">Enter the name of the company offering the job.</p>
                         </div>
@@ -177,7 +177,7 @@ export default function WebsiteAddJobPage() {
                                 type="date"
                                 value={formData.deadline}
                                 onChange={e => setFormData({ ...formData, deadline: e.target.value })}
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold lowercase">Select the last date for applications (optional).</p>
                         </div>
@@ -192,7 +192,7 @@ export default function WebsiteAddJobPage() {
                                     id="isActive"
                                     checked={formData.status}
                                     onCheckedChange={(checked) => setFormData({ ...formData, status: checked })}
-                                    className="border-gray-300 data-[state=checked]:bg-[#1a237e] data-[state=checked]:border-[#1a237e]"
+                                    className="border-gray-300 data-[state=checked]:bg-[#0f172a] data-[state=checked]:border-[#0f172a]"
                                 />
                                 <Label htmlFor="isActive" className="text-[12px] font-bold text-gray-700 cursor-pointer">Is Active</Label>
                             </div>
@@ -221,3 +221,9 @@ export default function WebsiteAddJobPage() {
         </div>
     );
 }
+
+
+
+
+
+

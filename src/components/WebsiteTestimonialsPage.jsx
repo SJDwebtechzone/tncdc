@@ -84,7 +84,7 @@ export default function WebsiteTestimonialsPage() {
                                 <Input
                                     value={settingsForm.subtitle}
                                     onChange={e => setSettingsForm({ ...settingsForm, subtitle: e.target.value })}
-                                    className="h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e] bg-gray-50/20"
+                                    className="h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a] bg-gray-50/20"
                                     placeholder="EDUCATION FOR EVERYONE"
                                 />
                             </div>
@@ -93,7 +93,7 @@ export default function WebsiteTestimonialsPage() {
                                 <Input
                                     value={settingsForm.title}
                                     onChange={e => setSettingsForm({ ...settingsForm, title: e.target.value })}
-                                    className="h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e] bg-gray-50/20"
+                                    className="h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a] bg-gray-50/20"
                                     placeholder="People like history education..."
                                 />
                                 <p className="text-[10px] text-gray-400 italic px-1 mt-1">You can use &lt;br /&gt; for line breaks.</p>
@@ -102,7 +102,7 @@ export default function WebsiteTestimonialsPage() {
                         <div className="mt-6">
                             <Button
                                 onClick={handleUpdateSettings}
-                                className="bg-[#1a237e] hover:bg-[#151c63] text-white px-6 h-9 rounded-sm font-bold flex items-center gap-2 shadow-sm transition-all border-none uppercase tracking-wider text-[11px]"
+                                className="bg-[#0f172a] hover:bg-[#151c63] text-white px-6 h-9 rounded-sm font-bold flex items-center gap-2 shadow-sm transition-all border-none uppercase tracking-wider text-[11px]"
                             >
                                 <Check size={14} />
                                 Update Section Settings
@@ -123,7 +123,7 @@ export default function WebsiteTestimonialsPage() {
                                 setFormData({ name: '', image: '', role: '', institute: '', content: '' });
                                 setIsModalOpen(true);
                             }}
-                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                            className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
                         >
                             <Plus size={16} /> Add New Testimonial
                         </Button>
@@ -137,12 +137,12 @@ export default function WebsiteTestimonialsPage() {
                                 </div>
                                 <Input
                                     placeholder="Search by name or company..."
-                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a]"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
                                 />
                             </div>
-                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                            <Button className="bg-[#0f172a] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
                                 Search
                             </Button>
                             <Button
@@ -193,7 +193,7 @@ export default function WebsiteTestimonialsPage() {
                                                     <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
                                                     <TableCell className="py-4 px-6 text-center">
                                                         <div className="flex items-center justify-center gap-2">
-                                                            <button onClick={() => handleEditTestimonial(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                            <button onClick={() => handleEditTestimonial(row)} className="h-8 w-8 text-[#0f172a] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
                                                                 <Edit2 size={14} />
                                                             </button>
                                                             <button onClick={() => handleDeleteTestimonial(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
@@ -231,7 +231,7 @@ export default function WebsiteTestimonialsPage() {
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                                     placeholder="Client Name"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -259,7 +259,7 @@ export default function WebsiteTestimonialsPage() {
                                     value={formData.role}
                                     onChange={e => setFormData({ ...formData, role: e.target.value })}
                                     placeholder="Client Role"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -269,7 +269,7 @@ export default function WebsiteTestimonialsPage() {
                                     value={formData.institute}
                                     onChange={e => setFormData({ ...formData, institute: e.target.value })}
                                     placeholder="Institute Name"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -279,7 +279,7 @@ export default function WebsiteTestimonialsPage() {
                                     required
                                     value={formData.content}
                                     onChange={e => setFormData({ ...formData, content: e.target.value })}
-                                    className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                    className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                                     placeholder="Testimonial Text"
                                 />
                             </div>
@@ -306,3 +306,9 @@ export default function WebsiteTestimonialsPage() {
         </div>
     );
 }
+
+
+
+
+
+

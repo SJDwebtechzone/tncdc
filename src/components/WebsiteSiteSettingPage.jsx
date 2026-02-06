@@ -50,7 +50,7 @@ export default function WebsiteSiteSettingPage() {
                                     name="headerType"
                                     checked={formData.headerType === 'logo'}
                                     onChange={() => setFormData({ ...formData, headerType: 'logo' })}
-                                    className="w-4 h-4 text-[#1a237e] border-gray-300 focus:ring-[#1a237e]"
+                                    className="w-4 h-4 text-[#0f172a] border-gray-300 focus:ring-[#0f172a]"
                                 />
                                 <span className="text-[13px] font-medium text-gray-700">Logo</span>
                             </label>
@@ -60,7 +60,7 @@ export default function WebsiteSiteSettingPage() {
                                     name="headerType"
                                     checked={formData.headerType === 'banner'}
                                     onChange={() => setFormData({ ...formData, headerType: 'banner' })}
-                                    className="w-4 h-4 text-[#1a237e] border-gray-300 focus:ring-[#1a237e]"
+                                    className="w-4 h-4 text-[#0f172a] border-gray-300 focus:ring-[#0f172a]"
                                 />
                                 <span className="text-[13px] font-medium text-gray-700">Banner Image</span>
                             </label>
@@ -124,7 +124,7 @@ export default function WebsiteSiteSettingPage() {
                                 <Input
                                     value={formData.playStoreLink}
                                     onChange={e => setFormData({ ...formData, playStoreLink: e.target.value })}
-                                    className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e] placeholder:italic"
+                                    className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#0f172a] placeholder:italic"
                                     placeholder="https://play.google.com/store/apps/details?id=com.example.app"
                                 />
                                 <p className="text-[10px] text-gray-400 italic">Optional. Enter a valid URL.</p>
@@ -134,7 +134,7 @@ export default function WebsiteSiteSettingPage() {
                                 <Input
                                     value={formData.appStoreLink}
                                     onChange={e => setFormData({ ...formData, appStoreLink: e.target.value })}
-                                    className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e] placeholder:italic"
+                                    className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#0f172a] placeholder:italic"
                                     placeholder="https://www.apple.com/app-store/"
                                 />
                                 <p className="text-[10px] text-gray-400 italic">Optional. Enter a valid URL.</p>
@@ -149,7 +149,7 @@ export default function WebsiteSiteSettingPage() {
                             <div className="space-y-2">
                                 <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Primary Color <span className="text-red-500">*</span></label>
                                 <div className="flex h-10 w-full rounded-sm border border-gray-200 overflow-hidden shadow-sm">
-                                    <div className="flex items-center px-4 bg-[#1a237e] text-white text-[10px] font-bold w-24">
+                                    <div className="flex items-center px-4 bg-[#0f172a] text-white text-[10px] font-bold w-24">
                                         {formData.primaryColor || '#FF5733'}
                                     </div>
                                     <div className="flex-1" style={{ backgroundColor: formData.primaryColor || '#FF5733' }}></div>
@@ -178,7 +178,7 @@ export default function WebsiteSiteSettingPage() {
                                     <Input
                                         value={entry}
                                         onChange={(e) => updateMarquee(index, e.target.value)}
-                                        className="flex-1 h-10 bg-white border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                        className="flex-1 h-10 bg-white border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#0f172a]"
                                         placeholder="Enter marquee text..."
                                     />
                                     <Button
@@ -193,7 +193,7 @@ export default function WebsiteSiteSettingPage() {
                             <div className="pt-2">
                                 <Button
                                     onClick={addMarquee}
-                                    className="bg-[#1a237e] hover:bg-[#151c63] text-white h-9 px-6 rounded-sm font-bold flex items-center gap-2 transition-all border-none text-[10px] uppercase tracking-wider"
+                                    className="bg-[#0f172a] hover:bg-[#151c63] text-white h-9 px-6 rounded-sm font-bold flex items-center gap-2 transition-all border-none text-[10px] uppercase tracking-wider"
                                 >
                                     <Plus size={14} />
                                     Add New Entry
@@ -205,7 +205,7 @@ export default function WebsiteSiteSettingPage() {
                     <div className="pt-8 border-t border-gray-100 flex justify-start">
                         <Button
                             onClick={handleUpdate}
-                            className="bg-[#ebca52] hover:bg-[#d9b942] text-[#1a237e] h-10 px-12 rounded-sm font-bold uppercase tracking-wider transition-all border-none flex items-center gap-2 text-xs shadow-sm"
+                            className="bg-[#ebca52] hover:bg-[#d9b942] text-[#0f172a] h-10 px-12 rounded-sm font-bold uppercase tracking-wider transition-all border-none flex items-center gap-2 text-xs shadow-sm"
                         >
                             Update All Settings
                         </Button>
@@ -216,3 +216,9 @@ export default function WebsiteSiteSettingPage() {
         </div>
     );
 }
+
+
+
+
+
+

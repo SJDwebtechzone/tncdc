@@ -12,9 +12,9 @@ const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
         role="switch"
         aria-checked={checked}
         onClick={() => onCheckedChange(!checked)}
-        className={`relative inline-flex h-5 w-9 items-center rounded-full border-2 transition-colors focus-visible:outline-none ${checked ? 'bg-white border-[#1a237e]' : 'bg-gray-200 border-transparent'}`}
+        className={`relative inline-flex h-5 w-9 items-center rounded-full border-2 transition-colors focus-visible:outline-none ${checked ? 'bg-white border-[#0f172a]' : 'bg-gray-200 border-transparent'}`}
     >
-        <span className={`pointer-events-none block h-4 w-4 rounded-full shadow-lg transition-transform ${checked ? 'translate-x-4 bg-[#1a237e]' : 'translate-x-0.5 bg-white'}`} />
+        <span className={`pointer-events-none block h-4 w-4 rounded-full shadow-lg transition-transform ${checked ? 'translate-x-4 bg-[#0f172a]' : 'translate-x-0.5 bg-white'}`} />
     </button>
 )
 
@@ -94,7 +94,7 @@ export default function WebsiteMobileBannersPage() {
                                 resetForm();
                                 setIsModalOpen(true);
                             }}
-                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                            className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
                         >
                             <Plus size={16} /> Add New Banner
                         </Button>
@@ -108,12 +108,12 @@ export default function WebsiteMobileBannersPage() {
                                 </div>
                                 <Input
                                     placeholder="Search by title..."
-                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a]"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
                                 />
                             </div>
-                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                            <Button className="bg-[#0f172a] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
                                 Search
                             </Button>
                             <Button
@@ -170,7 +170,7 @@ export default function WebsiteMobileBannersPage() {
                                                     <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
                                                     <TableCell className="py-4 px-6 text-center">
                                                         <div className="flex items-center justify-center gap-2">
-                                                            <button onClick={() => handleEditBanner(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                            <button onClick={() => handleEditBanner(row)} className="h-8 w-8 text-[#0f172a] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
                                                                 <Edit2 size={14} />
                                                             </button>
                                                             <button onClick={() => handleDeleteBanner(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
@@ -208,7 +208,7 @@ export default function WebsiteMobileBannersPage() {
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
                                     placeholder="Banner Title"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -237,7 +237,7 @@ export default function WebsiteMobileBannersPage() {
                                     value={formData.type}
                                     onChange={e => setFormData({ ...formData, type: e.target.value })}
                                     placeholder="Select Type"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -247,7 +247,7 @@ export default function WebsiteMobileBannersPage() {
                                     type="number"
                                     value={formData.order}
                                     onChange={e => setFormData({ ...formData, order: e.target.value })}
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -257,7 +257,7 @@ export default function WebsiteMobileBannersPage() {
                                     id="active-mobile"
                                     checked={formData.status}
                                     onChange={e => setFormData({ ...formData, status: e.target.checked })}
-                                    className="w-4 h-4 rounded border-gray-300 text-[#1a237e] focus:ring-[#1a237e]"
+                                    className="w-4 h-4 rounded border-gray-300 text-[#0f172a] focus:ring-[#0f172a]"
                                 />
                                 <label htmlFor="active-mobile" className="text-[11px] font-bold text-gray-600 uppercase tracking-widest cursor-pointer">Active</label>
                             </div>
@@ -284,3 +284,9 @@ export default function WebsiteMobileBannersPage() {
         </div>
     );
 }
+
+
+
+
+
+

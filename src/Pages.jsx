@@ -80,3 +80,4 @@ export const VerificationPage = () => <PageLayout title="Student Verification" /
 export const LoginPage = () => <Login />;
 
 export default Home;
+

@@ -241,3 +241,9 @@ const AddSubjectPage = () => {
 };
 
 export default AddSubjectPage;
+
+
+
+
+
+

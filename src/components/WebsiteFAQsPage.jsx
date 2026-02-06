@@ -115,7 +115,7 @@ export default function WebsiteFAQsPage() {
                                 </div>
                                 <Button
                                     onClick={() => handleUpdateSettings(1)}
-                                    className="bg-[#1a237e] hover:bg-[#151c63] text-white w-full h-9 rounded-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all border-none uppercase tracking-wider text-[11px]"
+                                    className="bg-[#0f172a] hover:bg-[#151c63] text-white w-full h-9 rounded-sm font-bold flex items-center justify-center gap-2 shadow-sm transition-all border-none uppercase tracking-wider text-[11px]"
                                 >
                                     <Upload size={14} />
                                     Update Banner 1
@@ -174,7 +174,7 @@ export default function WebsiteFAQsPage() {
                                 setFormData({ question: '', answer: '', status: true });
                                 setIsModalOpen(true);
                             }}
-                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                            className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
                         >
                             <Plus size={16} /> Add New Faq
                         </Button>
@@ -188,12 +188,12 @@ export default function WebsiteFAQsPage() {
                                 </div>
                                 <Input
                                     placeholder="Search by question or answer..."
-                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a]"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
                                 />
                             </div>
-                            <Button className="bg-[#f8fafc] hover:bg-gray-100 text-[#1a237e] border border-blue-200 h-10 px-16 rounded-sm font-bold transition-all uppercase tracking-wider text-xs">
+                            <Button className="bg-[#f8fafc] hover:bg-gray-100 text-[#0f172a] border border-blue-200 h-10 px-16 rounded-sm font-bold transition-all uppercase tracking-wider text-xs">
                                 Search
                             </Button>
                             <Button
@@ -234,7 +234,7 @@ export default function WebsiteFAQsPage() {
                                                     <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
                                                     <TableCell className="py-4 px-6 text-center">
                                                         <div className="flex items-center justify-center gap-2">
-                                                            <button onClick={() => handleEditFAQ(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                            <button onClick={() => handleEditFAQ(row)} className="h-8 w-8 text-[#0f172a] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
                                                                 <Edit2 size={14} />
                                                             </button>
                                                             <button onClick={() => handleDeleteFAQ(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
@@ -309,3 +309,9 @@ export default function WebsiteFAQsPage() {
         </div>
     );
 }
+
+
+
+
+
+

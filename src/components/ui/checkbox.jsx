@@ -16,8 +16,8 @@ const Checkbox = React.forwardRef(({ className, checked, onCheckedChange, ...pro
             }
         }}
         className={cn(
-            "peer h-4 w-4 shrink-0 rounded-sm border border-[#1a237e] ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[#1a237e] data-[state=checked]:text-white transition-all cursor-pointer flex items-center justify-center",
-            checked ? "bg-[#1a237e] text-white" : "bg-transparent",
+            "peer h-4 w-4 shrink-0 rounded-sm border border-[#0f172a] ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[#0f172a] data-[state=checked]:text-white transition-all cursor-pointer flex items-center justify-center",
+            checked ? "bg-[#0f172a] text-white" : "bg-transparent",
             className
         )}
         {...props}
@@ -30,3 +30,9 @@ const Checkbox = React.forwardRef(({ className, checked, onCheckedChange, ...pro
 Checkbox.displayName = "Checkbox"
 
 export { Checkbox }
+
+
+
+
+
+

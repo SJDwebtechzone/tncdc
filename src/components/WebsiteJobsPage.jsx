@@ -13,7 +13,7 @@ const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
         role="switch"
         aria-checked={checked}
         onClick={() => onCheckedChange(!checked)}
-        className={`relative inline-flex h-4 w-8 items-center rounded-full border border-gray-200 transition-colors focus-visible:outline-none ${checked ? 'bg-[#1a237e]' : 'bg-gray-200'}`}
+        className={`relative inline-flex h-4 w-8 items-center rounded-full border border-gray-200 transition-colors focus-visible:outline-none ${checked ? 'bg-[#0f172a]' : 'bg-gray-200'}`}
     >
         <span className={`pointer-events-none block h-3 w-3 rounded-full shadow-sm transition-transform ${checked ? 'translate-x-4 bg-white' : 'translate-x-0.5 bg-white'}`} />
     </button>
@@ -141,3 +141,9 @@ export default function WebsiteJobsPage() {
         </div>
     );
 }
+
+
+
+
+
+

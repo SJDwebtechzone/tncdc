@@ -13,7 +13,7 @@ const SocialField = ({ label, subtext, value, onChange, placeholder }) => (
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e]"
+            className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#0f172a]"
         />
         <p className="text-[11px] text-gray-400 italic font-medium">
             {subtext}
@@ -89,7 +89,7 @@ export default function WebsiteSocialMediaPage() {
                     </Button>
                     <Button
                         onClick={handleUpdate}
-                        className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 text-[11px] font-bold px-12 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
+                        className="bg-[#0f172a] hover:bg-[#151c63] text-white h-10 text-[11px] font-bold px-12 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
                     >
                         Save Changes
                     </Button>
@@ -98,3 +98,9 @@ export default function WebsiteSocialMediaPage() {
         </div>
     );
 }
+
+
+
+
+
+

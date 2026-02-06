@@ -28,7 +28,7 @@ export default function WebsiteContactPage() {
                 <div className="p-8 space-y-10">
                     {/* General Section */}
                     <div className="space-y-6">
-                        <h3 className="text-[12px] font-bold text-[#1a237e] uppercase tracking-wider border-l-4 border-[#1a237e] pl-3">
+                        <h3 className="text-[12px] font-bold text-[#0f172a] uppercase tracking-wider border-l-4 border-[#0f172a] pl-3">
                             General
                         </h3>
                         <div className="space-y-1">
@@ -39,7 +39,7 @@ export default function WebsiteContactPage() {
                                 value={formData.title}
                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
                                 placeholder="Histudy Course Contact <br> can join with us."
-                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;br&gt; for line breaks.</p>
                         </div>
@@ -47,7 +47,7 @@ export default function WebsiteContactPage() {
 
                     {/* Phone & Email Section */}
                     <div className="space-y-6">
-                        <h3 className="text-[12px] font-bold text-[#1a237e] uppercase tracking-wider border-l-4 border-[#1a237e] pl-3">
+                        <h3 className="text-[12px] font-bold text-[#0f172a] uppercase tracking-wider border-l-4 border-[#0f172a] pl-3">
                             Phone & Email
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -59,7 +59,7 @@ export default function WebsiteContactPage() {
                                     value={formData.phone1}
                                     onChange={e => setFormData({ ...formData, phone1: e.target.value })}
                                     placeholder="+444 555 666 777"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -70,7 +70,7 @@ export default function WebsiteContactPage() {
                                     value={formData.phone2}
                                     onChange={e => setFormData({ ...formData, phone2: e.target.value })}
                                     placeholder="+222 222 222 333"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
                         </div>
@@ -82,7 +82,7 @@ export default function WebsiteContactPage() {
                                 <Input
                                     value={formData.whatsapp}
                                     onChange={e => setFormData({ ...formData, whatsapp: e.target.value })}
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -93,7 +93,7 @@ export default function WebsiteContactPage() {
                                     value={formData.email1}
                                     onChange={e => setFormData({ ...formData, email1: e.target.value })}
                                     placeholder="admin@gmail.com"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
                         </div>
@@ -101,7 +101,7 @@ export default function WebsiteContactPage() {
 
                     {/* Location Block Section */}
                     <div className="space-y-6">
-                        <h3 className="text-[12px] font-bold text-[#1a237e] uppercase tracking-wider border-l-4 border-[#1a237e] pl-3">
+                        <h3 className="text-[12px] font-bold text-[#0f172a] uppercase tracking-wider border-l-4 border-[#0f172a] pl-3">
                             Location Block
                         </h3>
                         <div className="space-y-1">
@@ -112,7 +112,7 @@ export default function WebsiteContactPage() {
                                 value={formData.location}
                                 onChange={e => setFormData({ ...formData, location: e.target.value })}
                                 placeholder="5678 Bangla Main Road, cities 580 <br> GBnagla, example 54786"
-                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;br&gt; for line breaks.</p>
                         </div>
@@ -124,7 +124,7 @@ export default function WebsiteContactPage() {
                                 value={formData.mapIframe}
                                 onChange={e => setFormData({ ...formData, mapIframe: e.target.value })}
                                 placeholder="Paste Google Map iframe here."
-                                className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold">Paste Google Map iframe here.</p>
                         </div>
@@ -144,3 +144,9 @@ export default function WebsiteContactPage() {
         </div>
     );
 }
+
+
+
+
+
+

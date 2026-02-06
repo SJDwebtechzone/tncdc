@@ -113,7 +113,7 @@ export default function WebsiteAboutPage() {
                                 value={formData.subtitle}
                                 onChange={e => setFormData({ ...formData, subtitle: e.target.value })}
                                 placeholder="Know About Us"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
                     </div>
@@ -127,7 +127,7 @@ export default function WebsiteAboutPage() {
                             value={formData.title}
                             onChange={e => setFormData({ ...formData, title: e.target.value })}
                             placeholder="Know About Histudy <br /> Learning Platform"
-                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                         />
                         <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;br /&gt; for line breaks</p>
                     </div>
@@ -140,7 +140,7 @@ export default function WebsiteAboutPage() {
                         <Textarea
                             value={formData.description}
                             onChange={e => setFormData({ ...formData, description: e.target.value })}
-                            className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                            className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                         />
                     </div>
 
@@ -154,7 +154,7 @@ export default function WebsiteAboutPage() {
                                 value={formData.feature1Icon}
                                 onChange={e => setFormData({ ...formData, feature1Icon: e.target.value })}
                                 placeholder="Heart"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
                         <div className="space-y-1">
@@ -165,7 +165,7 @@ export default function WebsiteAboutPage() {
                                 value={formData.feature1Title}
                                 onChange={e => setFormData({ ...formData, feature1Title: e.target.value })}
                                 placeholder="Flexible Classes"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
                     </div>
@@ -178,7 +178,7 @@ export default function WebsiteAboutPage() {
                         <Textarea
                             value={formData.feature1Desc}
                             onChange={e => setFormData({ ...formData, feature1Desc: e.target.value })}
-                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                         />
                     </div>
 
@@ -192,7 +192,7 @@ export default function WebsiteAboutPage() {
                                 value={formData.feature2Icon}
                                 onChange={e => setFormData({ ...formData, feature2Icon: e.target.value })}
                                 placeholder="Book"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
                         <div className="space-y-1">
@@ -203,7 +203,7 @@ export default function WebsiteAboutPage() {
                                 value={formData.feature2Title}
                                 onChange={e => setFormData({ ...formData, feature2Title: e.target.value })}
                                 placeholder="Learn From Anywhere"
-                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                             />
                         </div>
                     </div>
@@ -216,7 +216,7 @@ export default function WebsiteAboutPage() {
                         <Textarea
                             value={formData.feature2Desc}
                             onChange={e => setFormData({ ...formData, feature2Desc: e.target.value })}
-                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                         />
                     </div>
 
@@ -234,3 +234,9 @@ export default function WebsiteAboutPage() {
         </div>
     );
 }
+
+
+
+
+
+

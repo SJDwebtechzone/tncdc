@@ -189,3 +189,9 @@ export default function BirthdayListPage() {
         </div>
     );
 }
+
+
+
+
+
+

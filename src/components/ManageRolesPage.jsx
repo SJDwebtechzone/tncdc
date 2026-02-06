@@ -226,7 +226,7 @@ export default function ManageRolesPage() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-4 mt-8">
-                        <Button onClick={handleSaveRole} className="bg-[#1a237e] hover:bg-[#1a237e]/90 text-white min-w-[120px]">
+                        <Button onClick={handleSaveRole} className="bg-[#0f172a] hover:bg-[#0f172a]/90 text-white min-w-[120px]">
                             Save Role
                         </Button>
                         <Button variant="outline" onClick={() => setView('list')} className="text-orange-500 border-orange-200 hover:bg-orange-50 min-w-[120px]">
@@ -244,7 +244,7 @@ export default function ManageRolesPage() {
                 <h1 className="text-xl font-medium text-gray-800">Manage Roles</h1>
                 <Button
                     onClick={() => { resetForm(); setView('add'); }}
-                    className="bg-[#1a237e] hover:bg-[#1a237e]/90 text-white gap-2 h-10 px-6 font-normal"
+                    className="bg-[#0f172a] hover:bg-[#0f172a]/90 text-white gap-2 h-10 px-6 font-normal"
                 >
                     <Plus size={18} />
                     Add New Role
@@ -265,7 +265,7 @@ export default function ManageRolesPage() {
                         />
                     </div>
                     <div className="md:col-span-2">
-                        <Button className="w-full bg-[#1a237e] hover:bg-[#1a237e]/90 text-white h-10">
+                        <Button className="w-full bg-[#0f172a] hover:bg-[#0f172a]/90 text-white h-10">
                             Search
                         </Button>
                     </div>
@@ -332,3 +332,9 @@ export default function ManageRolesPage() {
         </div>
     );
 }
+
+
+
+
+
+

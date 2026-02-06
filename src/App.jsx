@@ -112,6 +112,11 @@ import WebsitePostsPage from '@/components/WebsitePostsPage';
 import WebsiteAddPostPage from '@/components/WebsiteAddPostPage';
 import WebsiteGalleryPage from '@/components/WebsiteGalleryPage';
 import WebsitePartnersPage from '@/components/WebsitePartnersPage';
+import SettingsPage from '@/components/SettingsPage';
+import ChangePasswordPage from '@/components/ChangePasswordPage';
+import PaymentSettingsPage from '@/components/PaymentSettingsPage';
+import SecureBackupPage from '@/components/SecureBackupPage';
+import WhatsAppTemplatesPage from '@/components/WhatsAppTemplatesPage';
 
 function App() {
   return (
@@ -232,6 +237,12 @@ function App() {
           <Route path="website/posts/add" element={<WebsiteAddPostPage />} />
           <Route path="website/gallery" element={<WebsiteGalleryPage />} />
           <Route path="website/partners" element={<WebsitePartnersPage />} />
+          <Route path="settings/password" element={<ChangePasswordPage />} />
+          <Route path="settings/payment" element={<PaymentSettingsPage />} />
+          <Route path="settings/whatsapp" element={<WhatsAppTemplatesPage />} />
+          <Route path="settings/backup" element={<SecureBackupPage />} />
+          <Route path="settings/:tabId" element={<SettingsPage />} />
+          <Route path="settings" element={<SettingsPage />} />
 
           <Route path="*" element={<PlaceholderPage />} />
         </Route>
@@ -243,3 +254,4 @@ function App() {
 }
 
 export default App;
+

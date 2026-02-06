@@ -159,7 +159,7 @@ export default function WebsiteStudyMaterialsPage() {
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
                                     placeholder="Enter a descriptive title for the study material."
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter a descriptive title for the study material.</p>
                             </div>
@@ -173,7 +173,7 @@ export default function WebsiteStudyMaterialsPage() {
                                     value={formData.description}
                                     onChange={e => setFormData({ ...formData, description: e.target.value })}
                                     placeholder="Provide a short description of the study material."
-                                    className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Provide a short description of the study material.</p>
                             </div>
@@ -223,3 +223,9 @@ export default function WebsiteStudyMaterialsPage() {
         </div>
     );
 }
+
+
+
+
+
+

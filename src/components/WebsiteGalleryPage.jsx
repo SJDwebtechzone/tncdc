@@ -159,7 +159,7 @@ export default function WebsiteGalleryPage() {
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
                                     placeholder="Enter the title of the gallery item."
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -171,7 +171,7 @@ export default function WebsiteGalleryPage() {
                                     required
                                     value={formData.type}
                                     onChange={e => setFormData({ ...formData, type: e.target.value })}
-                                    className="w-full h-10 px-3 rounded-sm border border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] bg-white outline-none"
+                                    className="w-full h-10 px-3 rounded-sm border border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] bg-white outline-none"
                                 >
                                     <option value="" disabled>Select Type</option>
                                     <option value="image">Image</option>
@@ -221,3 +221,9 @@ export default function WebsiteGalleryPage() {
         </div>
     );
 }
+
+
+
+
+
+

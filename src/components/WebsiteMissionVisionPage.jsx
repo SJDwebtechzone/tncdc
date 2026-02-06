@@ -52,7 +52,7 @@ export default function WebsiteMissionVisionPage() {
                                     value={formData.bannerBadgeText}
                                     onChange={e => setFormData({ ...formData, bannerBadgeText: e.target.value })}
                                     placeholder="The Leader in Online Learning"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -62,7 +62,7 @@ export default function WebsiteMissionVisionPage() {
                                 <Input
                                     value={formData.bannerBadgeIcon}
                                     onChange={e => setFormData({ ...formData, bannerBadgeIcon: e.target.value })}
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold">Enter an emoji (e.g., 👤, ⭐, 🎓).</p>
                             </div>
@@ -74,7 +74,7 @@ export default function WebsiteMissionVisionPage() {
                             <Textarea
                                 value={formData.bannerDesc}
                                 onChange={e => setFormData({ ...formData, bannerDesc: e.target.value })}
-                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                         </div>
                     </div>
@@ -114,7 +114,7 @@ export default function WebsiteMissionVisionPage() {
                                     value={formData.videoUrl}
                                     onChange={e => setFormData({ ...formData, videoUrl: e.target.value })}
                                     placeholder="https://www.youtube.com/watch?v=nAIaqp0sPQo"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
                         </div>
@@ -200,7 +200,7 @@ export default function WebsiteMissionVisionPage() {
                                 value={formData.visionTitle}
                                 onChange={e => setFormData({ ...formData, visionTitle: e.target.value })}
                                 placeholder="Know About Histudy <br /> Learning Platform"
-                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;br /&gt; for line breaks.</p>
                         </div>
@@ -212,7 +212,7 @@ export default function WebsiteMissionVisionPage() {
                             <Textarea
                                 value={formData.visionDesc}
                                 onChange={e => setFormData({ ...formData, visionDesc: e.target.value })}
-                                className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                         </div>
 
@@ -228,7 +228,7 @@ export default function WebsiteMissionVisionPage() {
                                             value={formData[`visionFeature${num}Icon`]}
                                             onChange={e => setFormData({ ...formData, [`visionFeature${num}Icon`]: e.target.value })}
                                             placeholder="Heart"
-                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -239,7 +239,7 @@ export default function WebsiteMissionVisionPage() {
                                             value={formData[`visionFeature${num}Title`]}
                                             onChange={e => setFormData({ ...formData, [`visionFeature${num}Title`]: e.target.value })}
                                             placeholder="Flexible Classes"
-                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                         />
                                     </div>
                                     <div className="col-span-1 md:col-span-2 space-y-1">
@@ -249,7 +249,7 @@ export default function WebsiteMissionVisionPage() {
                                         <Textarea
                                             value={formData[`visionFeature${num}Desc`]}
                                             onChange={e => setFormData({ ...formData, [`visionFeature${num}Desc`]: e.target.value })}
-                                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                                         />
                                     </div>
                                 </React.Fragment>
@@ -337,7 +337,7 @@ export default function WebsiteMissionVisionPage() {
                                 value={formData.missionTitle}
                                 onChange={e => setFormData({ ...formData, missionTitle: e.target.value })}
                                 placeholder="Know About Histudy <br /> Learning Platform"
-                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                             <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;br /&gt; for line breaks.</p>
                         </div>
@@ -349,7 +349,7 @@ export default function WebsiteMissionVisionPage() {
                             <Textarea
                                 value={formData.missionDesc}
                                 onChange={e => setFormData({ ...formData, missionDesc: e.target.value })}
-                                className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                             />
                         </div>
 
@@ -365,7 +365,7 @@ export default function WebsiteMissionVisionPage() {
                                             value={formData[`missionFeature${num}Icon`]}
                                             onChange={e => setFormData({ ...formData, [`missionFeature${num}Icon`]: e.target.value })}
                                             placeholder="Heart"
-                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                         />
                                     </div>
                                     <div className="space-y-1">
@@ -376,7 +376,7 @@ export default function WebsiteMissionVisionPage() {
                                             value={formData[`missionFeature${num}Title`]}
                                             onChange={e => setFormData({ ...formData, [`missionFeature${num}Title`]: e.target.value })}
                                             placeholder="Flexible Classes"
-                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                         />
                                     </div>
                                     <div className="col-span-1 md:col-span-2 space-y-1">
@@ -386,7 +386,7 @@ export default function WebsiteMissionVisionPage() {
                                         <Textarea
                                             value={formData[`missionFeature${num}Desc`]}
                                             onChange={e => setFormData({ ...formData, [`missionFeature${num}Desc`]: e.target.value })}
-                                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                                         />
                                     </div>
                                 </React.Fragment>
@@ -408,3 +408,9 @@ export default function WebsiteMissionVisionPage() {
         </div>
     );
 }
+
+
+
+
+
+

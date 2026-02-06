@@ -270,7 +270,7 @@ export function Sidebar() {
             <div className="px-4 mb-4">
                 <button
                     onClick={() => setMode(mode === 'academic' ? 'website' : 'academic')}
-                    className="w-full bg-[#6366f1] hover:bg-[#4f46e5] text-white py-3 px-4 rounded-xl text-xs font-bold shadow-md transition-all flex items-center justify-center gap-3 active:scale-95"
+                    className="w-full bg-[#0f172a] hover:bg-black text-white py-3 px-4 rounded-xl text-xs font-bold shadow-md transition-all flex items-center justify-center gap-3 active:scale-95"
                 >
                     <div className="bg-white/20 p-1 rounded-lg">
                         <ArrowLeftRight size={16} />
@@ -341,3 +341,9 @@ export function Sidebar() {
         </div>
     )
 }
+
+
+
+
+
+

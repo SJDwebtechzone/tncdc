@@ -83,7 +83,7 @@ export default function WebsiteEventsPage() {
                                 resetForm();
                                 setIsModalOpen(true);
                             }}
-                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                            className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
                         >
                             <Plus size={16} /> Add New Event
                         </Button>
@@ -97,12 +97,12 @@ export default function WebsiteEventsPage() {
                                 </div>
                                 <Input
                                     placeholder="Search by title..."
-                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a]"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
                                 />
                             </div>
-                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                            <Button className="bg-[#0f172a] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
                                 Search
                             </Button>
                             <Button
@@ -155,7 +155,7 @@ export default function WebsiteEventsPage() {
                                                     <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
                                                     <TableCell className="py-4 px-6 text-center">
                                                         <div className="flex items-center justify-center gap-2">
-                                                            <button onClick={() => handleEditEvent(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                            <button onClick={() => handleEditEvent(row)} className="h-8 w-8 text-[#0f172a] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
                                                                 <Edit2 size={14} />
                                                             </button>
                                                             <button onClick={() => handleDeleteEvent(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
@@ -211,7 +211,7 @@ export default function WebsiteEventsPage() {
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
                                     placeholder="Event Title"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -222,7 +222,7 @@ export default function WebsiteEventsPage() {
                                     value={formData.location}
                                     onChange={e => setFormData({ ...formData, location: e.target.value })}
                                     placeholder="Vancouver"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -233,7 +233,7 @@ export default function WebsiteEventsPage() {
                                     value={formData.time}
                                     onChange={e => setFormData({ ...formData, time: e.target.value })}
                                     placeholder="8.00 am - 5.00 pm"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -244,7 +244,7 @@ export default function WebsiteEventsPage() {
                                     required
                                     value={formData.date}
                                     onChange={e => setFormData({ ...formData, date: e.target.value })}
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -270,3 +270,9 @@ export default function WebsiteEventsPage() {
         </div>
     );
 }
+
+
+
+
+
+

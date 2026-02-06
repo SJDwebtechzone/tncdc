@@ -161,7 +161,7 @@ export default function WebsiteAffiliationsPage() {
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
                                     placeholder="Enter the title of the affiliation."
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold lowercase">Enter the title of the affiliation.</p>
                             </div>
@@ -174,7 +174,7 @@ export default function WebsiteAffiliationsPage() {
                                     value={formData.subtitle}
                                     onChange={e => setFormData({ ...formData, subtitle: e.target.value })}
                                     placeholder="Enter a subtitle for the affiliation (optional)."
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                                 <p className="text-[9px] text-gray-400 italic px-1 font-bold lowercase">Enter a subtitle for the affiliation (optional).</p>
                             </div>
@@ -224,3 +224,9 @@ export default function WebsiteAffiliationsPage() {
         </div>
     );
 }
+
+
+
+
+
+

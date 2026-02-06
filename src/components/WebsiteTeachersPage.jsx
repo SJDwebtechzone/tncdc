@@ -101,7 +101,7 @@ export default function WebsiteTeachersPage() {
                                 resetForm();
                                 setIsModalOpen(true);
                             }}
-                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                            className="bg-[#0f172a] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
                         >
                             <Plus size={16} /> Add New Teacher
                         </Button>
@@ -115,12 +115,12 @@ export default function WebsiteTeachersPage() {
                                 </div>
                                 <Input
                                     placeholder="Search by name or designation..."
-                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#0f172a]"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
                                 />
                             </div>
-                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                            <Button className="bg-[#0f172a] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
                                 Search
                             </Button>
                             <Button
@@ -171,7 +171,7 @@ export default function WebsiteTeachersPage() {
                                                     <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
                                                     <TableCell className="py-4 px-6 text-center">
                                                         <div className="flex items-center justify-center gap-2">
-                                                            <button onClick={() => handleEditTeacher(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                            <button onClick={() => handleEditTeacher(row)} className="h-8 w-8 text-[#0f172a] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
                                                                 <Edit2 size={14} />
                                                             </button>
                                                             <button onClick={() => handleDeleteTeacher(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
@@ -209,7 +209,7 @@ export default function WebsiteTeachersPage() {
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                                     placeholder="Teacher Name"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -237,7 +237,7 @@ export default function WebsiteTeachersPage() {
                                     value={formData.designation}
                                     onChange={e => setFormData({ ...formData, designation: e.target.value })}
                                     placeholder="Teacher Designation"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -246,7 +246,7 @@ export default function WebsiteTeachersPage() {
                                 <Textarea
                                     value={formData.description}
                                     onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                    className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                    className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a] leading-relaxed p-3 bg-gray-50/20"
                                     placeholder="Teacher Description"
                                 />
                             </div>
@@ -258,7 +258,7 @@ export default function WebsiteTeachersPage() {
                                         value={formData.facebookUrl}
                                         onChange={e => setFormData({ ...formData, facebookUrl: e.target.value })}
                                         placeholder="https://www.facebook.com/"
-                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                     />
                                 </div>
                                 <div className="space-y-1">
@@ -267,7 +267,7 @@ export default function WebsiteTeachersPage() {
                                         value={formData.twitterUrl}
                                         onChange={e => setFormData({ ...formData, twitterUrl: e.target.value })}
                                         placeholder="https://www.twitter.com/"
-                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                     />
                                 </div>
                             </div>
@@ -279,7 +279,7 @@ export default function WebsiteTeachersPage() {
                                         value={formData.instagramUrl}
                                         onChange={e => setFormData({ ...formData, instagramUrl: e.target.value })}
                                         placeholder="https://www.instagram.com/"
-                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                     />
                                 </div>
                                 <div className="space-y-1">
@@ -288,7 +288,7 @@ export default function WebsiteTeachersPage() {
                                         value={formData.phone}
                                         onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                         placeholder="+1-202-555-0174"
-                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                     />
                                 </div>
                             </div>
@@ -299,7 +299,7 @@ export default function WebsiteTeachersPage() {
                                     value={formData.email}
                                     onChange={e => setFormData({ ...formData, email: e.target.value })}
                                     placeholder="example@gmail.com"
-                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#0f172a]"
                                 />
                             </div>
 
@@ -325,3 +325,9 @@ export default function WebsiteTeachersPage() {
         </div>
     );
 }
+
+
+
+
+
+

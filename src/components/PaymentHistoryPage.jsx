@@ -96,7 +96,7 @@ export default function PaymentHistoryPage() {
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <Button className="flex-1 bg-[#1a237e] hover:bg-blue-900 text-white gap-2">
+                                <Button className="flex-1 bg-[#0f172a] hover:bg-blue-900 text-white gap-2">
                                     <Search size={14} /> Apply Filters
                                 </Button>
                                 <Button variant="outline" className="flex-1 border-orange-200 text-orange-500 hover:bg-orange-50 gap-2">
@@ -179,3 +179,9 @@ export default function PaymentHistoryPage() {
         </div>
     )
 }
+
+
+
+
+
+

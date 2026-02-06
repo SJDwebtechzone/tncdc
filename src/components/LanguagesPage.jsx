@@ -14,13 +14,13 @@ const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
         onClick={() => onCheckedChange(!checked)}
         className={`
             relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 transition-colors focus-visible:outline-none 
-            ${checked ? 'bg-white border-[#1a237e]' : 'bg-gray-200 border-transparent'}
+            ${checked ? 'bg-white border-[#0f172a]' : 'bg-gray-200 border-transparent'}
         `}
     >
         <span
             className={`
                 pointer-events-none block h-4 w-4 rounded-full shadow-lg ring-0 transition-transform 
-                ${checked ? 'translate-x-4 bg-[#1a237e]' : 'translate-x-0.5 bg-white'}
+                ${checked ? 'translate-x-4 bg-[#0f172a]' : 'translate-x-0.5 bg-white'}
             `}
         />
     </button>
@@ -54,7 +54,7 @@ export default function LanguagesPage() {
                         <Button className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
                             <Download size={14} /> Export
                         </Button>
-                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#1a237e] hover:bg-[#1a237e]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
+                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#0f172a] hover:bg-[#0f172a]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
                             <Plus size={14} /> Add Language
                         </Button>
                     </div>
@@ -130,7 +130,7 @@ export default function LanguagesPage() {
                             </div>
                             <div className="flex justify-end gap-3 mt-6">
                                 <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button type="submit" className="bg-[#1a237e] text-white">Save</Button>
+                                <Button type="submit" className="bg-[#0f172a] text-white">Save</Button>
                             </div>
                         </form>
                     </div>
@@ -139,3 +139,9 @@ export default function LanguagesPage() {
         </div>
     )
 }
+
+
+
+
+
+
