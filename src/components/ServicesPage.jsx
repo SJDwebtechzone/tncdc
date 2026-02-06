@@ -9,7 +9,7 @@ const ServicesPage = () => {
             <Navbar />
 
             {/* Hero Section */}
-            <div className="relative w-full h-[500px] flex items-center bg-gray-900 overflow-hidden">
+            <div className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] flex items-center bg-gray-900 overflow-hidden">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0">
                     <img

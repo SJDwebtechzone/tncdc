@@ -19,6 +19,8 @@ import CoursesPageContent from './components/CoursesPage';
 import AboutPage from './components/AboutPage';
 import GalleryPageContent from './components/GalleryPage';
 import ServicesPageContent from './components/ServicesPage';
+import TopPerformerPage from './components/TopPerformerPage';
+import VerificationPageContent from './components/VerificationPage';
 
 // A simple layout wrapper for our interior pages
 const PageLayout = ({ children, title }) => (
@@ -73,10 +75,10 @@ const Home = () => (
 // Define interior pages
 export const CoursesPage = () => <CoursesPageContent />;
 export const AboutUsPage = () => <AboutPage />;
-export const TopPerformersPage = () => <PageLayout title="Top Performers" />;
+export const TopPerformersPage = () => <TopPerformerPage />;
 export const GalleryPage = () => <GalleryPageContent />;
 export const ServicesPage = () => <ServicesPageContent />;
-export const VerificationPage = () => <PageLayout title="Student Verification" />;
+export const VerificationPage = () => <VerificationPageContent />;
 export const LoginPage = () => <Login />;
 
 export default Home;
