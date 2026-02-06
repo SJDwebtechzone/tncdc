@@ -142,9 +142,6 @@ export default function ManageCoursesPage() {
                     </Table>
                 </div>
             </div>
-            <div className="text-center py-4">
-                <p className="text-[10px] text-gray-400 font-medium">Copyright 2026-27 © DITRP INDIA All rights reserved.</p>
-            </div>
         </div>
     )
 }

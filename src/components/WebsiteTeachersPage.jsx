@@ -1,180 +1,322 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, Plus, Edit2, Trash2, User, X, Mail, Phone, Briefcase } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Search, Plus, Edit2, Trash2, Check, X, Upload, Monitor } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
-import { addTeacher, deleteTeacher } from '@/store/websiteSlice';
+import { addTeacher, editTeacher, deleteTeacher } from '@/store/websiteSlice';
 
 export default function WebsiteTeachersPage() {
     const teachers = useSelector((state) => state.website.teachers || []);
     const dispatch = useDispatch();
+
     const [searchQuery, setSearchQuery] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({ name: '', image: '', designation: '', phone: '', email: '' });
+    const [formData, setFormData] = useState({
+        name: '',
+        image: '',
+        designation: '',
+        description: '',
+        facebookUrl: '',
+        twitterUrl: '',
+        instagramUrl: '',
+        phone: '',
+        email: ''
+    });
+    const [editingId, setEditingId] = useState(null);
+
+    const modalFileRef = useRef(null);
 
     const filteredTeachers = teachers.filter(t =>
         t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t.designation.toLowerCase().includes(searchQuery.toLowerCase())
+        t.designation.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (t.email && t.email.toLowerCase().includes(searchQuery.toLowerCase()))
     );
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        dispatch(addTeacher(formData));
-        setIsModalOpen(false);
-        setFormData({ name: '', image: '', designation: '', phone: '', email: '' });
+    const handleEditTeacher = (teacher) => {
+        setFormData({
+            name: teacher.name,
+            image: teacher.image,
+            designation: teacher.designation,
+            description: teacher.description || '',
+            facebookUrl: teacher.facebookUrl || '',
+            twitterUrl: teacher.twitterUrl || '',
+            instagramUrl: teacher.instagramUrl || '',
+            phone: teacher.phone || '',
+            email: teacher.email || ''
+        });
+        setEditingId(teacher.id);
+        setIsModalOpen(true);
     };
 
-    const handleDelete = (id) => {
+    const handleSaveTeacher = (e) => {
+        e.preventDefault();
+        if (editingId) {
+            dispatch(editTeacher({ ...formData, id: editingId }));
+        } else {
+            dispatch(addTeacher(formData));
+        }
+        setIsModalOpen(false);
+        resetForm();
+    };
+
+    const resetForm = () => {
+        setFormData({
+            name: '',
+            image: '',
+            designation: '',
+            description: '',
+            facebookUrl: '',
+            twitterUrl: '',
+            instagramUrl: '',
+            phone: '',
+            email: ''
+        });
+        setEditingId(null);
+    };
+
+    const handleDeleteTeacher = (id) => {
         if (window.confirm("Delete this teacher entry?")) {
             dispatch(deleteTeacher(id));
         }
     };
 
+    const triggerFileSelect = (ref) => {
+        if (ref.current) ref.current.click();
+    };
+
     return (
-        <div className="space-y-6 font-sans relative">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                    <User size={24} className="text-blue-600" />
-                    Manage Website Faculty
-                </h1>
-                <Button
-                    onClick={() => setIsModalOpen(true)}
-                    className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-2 rounded-xl flex items-center gap-2 border-none transition-all shadow-md font-bold"
-                >
-                    <Plus size={18} />
-                    Add Teacher
-                </Button>
-            </div>
+        <div className="space-y-6 font-sans relative pb-10 px-6 pt-4">
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 italic">
-                <div className="flex flex-col md:flex-row gap-4 items-center font-sans">
-                    <div className="flex-1 relative w-full italic font-sans">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                            <Search size={16} />
-                        </div>
-                        <Input
-                            placeholder="Search by faculty name or role..."
-                            className="pl-10 h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm italic font-sans"
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-                    <Button className="bg-[#1e40af] hover:bg-blue-900 text-white h-11 px-10 rounded-xl font-bold transition-all shadow-md border-none italic font-sans">
-                        Search
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="border-orange-100 text-orange-600 hover:bg-orange-50 h-11 px-10 rounded-xl font-bold"
-                        onClick={() => setSearchQuery("")}
-                    >
-                        Reset
-                    </Button>
-                </div>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[300px]">
-                <div className="overflow-x-auto font-sans">
-                    <Table>
-                        <TableHeader>
-                            <TableRow className="bg-[#f8fafc] border-b border-gray-100">
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 px-6 w-16 text-center">#</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Faculty Name</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 text-center">Avatar</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Role/Designation</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 text-center px-6">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredTeachers.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={5} className="py-24 text-center">
-                                        <div className="flex flex-col items-center justify-center gap-4 text-gray-400">
-                                            <div className="bg-gray-50 p-6 rounded-3xl">
-                                                <User size={48} className="text-gray-300" />
-                                            </div>
-                                            <p className="font-bold text-gray-400 italic">No faculty found</p>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                filteredTeachers.map((row, index) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell className="py-4 px-6 text-center font-medium text-gray-500">{index + 1}</TableCell>
-                                        <TableCell className="py-4">
-                                            <div className="space-y-0.5">
-                                                <div className="font-semibold text-gray-700">{row.name}</div>
-                                                <div className="text-[10px] text-gray-400 uppercase tracking-widest">{row.email}</div>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="py-4">
-                                            <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 overflow-hidden mx-auto flex items-center justify-center">
-                                                {row.image ? <img src={row.image} alt={row.name} className="w-full h-full object-cover" /> : <User size={20} className="text-blue-300" />}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="py-4">
-                                            <div className="flex items-center gap-2">
-                                                <Briefcase size={14} className="text-[#c08457]" />
-                                                <span className="text-sm font-bold text-gray-600 uppercase tracking-tighter">{row.designation}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="py-4 px-6">
-                                            <div className="flex items-center justify-center gap-2">
-                                                <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">
-                                                    <Edit2 size={18} />
-                                                </button>
-                                                <button onClick={() => handleDelete(row.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                                                    <Trash2 size={18} />
-                                                </button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
-            </div>
-
-            {/* Add Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 font-sans">
-                    <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative">
-                        <button onClick={() => setIsModalOpen(false)} className="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
-                            <X size={24} />
-                        </button>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600">
-                                <Plus size={24} />
-                            </div>
-                            Add New Faculty
+            <div className="space-y-6">
+                {/* Manage Teachers Card */}
+                <div className="bg-white rounded-sm border border-gray-100 overflow-hidden shadow-sm">
+                    <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+                        <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">
+                            Manage Teachers
                         </h2>
-                        <form onSubmit={handleSave} className="space-y-4 font-sans">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em]">Full Name <span className="text-red-500">*</span></label>
-                                    <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Priya" className="h-11 rounded-xl bg-gray-50/50" />
+                        <Button
+                            onClick={() => {
+                                resetForm();
+                                setIsModalOpen(true);
+                            }}
+                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                        >
+                            <Plus size={16} /> Add New Teacher
+                        </Button>
+                    </div>
+                    <div className="p-6 space-y-6">
+                        {/* Search Area */}
+                        <div className="flex flex-col md:flex-row gap-4 items-center">
+                            <div className="flex-1 relative w-full">
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold">
+                                    <Search size={16} />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em]">Designation <span className="text-red-500">*</span></label>
-                                    <Input required value={formData.designation} onChange={e => setFormData({ ...formData, designation: e.target.value })} placeholder="e.g. Python Trainer" className="h-11 rounded-xl bg-gray-50/50" />
+                                <Input
+                                    placeholder="Search by name or designation..."
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                                Search
+                            </Button>
+                            <Button
+                                variant="outline"
+                                className="bg-white hover:bg-orange-50/30 text-[#b9875a] border border-orange-200 h-10 px-16 rounded-sm font-bold transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm"
+                                onClick={() => setSearchQuery("")}
+                            >
+                                Reset
+                            </Button>
+                        </div>
+
+                        {/* Table */}
+                        <div className="bg-white rounded-sm border border-gray-100 overflow-hidden min-h-[300px]">
+                            <div className="overflow-x-auto font-sans">
+                                <Table className="border-collapse">
+                                    <TableHeader>
+                                        <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-100">
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 px-6 w-16 text-center border-r border-gray-100">#</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Name</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 text-center">Image</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Designation</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Phone</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Email</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Created At</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 text-center px-6">Actions</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredTeachers.length === 0 ? (
+                                            <TableRow>
+                                                <TableCell colSpan={8} className="py-20 text-center font-sans">
+                                                    <p className="text-red-500 font-bold italic text-xs uppercase tracking-widest">No Data Available</p>
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            filteredTeachers.map((row, index) => (
+                                                <TableRow key={row.id} className="hover:bg-gray-50/50 outline-none">
+                                                    <TableCell className="py-4 px-6 text-center font-medium text-gray-500 border-r border-gray-100 text-xs">{index + 1}</TableCell>
+                                                    <TableCell className="py-4 font-semibold text-gray-700 border-r border-gray-100 text-xs px-6 whitespace-nowrap">{row.name}</TableCell>
+                                                    <TableCell className="py-4 border-r border-gray-100">
+                                                        <div className="w-10 h-10 rounded-sm bg-gray-50 overflow-hidden border border-gray-200 mx-auto">
+                                                            {row.image ? <img src={row.image} alt={row.name} className="w-full h-full object-cover" /> : <Monitor size={18} className="text-gray-300 m-auto mt-2" />}
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="py-4 text-[11px] font-bold text-gray-600 border-r border-gray-100 px-6 uppercase tracking-tight">{row.designation}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-gray-500 border-r border-gray-100 px-6">{row.phone || '-'}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-blue-600 font-medium border-r border-gray-100 px-6">{row.email || '-'}</TableCell>
+                                                    <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
+                                                    <TableCell className="py-4 px-6 text-center">
+                                                        <div className="flex items-center justify-center gap-2">
+                                                            <button onClick={() => handleEditTeacher(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                                <Edit2 size={14} />
+                                                            </button>
+                                                            <button onClick={() => handleDeleteTeacher(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-[2px] p-4 font-sans">
+                    <div className="bg-white w-full max-w-lg rounded-sm shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-200">
+                        <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/30">
+                            <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">{editingId ? 'Edit Teacher' : 'Add New Teacher'}</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSaveTeacher} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto custom-scrollbar">
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Name <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.name}
+                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                    placeholder="Teacher Name"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Image <span className="text-red-500">*</span></label>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center h-10 border border-gray-200 rounded-sm overflow-hidden text-sm bg-gray-50/20">
+                                        <input type="file" ref={modalFileRef} className="hidden" onChange={() => { }} />
+                                        <button
+                                            type="button"
+                                            onClick={() => triggerFileSelect(modalFileRef)}
+                                            className="px-3 h-full bg-gray-200 border-r border-gray-200 text-[11px] font-bold text-gray-700 hover:bg-gray-300 transition-colors"
+                                        >
+                                            Choose File
+                                        </button>
+                                        <span className="px-3 text-gray-400 text-[11px] italic">No file chosen</span>
+                                    </div>
+                                    <p className="text-[9px] text-gray-400 italic px-1 font-sans font-bold">Image must be 415x555 pixels.</p>
                                 </div>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em]">Email Address</label>
-                                <Input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="faculty@example.com" className="h-11 rounded-xl bg-gray-50/50" />
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Designation</label>
+                                <Input
+                                    value={formData.designation}
+                                    onChange={e => setFormData({ ...formData, designation: e.target.value })}
+                                    placeholder="Teacher Designation"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em]">Phone Number</label>
-                                <Input value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} placeholder="123456" className="h-11 rounded-xl bg-gray-50/50" />
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Description</label>
+                                <Textarea
+                                    value={formData.description}
+                                    onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                    className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
+                                    placeholder="Teacher Description"
+                                />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em]">Profile Image URL</label>
-                                <Input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} placeholder="https://api.dicebear.com/..." className="h-11 rounded-xl bg-gray-50/50" />
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Facebook URL</label>
+                                    <Input
+                                        value={formData.facebookUrl}
+                                        onChange={e => setFormData({ ...formData, facebookUrl: e.target.value })}
+                                        placeholder="https://www.facebook.com/"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Twitter URL</label>
+                                    <Input
+                                        value={formData.twitterUrl}
+                                        onChange={e => setFormData({ ...formData, twitterUrl: e.target.value })}
+                                        placeholder="https://www.twitter.com/"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    />
+                                </div>
                             </div>
-                            <div className="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-50">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="h-11 px-8 rounded-xl font-bold text-gray-500 hover:bg-gray-50">Cancel</Button>
-                                <Button type="submit" className="bg-[#1e40af] hover:bg-blue-900 text-white font-bold h-11 px-10 rounded-xl shadow-lg border-none transition-all active:scale-95">Save Faculty</Button>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Instagram URL</label>
+                                    <Input
+                                        value={formData.instagramUrl}
+                                        onChange={e => setFormData({ ...formData, instagramUrl: e.target.value })}
+                                        placeholder="https://www.instagram.com/"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Phone</label>
+                                    <Input
+                                        value={formData.phone}
+                                        onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                                        placeholder="+1-202-555-0174"
+                                        className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Email</label>
+                                <Input
+                                    value={formData.email}
+                                    onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                    placeholder="example@gmail.com"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="flex justify-center gap-4 pt-4 border-t border-gray-100 -mx-6 px-6 mt-4">
+                                <Button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white border-none h-10 text-[11px] font-bold px-10 rounded-sm shadow-sm transition-all uppercase tracking-wider"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white h-10 text-[11px] font-bold px-10 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
+                                >
+                                    {editingId ? 'Update Teacher' : 'Add Teacher'}
+                                </Button>
                             </div>
                         </form>
                     </div>

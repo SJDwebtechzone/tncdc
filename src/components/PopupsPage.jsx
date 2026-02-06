@@ -28,127 +28,140 @@ export default function PopupsPage() {
 
     return (
         <div className="space-y-6 relative animate-in fade-in duration-500">
-            <h1 className="text-xl font-bold text-gray-800 tracking-tight">Manage Popups/Banners</h1>
-
-            {/* Filters Row */}
-            <div className="bg-white p-4 rounded-sm shadow-sm border border-gray-100 flex flex-wrap items-center justify-between gap-4">
-                <div className="flex flex-1 gap-4 items-center">
-                    <div className="relative flex-1 max-w-sm">
-                        <Search className="absolute left-3 top-2.5 text-gray-400" size={16} />
-                        <Input className="pl-9 h-10 w-full rounded-sm bg-gray-50/50 border-gray-200 text-sm" placeholder="Search by title..." />
-                    </div>
-                    <div className="w-48">
-                        <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-sm text-gray-500 bg-white outline-none focus:ring-1 focus:ring-blue-900 transition-all">
-                            <option>All Status</option>
-                        </select>
-                    </div>
-                    <Button variant="outline" className="h-10 px-8 border-[#1e3a8a] text-[#1e3a8a] hover:bg-blue-50 rounded-sm font-medium transition-all">
-                        Search
-                    </Button>
-                    <Button variant="outline" className="h-10 px-8 border-[#b9875a] text-[#b9875a] hover:bg-orange-50 rounded-sm font-medium transition-all">
-                        Reset
-                    </Button>
-                </div>
-                <Button onClick={() => setIsModalOpen(true)} className="bg-[#1e3a8a] hover:bg-blue-900 text-white gap-2 h-10 px-4 rounded-sm transition-all active:scale-95 shadow-md">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 font-sans border-b border-gray-100 pb-6 px-6">
+                <h2 className="text-xl font-medium text-gray-800 tracking-tight">Manage Popups/Banners</h2>
+                <Button
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-[#0f172a] hover:bg-[#1e293b] text-white gap-2 rounded-sm px-4 h-9 text-xs font-bold transition-all border-none uppercase tracking-wider"
+                >
                     <Plus size={16} /> Add Popup
                 </Button>
             </div>
 
-            {/* Table */}
-            <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden min-h-[400px]">
-                <Table>
-                    <TableHeader className="bg-gray-50/50 border-b">
-                        <TableRow>
-                            <TableHead className="w-[60px] font-bold text-gray-800 text-xs uppercase text-center">#</TableHead>
-                            <TableHead className="font-bold text-gray-800 text-xs uppercase min-w-[120px]">Image</TableHead>
-                            <TableHead className="font-bold text-gray-800 text-xs uppercase min-w-[200px]">Title</TableHead>
-                            <TableHead className="font-bold text-gray-800 text-xs uppercase min-w-[150px]">Link</TableHead>
-                            <TableHead className="font-bold text-gray-800 text-xs uppercase">Target</TableHead>
-                            <TableHead className="font-bold text-gray-800 text-xs uppercase">Status</TableHead>
-                            <TableHead className="font-bold text-gray-800 text-xs uppercase text-center w-[100px]">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {popups.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={7} className="text-center py-20 text-gray-400 italic text-sm">
-                                    No popups or banners found in the collection.
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            popups.map((item, index) => (
-                                <TableRow key={item.id} className="border-b hover:bg-gray-50 transition-colors">
-                                    <TableCell className="text-center font-bold text-gray-500">{index + 1}</TableCell>
-                                    <TableCell>
-                                        <div className="w-16 h-10 bg-gray-100 rounded-sm border overflow-hidden flex items-center justify-center">
-                                            {item.image ? (
-                                                <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                                            ) : (
-                                                <span className="text-[10px] text-gray-400 uppercase font-bold tracking-tighter">Preview</span>
-                                            )}
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="font-bold text-[#1e3a8a]">{item.title}</TableCell>
-                                    <TableCell className="text-blue-500 underline text-xs">{item.link || '---'}</TableCell>
-                                    <TableCell className="text-xs font-medium text-gray-600">{item.targetType || 'All Users'}</TableCell>
-                                    <TableCell>
-                                        <span className={`px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider ${item.status === 'Active' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-gray-100 text-gray-700 border border-gray-200'}`}>
-                                            {item.status}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        <div className="flex justify-center gap-2">
-                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[#1e3a8a] bg-blue-50 hover:bg-blue-100"><Edit size={14} /></Button>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                className="h-8 w-8 text-red-500 bg-red-50 hover:bg-red-100"
-                                                onClick={() => dispatch(deletePopup(item.id))}
-                                            >
-                                                <Trash2 size={14} />
-                                            </Button>
-                                        </div>
-                                    </TableCell>
+            <div className="p-6">
+                <div className="bg-white p-6 rounded-sm border border-gray-100 italic">
+                    <div className="flex flex-col gap-4 font-sans">
+                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Search popups</label>
+                        <div className="flex flex-col md:flex-row gap-4 items-center">
+                            <div className="flex-1 relative w-full italic">
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    <Search size={16} />
+                                </div>
+                                <Input
+                                    placeholder="Search by title..."
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm italic"
+                                />
+                            </div>
+                            <div className="w-48 font-sans">
+                                <select className="w-full h-10 rounded-sm border border-gray-200 px-3 text-sm text-gray-500 bg-white outline-none italic">
+                                    <option>All Status</option>
+                                </select>
+                            </div>
+                            <Button className="bg-[#1e3a8a] text-white h-10 px-10 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs shadow-md">
+                                Search
+                            </Button>
+                            <Button
+                                variant="outline"
+                                className="border-[#c08457]/30 text-[#c08457] hover:bg-orange-50/30 h-10 px-10 rounded-sm font-bold bg-[#c08457]/10 uppercase tracking-wider text-xs font-sans"
+                            >
+                                Reset
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="px-6 pb-6">
+                <div className="bg-white rounded-sm border border-gray-100 overflow-hidden min-h-[400px]">
+                    <div className="overflow-x-auto font-sans">
+                        <Table className="border-collapse">
+                            <TableHeader>
+                                <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-100">
+                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 px-6 w-16 text-center border-r border-gray-100">#</TableHead>
+                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Image</TableHead>
+                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Title</TableHead>
+                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Link</TableHead>
+                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Target</TableHead>
+                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Status</TableHead>
+                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 text-center px-6">Actions</TableHead>
                                 </TableRow>
-                            ))
-                        )}
-                    </TableBody>
-                </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {popups.length === 0 ? (
+                                    <TableRow>
+                                        <TableCell colSpan={7} className="py-20 text-center border-b border-gray-100 italic">
+                                            <p className="text-red-500 font-bold text-base">No Data Available</p>
+                                        </TableCell>
+                                    </TableRow>
+                                ) : (
+                                    popups.map((item, index) => (
+                                        <TableRow key={item.id} className="hover:bg-gray-50/50">
+                                            <TableCell className="py-4 px-6 text-center font-medium text-gray-500 border-r border-gray-100 text-xs">{index + 1}</TableCell>
+                                            <TableCell className="py-4 border-r border-gray-100">
+                                                <div className="w-16 h-10 bg-gray-100 rounded-sm border border-gray-200 overflow-hidden mx-auto">
+                                                    {item.image ? <img src={item.image} alt={item.title} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[8px] text-gray-400 font-bold uppercase tracking-tighter">Preview</div>}
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="py-4 border-r border-gray-100 px-6 font-semibold text-gray-700 text-xs text-left">{item.title}</TableCell>
+                                            <TableCell className="py-4 border-r border-gray-100 px-6">
+                                                <div className="text-blue-500 underline text-[10px] truncate max-w-[150px]">{item.link || '---'}</div>
+                                            </TableCell>
+                                            <TableCell className="py-4 border-r border-gray-100 px-6 font-medium text-gray-500 text-[10px]">{item.targetType || 'All Users'}</TableCell>
+                                            <TableCell className="py-4 border-r border-gray-100 px-6">
+                                                <span className={`px-3 py-1 rounded-sm text-[9px] font-bold uppercase tracking-wider ${item.status === 'Active' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-gray-100 text-gray-700 border border-gray-200'}`}>
+                                                    {item.status}
+                                                </span>
+                                            </TableCell>
+                                            <TableCell className="py-4 px-6 border-b border-gray-100">
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <button className="h-8 w-8 text-[#1e3a8a] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                        <Search size={14} />
+                                                    </button>
+                                                    <button onClick={() => dispatch(deletePopup(item.id))} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
+                                                        <Trash2 size={14} />
+                                                    </button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </div>
             </div>
 
             {/* Add New Popup Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-                    <div className="bg-white w-full max-w-2xl rounded-sm shadow-2xl relative animate-in fade-in zoom-in duration-300">
-                        {/* Modal Header */}
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-[2px] p-4 font-sans">
+                    <div className="bg-white w-full max-w-lg rounded-sm shadow-2xl relative overflow-hidden">
                         <div className="flex items-center justify-between p-4 border-b">
-                            <h2 className="text-lg font-bold text-gray-800">Add New Popup</h2>
-                            <button
-                                onClick={() => setIsModalOpen(false)}
-                                className="text-gray-400 hover:text-gray-600 transition-colors bg-gray-50 rounded-full p-1"
-                            >
+                            <h2 className="text-[17px] font-medium text-gray-800">Add New Popup</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
                                 <X size={20} />
                             </button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                            {/* Title Field */}
+                        <form onSubmit={handleSubmit} className="p-6 space-y-5">
                             <div className="space-y-1.5">
-                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest">Title <span className="text-red-500">*</span></label>
+                                <label className="text-[13px] font-medium text-gray-700">Title <span className="text-red-500">*</span></label>
                                 <Input
                                     required
-                                    className="h-10 rounded-sm border-gray-200 focus:ring-1 focus:ring-blue-900 transition-all font-medium text-sm"
-                                    placeholder="Enter popup title"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    placeholder="Enter Title"
+                                    className="h-10 rounded-sm border-gray-200 text-sm focus:ring-1 focus:ring-[#1e463a]"
                                 />
                             </div>
 
-                            {/* Image Field */}
                             <div className="space-y-1.5">
-                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest">Image <span className="text-red-500">*</span></label>
+                                <label className="text-[13px] font-medium text-gray-700">Image <span className="text-red-500">*</span></label>
                                 <div className="flex flex-col gap-2">
-                                    <div className="flex items-center gap-2 border border-gray-200 rounded-sm p-1 pr-3 h-10">
+                                    <div className="flex items-center h-10 border border-gray-200 rounded-sm overflow-hidden text-sm bg-gray-50/30">
+                                        <button type="button" className="px-3 py-1 bg-gray-100 border-r border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-200 h-full" onClick={() => document.getElementById('popup-image').click()}>Choose File</button>
+                                        <span className="px-3 text-gray-400 text-xs truncate">
+                                            {selectedImage ? selectedImage.name : "No file chosen"}
+                                        </span>
                                         <input
                                             type="file"
                                             id="popup-image"
@@ -156,49 +169,27 @@ export default function PopupsPage() {
                                             accept="image/*"
                                             onChange={(e) => setSelectedImage(e.target.files[0])}
                                         />
-                                        <Button
-                                            type="button"
-                                            variant="outline"
-                                            className="h-8 text-[11px] font-bold px-4 rounded-sm bg-gray-100 border-gray-300 hover:bg-gray-200 text-gray-700"
-                                            onClick={() => document.getElementById('popup-image').click()}
-                                        >
-                                            Choose File
-                                        </Button>
-                                        <span className="text-[11px] text-gray-500 font-medium truncate flex-1">
-                                            {selectedImage ? selectedImage.name : "No file chosen"}
-                                        </span>
-                                        {selectedImage && (
-                                            <button type="button" onClick={() => setSelectedImage(null)} className="text-gray-400 hover:text-red-500"><X size={14} /></button>
-                                        )}
                                     </div>
-                                    <p className="text-[10px] text-gray-400 font-medium italic">Max size: 2MB. Allowed: jpeg, png, jpg, gif, webp</p>
-
-                                    {selectedImage && (
-                                        <div className="w-32 h-20 rounded border-2 border-dashed border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center p-1">
-                                            <img src={URL.createObjectURL(selectedImage)} alt="Preview" className="h-full w-full object-contain" />
-                                        </div>
-                                    )}
+                                    <p className="text-[10px] text-gray-400 italic font-medium">Max size: 2MB. Allowed: jpeg, png, jpg, gif, webp</p>
                                 </div>
                             </div>
 
-                            {/* Link Field */}
                             <div className="space-y-1.5">
-                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest">Link (Optional)</label>
+                                <label className="text-[13px] font-medium text-gray-700">Link (Optional)</label>
                                 <Input
-                                    className="h-10 rounded-sm border-gray-200 focus:ring-1 focus:ring-blue-900 transition-all font-medium text-sm"
-                                    placeholder="https://example.com"
                                     value={formData.link}
                                     onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                                    placeholder="https://example.com"
+                                    className="h-10 rounded-sm border-gray-200 text-sm focus:ring-1 focus:ring-[#1e463a]"
                                 />
-                                <p className="text-[10px] text-gray-400 font-medium italic">If provided, clicking the popup will open this link in a new tab</p>
+                                <p className="text-[10px] text-gray-400 italic">If provided, clicking the popup will open this link in a new tab</p>
                             </div>
 
-                            {/* Target Type Field */}
                             <div className="space-y-1.5">
-                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest">Target Type <span className="text-red-500">*</span></label>
+                                <label className="text-[13px] font-medium text-gray-700">Target Type <span className="text-red-500">*</span></label>
                                 <select
                                     required
-                                    className="w-full h-10 rounded-sm border border-gray-200 px-3 text-sm text-gray-500 bg-white outline-none focus:ring-1 focus:ring-blue-900 transition-all font-medium"
+                                    className="w-full h-10 rounded-sm border border-gray-200 px-3 text-sm text-gray-500 bg-white outline-none focus:ring-1 focus:ring-[#1e463a]"
                                     value={formData.targetType}
                                     onChange={(e) => setFormData({ ...formData, targetType: e.target.value })}
                                 >
@@ -207,21 +198,20 @@ export default function PopupsPage() {
                                     <option value="Registered Students">Registered Students</option>
                                     <option value="Enquiry Lead Only">Enquiry Lead Only</option>
                                 </select>
-                                <p className="text-[10px] text-gray-400 font-medium italic">Where should this popup appear? (Always shown to all users)</p>
+                                <p className="text-[10px] text-gray-400 italic">Where should this popup appear?</p>
                             </div>
 
-                            {/* Footer Buttons */}
-                            <div className="flex justify-end gap-3 pt-6 border-t font-bold">
+                            <div className="flex justify-center gap-4 pt-4">
                                 <Button
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-8 rounded-sm h-10 uppercase tracking-widest text-[11px] transition-all active:scale-95 shadow-md font-bold"
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white border-none h-9 text-xs font-bold px-12 rounded-sm shadow-sm transition-all uppercase tracking-wider"
                                 >
                                     Cancel
                                 </Button>
                                 <Button
                                     type="submit"
-                                    className="bg-[#1e463a] hover:bg-[#153229] text-white px-8 rounded-sm h-10 uppercase tracking-widest text-[11px] transition-all active:scale-95 shadow-md font-bold"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white h-9 text-xs font-bold px-12 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
                                 >
                                     Add Popup
                                 </Button>

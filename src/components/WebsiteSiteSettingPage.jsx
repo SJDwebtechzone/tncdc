@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Plus, X, Check } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSiteSettings } from '@/store/websiteSlice';
@@ -10,6 +9,9 @@ export default function WebsiteSiteSettingPage() {
     const settings = useSelector((state) => state.website.siteSettings);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState(settings);
+
+    const logoRef = useRef(null);
+    const faviconRef = useRef(null);
 
     const handleUpdate = () => {
         dispatch(updateSiteSettings(formData));
@@ -24,138 +26,193 @@ export default function WebsiteSiteSettingPage() {
         setFormData({ ...formData, marqueeEntries: newEntries });
     };
 
-    return (
-        <div className="space-y-6 pb-12 font-sans">
-            <h1 className="text-xl font-bold text-gray-800">Edit Site Settings</h1>
+    const triggerFileSelect = (ref) => {
+        if (ref?.current) ref.current.click();
+    };
 
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-10">
-                {/* Header Display Section */}
-                <div className="space-y-4">
-                    <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2">Header Display</h3>
-                    <div className="space-y-3">
-                        <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Header Type <span className="text-red-500">*</span></Label>
-                        <div className="flex items-center gap-8 pt-2">
-                            <label className="flex items-center space-x-2 cursor-pointer">
+    return (
+        <div className="space-y-6 font-sans relative pb-10 pt-4">
+
+            <div className="px-6 space-y-4">
+                <div className="bg-white rounded-sm border border-gray-100 shadow-sm p-10 space-y-12">
+                    <h1 className="text-[18px] font-bold text-gray-800 -mt-2 mb-8">Edit Site Settings</h1>
+
+                    {/* Header Display Section */}
+                    <div className="space-y-4">
+                        <div className="space-y-1">
+                            <h3 className="text-[14px] font-bold text-gray-800 tracking-tight">Header Display</h3>
+                            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Header Type <span className="text-red-500">*</span></label>
+                        </div>
+                        <div className="flex items-center gap-8 pt-1">
+                            <label className="flex items-center space-x-2 cursor-pointer group">
                                 <input
                                     type="radio"
                                     name="headerType"
                                     checked={formData.headerType === 'logo'}
                                     onChange={() => setFormData({ ...formData, headerType: 'logo' })}
-                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    className="w-4 h-4 text-[#1a237e] border-gray-300 focus:ring-[#1a237e]"
                                 />
-                                <span className="text-sm font-bold text-gray-700">Display Logo</span>
+                                <span className="text-[13px] font-medium text-gray-700">Logo</span>
                             </label>
-                            <label className="flex items-center space-x-2 cursor-pointer">
+                            <label className="flex items-center space-x-2 cursor-pointer group">
                                 <input
                                     type="radio"
                                     name="headerType"
                                     checked={formData.headerType === 'banner'}
                                     onChange={() => setFormData({ ...formData, headerType: 'banner' })}
-                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    className="w-4 h-4 text-[#1a237e] border-gray-300 focus:ring-[#1a237e]"
                                 />
-                                <span className="text-sm font-bold text-gray-700">Display Banner</span>
+                                <span className="text-[13px] font-medium text-gray-700">Banner Image</span>
                             </label>
                         </div>
+                        <p className="text-[11px] text-gray-400 italic">Choose whether to display a logo or banner in the website header.</p>
                     </div>
-                </div>
 
-                {/* Images Section */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="space-y-4">
-                        <div className="space-y-3">
-                            <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Logo URL</Label>
-                            <Input value={formData.logo} onChange={e => setFormData({ ...formData, logo: e.target.value })} className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm" />
-                            <div className="mt-4 w-28 h-28 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-center overflow-hidden p-3 shadow-inner">
-                                {formData.logo && <img src={formData.logo} alt="Logo Preview" className="max-w-full max-h-full object-contain" />}
+                    {/* Images Section */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <h3 className="text-[14px] font-bold text-gray-800 tracking-tight">Images</h3>
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Logo</label>
+                                <div className="flex items-center h-10 border border-gray-200 rounded-sm overflow-hidden text-sm bg-white">
+                                    <input type="file" ref={logoRef} className="hidden" onChange={() => { }} />
+                                    <button
+                                        type="button"
+                                        onClick={() => triggerFileSelect(logoRef)}
+                                        className="px-4 h-full bg-gray-100 border-r border-gray-200 text-[11px] font-bold text-gray-600 hover:bg-gray-200 transition-colors"
+                                    >
+                                        Choose File
+                                    </button>
+                                    <span className="px-3 text-gray-400 text-[11px] italic">No file chosen</span>
+                                </div>
+                                <p className="text-[10px] text-gray-400 italic">PNG only, max 2MB. Leave blank to keep existing.</p>
+                                <div className="mt-4 w-20 h-20 bg-gray-50 rounded-sm border border-gray-100 flex items-center justify-center overflow-hidden p-2">
+                                    {formData.logo && <img src={formData.logo} alt="Logo Preview" className="max-w-full max-h-full object-contain" />}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4 pt-6 md:pt-11">
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Favicon</label>
+                                <div className="flex items-center h-10 border border-gray-200 rounded-sm overflow-hidden text-sm bg-white">
+                                    <input type="file" ref={faviconRef} className="hidden" onChange={() => { }} />
+                                    <button
+                                        type="button"
+                                        onClick={() => triggerFileSelect(faviconRef)}
+                                        className="px-4 h-full bg-gray-100 border-r border-gray-200 text-[11px] font-bold text-gray-600 hover:bg-gray-200 transition-colors"
+                                    >
+                                        Choose File
+                                    </button>
+                                    <span className="px-3 text-gray-400 text-[11px] italic">No file chosen</span>
+                                </div>
+                                <p className="text-[10px] text-gray-400 italic">JPEG/PNG/JPG/ICO, max 2MB. Leave blank to keep existing. ✨</p>
+                                <div className="mt-4 w-8 h-8 flex items-center justify-center">
+                                    {formData.favicon && <img src={formData.favicon} alt="Favicon Preview" className="w-full h-full object-contain" />}
+                                    {!formData.favicon && <div className="w-6 h-6 bg-blue-500 rounded-sm" />}
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="space-y-3">
-                        <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Favicon URL</Label>
-                        <Input value={formData.favicon} onChange={e => setFormData({ ...formData, favicon: e.target.value })} className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm" />
-                        <p className="text-[10px] text-gray-400 italic mt-2">Recommended: 32x32 or 16x16 pixels ICO/PNG.</p>
-                    </div>
-                </div>
-
-                {/* Store Links Section */}
-                <div className="space-y-6">
-                    <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2">App Store Links</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Google Play Store</Label>
-                            <Input value={formData.playStoreLink} onChange={e => setFormData({ ...formData, playStoreLink: e.target.value })} className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Apple App Store</Label>
-                            <Input value={formData.appStoreLink} onChange={e => setFormData({ ...formData, appStoreLink: e.target.value })} className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm" />
-                        </div>
-                    </div>
-                </div>
-
-                {/* Brand Colors Section */}
-                <div className="space-y-6">
-                    <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2">Identity & Colors</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                            <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Primary Brand Color</Label>
-                            <div className="flex gap-3">
-                                <div className="w-14 h-11 rounded-xl shadow-md border border-white" style={{ backgroundColor: formData.primaryColor }}></div>
-                                <Input value={formData.primaryColor} onChange={e => setFormData({ ...formData, primaryColor: e.target.value })} className="flex-1 h-11 bg-gray-50/50 border-gray-100 rounded-xl font-mono" />
-                            </div>
-                        </div>
-                        <div className="space-y-3">
-                            <Label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Secondary Accent Color</Label>
-                            <div className="flex gap-3">
-                                <div className="w-14 h-11 rounded-xl shadow-md border border-white" style={{ backgroundColor: formData.secondaryColor }}></div>
-                                <Input value={formData.secondaryColor} onChange={e => setFormData({ ...formData, secondaryColor: e.target.value })} className="flex-1 h-11 bg-gray-50/50 border-gray-100 rounded-xl font-mono" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Marquee Entries Section */}
-                <div className="space-y-6">
-                    <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider border-b border-gray-50 pb-2">Headline Marquee</h3>
-                    <div className="space-y-4">
-                        {formData.marqueeEntries.map((entry, index) => (
-                            <div key={index} className="flex gap-3 items-center group bg-gray-50/30 p-2 rounded-2xl border border-transparent hover:border-blue-100 transition-all">
-                                <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center font-bold text-xs">{index + 1}</div>
+                    {/* Store Links Section */}
+                    <div className="space-y-6">
+                        <h3 className="text-[14px] font-bold text-gray-800 tracking-tight">Store Links</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Play Store Link</label>
                                 <Input
-                                    value={entry}
-                                    onChange={(e) => updateMarquee(index, e.target.value)}
-                                    className="flex-1 h-12 bg-white border-gray-100 rounded-xl text-sm"
-                                    placeholder="Enter marquee text..."
+                                    value={formData.playStoreLink}
+                                    onChange={e => setFormData({ ...formData, playStoreLink: e.target.value })}
+                                    className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e] placeholder:italic"
+                                    placeholder="https://play.google.com/store/apps/details?id=com.example.app"
                                 />
+                                <p className="text-[10px] text-gray-400 italic">Optional. Enter a valid URL.</p>
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">App Store Link</label>
+                                <Input
+                                    value={formData.appStoreLink}
+                                    onChange={e => setFormData({ ...formData, appStoreLink: e.target.value })}
+                                    className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e] placeholder:italic"
+                                    placeholder="https://www.apple.com/app-store/"
+                                />
+                                <p className="text-[10px] text-gray-400 italic">Optional. Enter a valid URL.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Brand Colors Section */}
+                    <div className="space-y-6">
+                        <h3 className="text-[14px] font-bold text-gray-800 tracking-tight">Brand Colors</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Primary Color <span className="text-red-500">*</span></label>
+                                <div className="flex h-10 w-full rounded-sm border border-gray-200 overflow-hidden shadow-sm">
+                                    <div className="flex items-center px-4 bg-[#1a237e] text-white text-[10px] font-bold w-24">
+                                        {formData.primaryColor || '#FF5733'}
+                                    </div>
+                                    <div className="flex-1" style={{ backgroundColor: formData.primaryColor || '#FF5733' }}></div>
+                                </div>
+                                <p className="text-[10px] text-gray-400 italic">This color will be used for buttons, links, and accents.</p>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Secondary Color <span className="text-red-500">*</span></label>
+                                <div className="flex h-10 w-full rounded-sm border border-gray-200 overflow-hidden shadow-sm">
+                                    <div className="flex items-center px-4 bg-black text-white text-[10px] font-bold w-24">
+                                        {formData.secondaryColor || '#C70039'}
+                                    </div>
+                                    <div className="flex-1" style={{ backgroundColor: formData.secondaryColor || '#C70039' }}></div>
+                                </div>
+                                <p className="text-[10px] text-gray-400 italic">This color will be used for secondary elements and highlights.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Marquee Entries Section */}
+                    <div className="space-y-6">
+                        <h3 className="text-[14px] font-bold text-gray-800 tracking-tight">Marquee Entries</h3>
+                        <div className="space-y-6 relative">
+                            {formData.marqueeEntries.map((entry, index) => (
+                                <div key={index} className="flex gap-4 items-center group relative border-l-2 border-blue-500 pl-4 py-1">
+                                    <Input
+                                        value={entry}
+                                        onChange={(e) => updateMarquee(index, e.target.value)}
+                                        className="flex-1 h-10 bg-white border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                        placeholder="Enter marquee text..."
+                                    />
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => removeMarquee(index)}
+                                        className="text-gray-600 hover:text-red-500 hover:bg-red-50 h-10 px-6 rounded-sm border-gray-200 text-xs font-bold transition-all"
+                                    >
+                                        Remove
+                                    </Button>
+                                </div>
+                            ))}
+                            <div className="pt-2">
                                 <Button
-                                    variant="ghost"
-                                    onClick={() => removeMarquee(index)}
-                                    className="text-gray-400 hover:text-red-500 h-12 w-12 p-0 rounded-xl font-bold"
+                                    onClick={addMarquee}
+                                    className="bg-[#1a237e] hover:bg-[#151c63] text-white h-9 px-6 rounded-sm font-bold flex items-center gap-2 transition-all border-none text-[10px] uppercase tracking-wider"
                                 >
-                                    <X size={20} />
+                                    <Plus size={14} />
+                                    Add New Entry
                                 </Button>
                             </div>
-                        ))}
+                        </div>
                     </div>
-                    <Button
-                        onClick={addMarquee}
-                        className="bg-[#0061ff]/10 hover:bg-[#0061ff]/20 text-[#0061ff] h-11 px-6 rounded-xl font-bold flex items-center gap-2 transition-all border-none"
-                    >
-                        <Plus size={18} />
-                        Add New Slide
-                    </Button>
-                </div>
 
-                <div className="pt-8 border-t border-gray-50">
-                    <Button
-                        onClick={handleUpdate}
-                        className="bg-[#f2ca52] hover:bg-[#e0bb43] text-[#0f172a] h-14 px-12 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl transition-all active:scale-95 border-none flex items-center gap-3"
-                    >
-                        <Check size={20} strokeWidth={3} />
-                        Save All Settings
-                    </Button>
+                    <div className="pt-8 border-t border-gray-100 flex justify-start">
+                        <Button
+                            onClick={handleUpdate}
+                            className="bg-[#ebca52] hover:bg-[#d9b942] text-[#1a237e] h-10 px-12 rounded-sm font-bold uppercase tracking-wider transition-all border-none flex items-center gap-2 text-xs shadow-sm"
+                        >
+                            Update All Settings
+                        </Button>
+                    </div>
                 </div>
             </div>
+
         </div>
     );
 }

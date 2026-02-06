@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
-import { Search, Plus, Edit2, Trash2, Check, Layout, Image as ImageIcon, X } from "lucide-react";
+import { Search, Plus, Edit2, Trash2, Check, Layout, Image as ImageIcon, X, RotateCcw, Upload } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
-import { updatePerformerSettings, addPerformer, deletePerformer } from '@/store/websiteSlice';
+import { updatePerformerSettings, addPerformer, editPerformer, deletePerformer } from '@/store/websiteSlice';
 
 export default function WebsiteTopPerformersPage() {
     const settings = useSelector((state) => state.website.performerSettings);
@@ -15,12 +15,11 @@ export default function WebsiteTopPerformersPage() {
     const [bannerForm, setBannerForm] = useState(settings);
     const [searchQuery, setSearchQuery] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        image: '',
-        course: '',
-        description: ''
-    });
+    const [formData, setFormData] = useState({ name: '', image: '', course: '', description: '' });
+    const [editingId, setEditingId] = useState(null);
+
+    const bannerFileRef = useRef(null);
+    const modalFileRef = useRef(null);
 
     const filteredPerformers = performers.filter(p =>
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -32,11 +31,27 @@ export default function WebsiteTopPerformersPage() {
         alert("Banner settings updated successfully!");
     };
 
+    const handleEditPerformer = (performer) => {
+        setFormData({
+            name: performer.name,
+            image: performer.image,
+            course: performer.course,
+            description: performer.description
+        });
+        setEditingId(performer.id);
+        setIsModalOpen(true);
+    };
+
     const handleSavePerformer = (e) => {
         e.preventDefault();
-        dispatch(addPerformer(formData));
+        if (editingId) {
+            dispatch(editPerformer({ ...formData, id: editingId }));
+        } else {
+            dispatch(addPerformer(formData));
+        }
         setIsModalOpen(false);
         setFormData({ name: '', image: '', course: '', description: '' });
+        setEditingId(null);
     };
 
     const handleDeletePerformer = (id) => {
@@ -45,195 +60,218 @@ export default function WebsiteTopPerformersPage() {
         }
     };
 
-    return (
-        <div className="space-y-8 pb-10 relative">
-            <h1 className="hidden">Manage Top Performers</h1>
+    const triggerFileSelect = (ref) => {
+        if (ref.current) ref.current.click();
+    };
 
-            {/* Banner Settings Section */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-6 border-b border-gray-50 bg-gray-50/30">
-                    <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                        <Layout size={20} className="text-blue-600" />
-                        Banner Settings
-                    </h2>
-                </div>
-                <div className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-4">
+    return (
+        <div className="space-y-6 font-sans relative pb-10 px-6 pt-4">
+
+            <div className="px-6 space-y-6">
+                {/* Banner Settings Section */}
+                <div className="bg-white rounded-sm border border-gray-100 overflow-hidden shadow-sm">
+                    <div className="p-4 border-b border-gray-100 bg-gray-50/30">
+                        <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">
+                            Banner Settings
+                        </h2>
+                    </div>
+                    <div className="p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                             <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1">
-                                    Title <span className="text-red-500">*</span>
-                                </label>
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Title <span className="text-red-500">*</span></label>
                                 <Input
                                     value={bannerForm.title}
                                     onChange={e => setBannerForm({ ...bannerForm, title: e.target.value })}
-                                    className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
+                                    className="h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1e463a] bg-gray-50/20"
+                                    placeholder="Unmatched Performance Excellence"
+                                />
+                            </div>
+                            <div className="space-y-1.5 row-span-2">
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Short Description</label>
+                                <Textarea
+                                    className="min-h-[141px] border-gray-200 rounded-sm text-sm leading-relaxed focus:ring-1 focus:ring-[#1e463a] bg-gray-50/20"
+                                    value={bannerForm.description}
+                                    onChange={e => setBannerForm({ ...bannerForm, description: e.target.value })}
+                                    placeholder="Delivering exceptional results..."
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Banner Image</label>
-                                <div className="flex flex-col gap-3">
-                                    <div className="flex gap-2">
-                                        <Input
-                                            placeholder="Image URL"
-                                            value={bannerForm.image}
-                                            onChange={e => setBannerForm({ ...bannerForm, image: e.target.value })}
-                                            className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                                        />
+                                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">Banner Image</label>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex-1 border border-gray-200 rounded-sm h-10 flex items-center px-3 bg-gray-50/20">
+                                        <input type="file" ref={bannerFileRef} className="hidden" onChange={() => { }} />
+                                        <button
+                                            onClick={() => triggerFileSelect(bannerFileRef)}
+                                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 text-[11px] font-bold rounded-sm transition-colors mr-3 h-7 flex items-center"
+                                        >
+                                            Choose File
+                                        </button>
+                                        <span className="text-[11px] text-gray-400 italic">No file chosen</span>
                                     </div>
-                                    <p className="text-[10px] text-gray-400 italic">
-                                        Accepted: JPEG, PNG, JPG, GIF, WEBP. Max: 5MB. Recommended: 1415x600px
-                                    </p>
                                 </div>
+                                <p className="text-[10px] text-gray-400 italic px-1">Accepted: JPEG, PNG, JPG, GIF, WEBP. Max: 5MB. Recommended: 1415x600px</p>
                             </div>
                         </div>
-                        <div className="space-y-1.5">
-                            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Short Description</label>
-                            <Textarea
-                                className="min-h-[148px] bg-gray-50/50 border-gray-100 rounded-2xl text-sm leading-relaxed"
-                                value={bannerForm.description}
-                                onChange={e => setBannerForm({ ...bannerForm, description: e.target.value })}
-                            />
+                        <div className="mt-6 flex">
+                            <Button
+                                onClick={handleUpdateSettings}
+                                className="bg-[#1e463a] hover:bg-[#153229] text-white px-6 h-9 rounded-sm font-bold flex items-center gap-2 shadow-sm transition-all border-none uppercase tracking-wider text-[11px]"
+                            >
+                                <Check size={14} />
+                                Update Banner Settings
+                            </Button>
                         </div>
                     </div>
-                    <div className="mt-8">
+                </div>
+
+                {/* Manage Top Performers Card */}
+                <div className="bg-white rounded-sm border border-gray-100 overflow-hidden shadow-sm">
+                    <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+                        <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">
+                            Manage Top Performers
+                        </h2>
                         <Button
-                            onClick={handleUpdateSettings}
-                            className="bg-[#0f4c3a] hover:bg-[#0d3f30] text-white px-8 h-12 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95"
+                            onClick={() => {
+                                setEditingId(null);
+                                setFormData({ name: '', image: '', course: '', description: '' });
+                                setIsModalOpen(true);
+                            }}
+                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
                         >
-                            <Check size={18} />
-                            Update Banner Settings
+                            <Plus size={16} /> Add New Performer
                         </Button>
                     </div>
-                </div>
-            </div>
-
-            {/* List Section */}
-            <div className="space-y-4">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
-                    <h2 className="text-xl font-bold text-gray-800">Manage Top Performers</h2>
-                    <Button
-                        onClick={() => setIsModalOpen(true)}
-                        className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 h-11 rounded-xl flex items-center gap-2 shadow-md transition-all"
-                    >
-                        <Plus size={18} />
-                        Add New Performer
-                    </Button>
-                </div>
-
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 italic">
-                    <div className="flex flex-col md:flex-row gap-4 items-center">
-                        <div className="flex-1 relative w-full italic">
-                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                                <Search size={16} />
+                    <div className="p-6 space-y-6">
+                        {/* Search Area */}
+                        <div className="flex flex-col md:flex-row gap-4 items-center">
+                            <div className="flex-1 relative w-full">
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    <Search size={16} />
+                                </div>
+                                <Input
+                                    placeholder="Search by name or course..."
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
+                                />
                             </div>
-                            <Input
-                                placeholder="Search by name or course..."
-                                className="pl-10 h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm italic"
-                                value={searchQuery}
-                                onChange={e => setSearchQuery(e.target.value)}
-                            />
+                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto">
+                                Search
+                            </Button>
+                            <Button
+                                variant="outline"
+                                className="bg-white hover:bg-orange-50/30 text-[#b9875a] border border-orange-200 h-10 px-16 rounded-sm font-bold transition-all uppercase tracking-wider text-xs w-full md:w-auto"
+                                onClick={() => setSearchQuery("")}
+                            >
+                                Reset
+                            </Button>
                         </div>
-                        <Button className="bg-[#1e3a8a] hover:bg-blue-900 text-white h-11 px-10 rounded-xl font-bold">
-                            Search
-                        </Button>
-                        <Button
-                            variant="outline"
-                            className="border-orange-100 text-orange-600 hover:bg-orange-50 h-11 px-10 rounded-xl font-bold"
-                            onClick={() => setSearchQuery("")}
-                        >
-                            Reset
-                        </Button>
-                    </div>
-                </div>
 
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[300px]">
-                    <div className="overflow-x-auto">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-100">
-                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 px-6 w-16 text-center">#</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Name</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Image</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Course Name</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Short Description</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Created At</TableHead>
-                                    <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 text-center px-6">Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {filteredPerformers.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={7} className="py-20 text-center">
-                                            <p className="text-red-500 font-bold italic text-base">No Data Available</p>
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                    filteredPerformers.map((row, index) => (
-                                        <TableRow key={row.id}>
-                                            <TableCell className="py-4 px-6 text-center font-medium text-gray-500">{index + 1}</TableCell>
-                                            <TableCell className="py-4">
-                                                <div className="w-12 h-10 rounded-lg bg-gray-100 overflow-hidden border border-gray-200">
-                                                    {row.image ? <img src={row.image} alt={row.name} className="w-full h-full object-cover" /> : <ImageIcon size={20} className="text-gray-300 m-auto mt-2" />}
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className="py-4 font-semibold text-gray-700">{row.name}</TableCell>
-                                            <TableCell className="py-4 text-sm text-gray-600">{row.course}</TableCell>
-                                            <TableCell className="py-4 text-sm text-gray-500 max-w-xs truncate">{row.description}</TableCell>
-                                            <TableCell className="py-4 text-sm text-gray-500">{row.createdAt}</TableCell>
-                                            <TableCell className="py-4">
-                                                <div className="flex items-center justify-center gap-2">
-                                                    <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">
-                                                        <Edit2 size={18} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDeletePerformer(row.id)}
-                                                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                                                    >
-                                                        <Trash2 size={18} />
-                                                    </button>
-                                                </div>
-                                            </TableCell>
+                        {/* Table */}
+                        <div className="bg-white rounded-sm border border-gray-100 overflow-hidden min-h-[300px]">
+                            <div className="overflow-x-auto">
+                                <Table className="border-collapse">
+                                    <TableHeader>
+                                        <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-100">
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 px-6 w-16 text-center border-r border-gray-100">#</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Name</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 text-center">Image</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Course Name</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Short Description</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100">Created At</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 text-center px-6">Actions</TableHead>
                                         </TableRow>
-                                    ))
-                                )}
-                            </TableBody>
-                        </Table>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredPerformers.length === 0 ? (
+                                            <TableRow>
+                                                <TableCell colSpan={7} className="py-20 text-center">
+                                                    <p className="text-red-500 font-bold italic text-xs uppercase tracking-widest">No Data Available</p>
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            filteredPerformers.map((row, index) => (
+                                                <TableRow key={row.id} className="hover:bg-gray-50/50 outline-none">
+                                                    <TableCell className="py-4 px-6 text-center font-medium text-gray-500 border-r border-gray-100 text-xs">{index + 1}</TableCell>
+                                                    <TableCell className="py-4 font-semibold text-gray-700 border-r border-gray-100 text-xs px-6">{row.name}</TableCell>
+                                                    <TableCell className="py-4 border-r border-gray-100">
+                                                        <div className="w-12 h-10 rounded-sm bg-gray-50 overflow-hidden border border-gray-200 mx-auto">
+                                                            {row.image ? <img src={row.image} alt={row.name} className="w-full h-full object-cover" /> : <ImageIcon size={20} className="text-gray-300 m-auto mt-2" />}
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="py-4 text-[11px] font-bold text-gray-600 border-r border-gray-100 px-6 uppercase tracking-tight">{row.course}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-gray-500 max-w-xs truncate border-r border-gray-100 px-6 italic">"{row.description}"</TableCell>
+                                                    <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
+                                                    <TableCell className="py-4 px-6 text-center">
+                                                        <div className="flex items-center justify-center gap-2">
+                                                            <button onClick={() => handleEditPerformer(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                                <Edit2 size={14} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleDeletePerformer(row.id)}
+                                                                className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors"
+                                                            >
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Add Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-                    <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative">
-                        <button onClick={() => setIsModalOpen(false)} className="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
-                            <X size={24} />
-                        </button>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                            <Plus size={24} className="text-blue-600" />
-                            Add New Performer
-                        </h2>
-                        <form onSubmit={handleSavePerformer} className="space-y-4">
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Name <span className="text-red-500">*</span></label>
-                                <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. John Doe" />
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-[2px] p-4 font-sans">
+                    <div className="bg-white w-full max-w-lg rounded-sm shadow-2xl relative overflow-hidden">
+                        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+                            <h2 className="text-[15px] font-bold text-gray-800 uppercase tracking-widest">{editingId ? 'Edit Performer' : 'Add New Performer'}</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSavePerformer} className="p-6 space-y-6">
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Name <span className="text-red-500">*</span></label>
+                                <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="Enter Student Name" className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e463a]" />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Image URL</label>
-                                <Input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} placeholder="https://..." />
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Image <span className="text-red-500">*</span></label>
+                                <div className="flex items-center gap-2">
+                                    <div className="flex-1 border border-gray-200 rounded-sm h-10 flex items-center px-3 bg-gray-50/20">
+                                        <input type="file" ref={modalFileRef} className="hidden" onChange={() => { }} />
+                                        <button
+                                            type="button"
+                                            onClick={() => triggerFileSelect(modalFileRef)}
+                                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 text-[11px] font-bold rounded-sm transition-colors mr-3 h-7 flex items-center gap-1.5"
+                                        >
+                                            <Upload size={12} />
+                                            Choose File
+                                        </button>
+                                        <span className="text-[11px] text-gray-400 italic">No file chosen</span>
+                                    </div>
+                                </div>
+                                <p className="text-[10px] text-gray-400 italic px-1 mt-1 font-sans">JPEG/PNG/WEBP format, max 2MB. Recommended size: 400x300 pixels.</p>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Course Name</label>
-                                <Input value={formData.course} onChange={e => setFormData({ ...formData, course: e.target.value })} placeholder="e.g. Web Development" />
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Course Name</label>
+                                <Input value={formData.course} onChange={e => setFormData({ ...formData, course: e.target.value })} placeholder="Enter Course Name" className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e463a]" />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-600 uppercase">Short Description</label>
-                                <Textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Brief achievements..." />
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Short Description</label>
+                                <Textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Enter Short Description" className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1e463a] leading-relaxed p-3 bg-gray-50/20" />
                             </div>
-                            <div className="flex justify-end gap-3 mt-8">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                                <Button type="submit" className="bg-blue-600 text-white font-bold px-8">Save Performer</Button>
+
+                            <div className="flex justify-center gap-4 pt-4 border-t border-gray-100 -mx-6 px-6 mt-6">
+                                <Button type="button" onClick={() => setIsModalOpen(false)} className="bg-[#b9875a] hover:bg-[#a6764a] text-white border-none h-10 text-[11px] font-bold px-10 rounded-sm shadow-sm transition-all uppercase tracking-wider">Cancel</Button>
+                                <Button type="submit" className="bg-[#1e463a] hover:bg-[#153229] text-white h-10 text-[11px] font-bold px-10 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider">{editingId ? 'Update Performer' : 'Add Performer'}</Button>
                             </div>
                         </form>
                     </div>

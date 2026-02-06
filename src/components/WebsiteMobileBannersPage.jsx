@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, Plus, Edit2, Trash2, X, Smartphone, Image } from "lucide-react";
+import { Search, Plus, Edit2, Trash2, X, Monitor } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
-import { addMobileBanner, deleteMobileBanner } from '@/store/websiteSlice';
+import { addMobileBanner, editMobileBanner, deleteMobileBanner } from '@/store/websiteSlice';
 
 const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
     <button
@@ -21,171 +21,261 @@ const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
 export default function WebsiteMobileBannersPage() {
     const banners = useSelector((state) => state.website.mobileBanners || []);
     const dispatch = useDispatch();
+
     const [searchQuery, setSearchQuery] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({ title: '', image: '', type: 'Home', link: '', order: '1', status: true });
+    const [formData, setFormData] = useState({
+        title: '',
+        image: '',
+        type: '',
+        link: '',
+        order: '0',
+        status: true
+    });
+    const [editingId, setEditingId] = useState(null);
+
+    const modalFileRef = useRef(null);
 
     const filteredBanners = banners.filter(b =>
         b.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        dispatch(addMobileBanner(formData));
-        setIsModalOpen(false);
-        setFormData({ title: '', image: '', type: 'Home', link: '', order: '1', status: true });
+    const handleEditBanner = (banner) => {
+        setFormData({
+            title: banner.title,
+            image: banner.image,
+            type: banner.type,
+            link: banner.link,
+            order: banner.order,
+            status: banner.status
+        });
+        setEditingId(banner.id);
+        setIsModalOpen(true);
     };
 
-    const handleDelete = (id) => {
+    const handleSaveBanner = (e) => {
+        e.preventDefault();
+        if (editingId) {
+            dispatch(editMobileBanner({ ...formData, id: editingId }));
+        } else {
+            dispatch(addMobileBanner(formData));
+        }
+        setIsModalOpen(false);
+        resetForm();
+    };
+
+    const resetForm = () => {
+        setFormData({ title: '', image: '', type: '', link: '', order: '0', status: true });
+        setEditingId(null);
+    };
+
+    const handleDeleteBanner = (id) => {
         if (window.confirm("Delete this mobile banner?")) {
             dispatch(deleteMobileBanner(id));
         }
     };
 
+    const triggerFileSelect = (ref) => {
+        if (ref.current) ref.current.click();
+    };
+
     return (
-        <div className="space-y-6 font-sans relative">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                    <Smartphone size={24} className="text-blue-600" />
-                    Manage Mobile Banners
-                </h1>
-                <Button
-                    onClick={() => setIsModalOpen(true)}
-                    className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-2 rounded-xl flex items-center gap-2 border-none transition-all shadow-md font-bold"
-                >
-                    <Plus size={18} />
-                    Add New Mobile Banner
-                </Button>
-            </div>
+        <div className="space-y-6 font-sans relative pb-10 px-6 pt-4">
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 italic">
-                <div className="flex flex-col md:flex-row gap-4 items-center">
-                    <div className="flex-1 relative w-full italic">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                            <Search size={16} />
-                        </div>
-                        <Input
-                            placeholder="Search by banner title..."
-                            className="pl-10 h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm italic"
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-                    <Button className="bg-[#1e40af] hover:bg-blue-900 text-white h-11 px-10 rounded-xl font-bold transition-all shadow-md border-none">
-                        Search
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="border-orange-100 text-orange-600 hover:bg-orange-50 h-11 px-10 rounded-xl font-bold"
-                        onClick={() => setSearchQuery("")}
-                    >
-                        Reset
-                    </Button>
-                </div>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[300px]">
-                <div className="overflow-x-auto">
-                    <Table>
-                        <TableHeader>
-                            <TableRow className="bg-[#f8fafc] border-b border-gray-100">
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 px-6 w-16 text-center">#</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Title</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Preview</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Type</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Link</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Order</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 text-center">Status</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Created At</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 text-center px-6">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredBanners.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={9} className="py-24 text-center">
-                                        <div className="flex flex-col items-center justify-center gap-4 text-gray-400">
-                                            <div className="bg-gray-50 p-6 rounded-3xl">
-                                                <Image size={48} className="text-gray-300" />
-                                            </div>
-                                            <p className="font-bold text-gray-400 italic">No mobile banners found</p>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                filteredBanners.map((row, index) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell className="py-4 px-6 text-center font-medium text-gray-500">{index + 1}</TableCell>
-                                        <TableCell className="py-4 font-semibold text-gray-700">{row.title}</TableCell>
-                                        <TableCell className="py-4">
-                                            <div className="w-16 h-10 rounded-lg bg-gray-100 overflow-hidden border border-gray-200">
-                                                {row.image && <img src={row.image} alt={row.title} className="w-full h-full object-cover" />}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="py-4 text-xs font-bold text-blue-600 uppercase tracking-widest">{row.type}</TableCell>
-                                        <TableCell className="py-4 text-sm text-gray-500 max-w-[120px] truncate">{row.link}</TableCell>
-                                        <TableCell className="py-4 font-bold text-gray-700">{row.order}</TableCell>
-                                        <TableCell className="py-4 text-center">
-                                            <div className="flex justify-center">
-                                                <CustomBlueSwitch checked={row.status} onCheckedChange={() => { }} />
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="py-4 text-xs text-gray-400">{row.createdAt}</TableCell>
-                                        <TableCell className="py-4 px-6">
-                                            <div className="flex items-center justify-center gap-2">
-                                                <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">
-                                                    <Edit2 size={18} />
-                                                </button>
-                                                <button onClick={() => handleDelete(row.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                                                    <Trash2 size={18} />
-                                                </button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
-            </div>
-
-            {/* Add Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 font-sans">
-                    <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative">
-                        <button onClick={() => setIsModalOpen(false)} className="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
-                            <X size={24} />
-                        </button>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                            <Plus size={24} className="text-[#0f172a]" />
-                            Add Mobile Banner
+            <div className="space-y-6">
+                {/* Manage Mobile Banners Card */}
+                <div className="bg-white rounded-sm border border-gray-100 overflow-hidden shadow-sm">
+                    <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+                        <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">
+                            Manage Mobile Banners
                         </h2>
-                        <form onSubmit={handleSave} className="space-y-4">
-                            <div className="space-y-2">
-                                <Label className="text-gray-600">Banner Title <span className="text-red-500">*</span></Label>
-                                <Input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. New Year Offer" className="h-11 rounded-xl bg-gray-50/50" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-gray-600">Image URL <span className="text-red-500">*</span></Label>
-                                <Input required value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} placeholder="https://..." className="h-11 rounded-xl bg-gray-50/50" />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label className="text-gray-600">Type</Label>
-                                    <Input value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })} placeholder="e.g. Home" className="h-11 rounded-xl bg-gray-50/50" />
+                        <Button
+                            onClick={() => {
+                                resetForm();
+                                setIsModalOpen(true);
+                            }}
+                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                        >
+                            <Plus size={16} /> Add New Banner
+                        </Button>
+                    </div>
+                    <div className="p-6 space-y-6">
+                        {/* Search Area */}
+                        <div className="flex flex-col md:flex-row gap-4 items-center">
+                            <div className="flex-1 relative w-full">
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold">
+                                    <Search size={16} />
                                 </div>
-                                <div className="space-y-2">
-                                    <Label className="text-gray-600">Order</Label>
-                                    <Input type="number" value={formData.order} onChange={e => setFormData({ ...formData, order: e.target.value })} className="h-11 rounded-xl bg-gray-50/50" />
+                                <Input
+                                    placeholder="Search by title..."
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                                Search
+                            </Button>
+                            <Button
+                                variant="outline"
+                                className="bg-white hover:bg-orange-50/30 text-[#b9875a] border border-orange-200 h-10 px-16 rounded-sm font-bold transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm"
+                                onClick={() => setSearchQuery("")}
+                            >
+                                Reset
+                            </Button>
+                        </div>
+
+                        {/* Table */}
+                        <div className="bg-white rounded-sm border border-gray-100 overflow-hidden min-h-[300px]">
+                            <div className="overflow-x-auto font-sans">
+                                <Table className="border-collapse">
+                                    <TableHeader>
+                                        <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-100">
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 px-6 w-16 text-center border-r border-gray-100">#</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Title</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 text-center px-6">Image</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6 text-center">Type</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Course/Link</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6 text-center">Order</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6 text-center">Status</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Created At</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 text-center px-6">Actions</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredBanners.length === 0 ? (
+                                            <TableRow>
+                                                <TableCell colSpan={9} className="py-20 text-center font-sans border-b border-gray-100">
+                                                    <p className="text-red-500 font-bold italic text-xs uppercase tracking-widest">No Data Available</p>
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            filteredBanners.map((row, index) => (
+                                                <TableRow key={row.id} className="hover:bg-gray-50/50 outline-none border-b border-gray-100">
+                                                    <TableCell className="py-4 px-6 text-center font-medium text-gray-500 border-r border-gray-100 text-xs">{index + 1}</TableCell>
+                                                    <TableCell className="py-4 font-semibold text-gray-700 border-r border-gray-100 text-xs px-6">{row.title}</TableCell>
+                                                    <TableCell className="py-4 border-r border-gray-100">
+                                                        <div className="w-12 h-10 rounded-sm bg-gray-50 overflow-hidden border border-gray-200 mx-auto flex items-center justify-center">
+                                                            {row.image ? <img src={row.image} alt={row.title} className="w-full h-full object-cover" /> : <Monitor size={18} className="text-gray-300" />}
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="py-4 text-xs font-bold text-blue-600 uppercase tracking-widest border-r border-gray-100 text-center px-6">{row.type}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-gray-600 border-r border-gray-100 px-6 truncate max-w-[150px]">{row.link}</TableCell>
+                                                    <TableCell className="py-4 font-bold text-gray-700 border-r border-gray-100 text-xs px-6 text-center">{row.order}</TableCell>
+                                                    <TableCell className="py-4 border-r border-gray-100 text-center px-6">
+                                                        <div className="flex justify-center scale-90">
+                                                            <CustomBlueSwitch checked={row.status} onCheckedChange={() => { }} />
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
+                                                    <TableCell className="py-4 px-6 text-center">
+                                                        <div className="flex items-center justify-center gap-2">
+                                                            <button onClick={() => handleEditBanner(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                                <Edit2 size={14} />
+                                                            </button>
+                                                            <button onClick={() => handleDeleteBanner(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-[2px] p-4 font-sans">
+                    <div className="bg-white w-full max-w-lg rounded-sm shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-200">
+                        <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/30">
+                            <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">{editingId ? 'Edit Mobile Banner' : 'Add New Mobile Banner'}</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSaveBanner} className="p-6 space-y-5">
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Title <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.title}
+                                    onChange={e => setFormData({ ...formData, title: e.target.value })}
+                                    placeholder="Banner Title"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Image <span className="text-red-500">*</span></label>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center h-10 border border-gray-200 rounded-sm overflow-hidden text-sm bg-gray-50/20">
+                                        <input type="file" ref={modalFileRef} className="hidden" onChange={() => { }} />
+                                        <button
+                                            type="button"
+                                            onClick={() => triggerFileSelect(modalFileRef)}
+                                            className="px-3 h-full bg-gray-200 border-r border-gray-200 text-[11px] font-bold text-gray-700 hover:bg-gray-300 transition-colors"
+                                        >
+                                            Choose File
+                                        </button>
+                                        <span className="px-3 text-gray-400 text-[11px] italic">No file chosen</span>
+                                    </div>
+                                    <p className="text-[9px] text-gray-400 italic px-1 font-sans font-bold leading-tight">Image size should be optimized for mobile devices.</p>
                                 </div>
                             </div>
-                            <div className="space-y-2">
-                                <Label className="text-gray-600">Link URL</Label>
-                                <Input value={formData.link} onChange={e => setFormData({ ...formData, link: e.target.value })} placeholder="https://..." className="h-11 rounded-xl bg-gray-50/50" />
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Banner Type <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.type}
+                                    onChange={e => setFormData({ ...formData, type: e.target.value })}
+                                    placeholder="Select Type"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
                             </div>
-                            <div className="flex justify-end gap-3 mt-8">
-                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="h-11 px-8 rounded-xl font-bold text-gray-500">Cancel</Button>
-                                <Button type="submit" className="bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold h-11 px-10 rounded-xl shadow-lg border-none">Save Banner</Button>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Order</label>
+                                <Input
+                                    type="number"
+                                    value={formData.order}
+                                    onChange={e => setFormData({ ...formData, order: e.target.value })}
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="flex items-center gap-2 px-1">
+                                <input
+                                    type="checkbox"
+                                    id="active-mobile"
+                                    checked={formData.status}
+                                    onChange={e => setFormData({ ...formData, status: e.target.checked })}
+                                    className="w-4 h-4 rounded border-gray-300 text-[#1a237e] focus:ring-[#1a237e]"
+                                />
+                                <label htmlFor="active-mobile" className="text-[11px] font-bold text-gray-600 uppercase tracking-widest cursor-pointer">Active</label>
+                            </div>
+
+                            <div className="flex justify-center gap-4 pt-4 border-t border-gray-100 -mx-6 px-6 mt-4">
+                                <Button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white border-none h-10 text-[11px] font-bold px-10 rounded-sm shadow-sm transition-all uppercase tracking-wider"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white h-10 text-[11px] font-bold px-10 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
+                                >
+                                    {editingId ? 'Update Banner' : 'Add Banner'}
+                                </Button>
                             </div>
                         </form>
                     </div>
@@ -194,5 +284,3 @@ export default function WebsiteMobileBannersPage() {
         </div>
     );
 }
-
-const Label = ({ children, className }) => <label className={`block text-xs font-bold uppercase tracking-widest ${className}`}>{children}</label>;

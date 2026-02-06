@@ -16,90 +16,109 @@ export default function WebsiteJobApplicationsPage() {
     ];
 
     return (
-        <div className="space-y-8 pb-10">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {stats.map((stat, i) => (
-                    <Card key={i} className={`${stat.color} border-none shadow-md overflow-hidden relative h-28 transform hover:scale-105 transition-all cursor-default`}>
-                        <CardContent className="p-4 flex flex-col justify-center items-center h-full text-white text-center">
-                            <span className="text-2xl font-black mb-1">{stat.count}</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest opacity-90">{stat.label}</span>
-                        </CardContent>
-                        <div className="absolute -right-4 -bottom-4 opacity-10">
-                            <ClipboardList size={80} />
-                        </div>
-                    </Card>
-                ))}
+        <div className="space-y-6 font-sans relative">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-100 pb-6 px-6">
+                <h2 className="text-xl font-medium text-gray-800 tracking-tight">Job Applications Management</h2>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-6 border-b border-gray-50 bg-gray-50/20">
-                    <h2 className="text-lg font-bold text-gray-800">Job Applications Management</h2>
+            <div className="p-6 space-y-8">
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    {stats.map((stat, i) => (
+                        <div key={i} className={`${stat.color} rounded-sm shadow-sm overflow-hidden relative h-24 transform hover:translate-y-[-2px] transition-all cursor-default group`}>
+                            <div className="p-4 flex flex-col justify-center items-center h-full text-white text-center relative z-10">
+                                <span className="text-2xl font-black mb-1 leading-none">{stat.count}</span>
+                                <span className="text-[10px] font-bold uppercase tracking-wider opacity-80">{stat.label}</span>
+                            </div>
+                            <div className="absolute -right-4 -bottom-4 opacity-10 text-white group-hover:scale-110 transition-transform duration-500">
+                                <ClipboardList size={70} />
+                            </div>
+                        </div>
+                    ))}
                 </div>
 
-                <div className="p-6 space-y-6">
-                    {/* Filters */}
-                    <div className="flex flex-col lg:flex-row gap-4">
-                        <div className="w-full lg:w-48">
-                            <select className="w-full h-11 bg-gray-50/50 border border-gray-100 rounded-xl px-4 text-xs font-medium text-gray-500 italic appearance-none cursor-pointer">
-                                <option>All Status</option>
-                            </select>
-                        </div>
-                        <div className="w-full lg:w-64 text-sans">
-                            <select className="w-full h-11 bg-gray-50/50 border border-gray-100 rounded-xl px-4 text-xs font-medium text-gray-500 italic appearance-none cursor-pointer">
-                                <option>All Jobs</option>
-                            </select>
-                        </div>
-                        <div className="flex-1 relative">
-                            <Input
-                                placeholder="Search by name, email or mobile..."
-                                className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm italic pl-4"
-                            />
-                        </div>
-                        <div className="flex gap-2">
-                            <Button className="bg-[#1e3a8a] hover:bg-blue-900 text-white h-11 px-8 rounded-xl font-bold flex items-center gap-2">
-                                <Filter size={16} />
-                                Filter
-                            </Button>
-                            <Button variant="outline" className="border-[#c08457]/30 text-[#c08457] hover:bg-orange-50/30 h-11 px-8 rounded-xl font-bold bg-[#c08457]/10 flex items-center gap-2">
-                                <RotateCcw size={16} />
-                                Reset
-                            </Button>
-                        </div>
+                <div className="bg-white rounded-sm border border-gray-100 overflow-hidden shadow-sm">
+                    <div className="p-5 border-b border-gray-100 bg-gray-50/10">
+                        <h2 className="text-[14px] font-bold text-gray-800 flex items-center gap-2 uppercase tracking-wider">
+                            <Filter size={18} className="text-blue-600" />
+                            Search & Filters
+                        </h2>
                     </div>
 
-                    {/* Table */}
-                    <div className="border border-gray-50 rounded-2xl overflow-hidden">
-                        <div className="overflow-x-auto">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow className="bg-[#f8fafc] border-b border-gray-100">
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 px-6 w-16 text-center">#</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Applicant Name</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Email</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Mobile</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Job Title</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Experience</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Skills</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Message</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Status</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Applied On</TableHead>
-                                        <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 text-center px-6">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell colSpan={11} className="py-24 text-center">
-                                            <div className="flex flex-col items-center justify-center gap-4 text-gray-400">
-                                                <div className="bg-gray-50 p-6 rounded-2xl">
-                                                    <ClipboardList size={48} className="text-gray-300" />
+                    <div className="p-8 space-y-8">
+                        {/* Filters */}
+                        <div className="flex flex-col lg:flex-row gap-4 items-end">
+                            <div className="w-full lg:w-48 space-y-1.5">
+                                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Status</label>
+                                <select className="w-full h-10 bg-white border border-gray-200 rounded-sm px-4 text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:ring-1 focus:ring-[#1e463a] outline-none">
+                                    <option>All Status</option>
+                                </select>
+                            </div>
+                            <div className="w-full lg:w-64 space-y-1.5">
+                                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Job Title</label>
+                                <select className="w-full h-10 bg-white border border-gray-200 rounded-sm px-4 text-sm font-medium text-gray-700 appearance-none cursor-pointer focus:ring-1 focus:ring-[#1e463a] outline-none">
+                                    <option>All Jobs</option>
+                                </select>
+                            </div>
+                            <div className="flex-1 space-y-1.5">
+                                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Search Keywords</label>
+                                <div className="relative italic">
+                                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                        <Search size={16} />
+                                    </div>
+                                    <Input
+                                        placeholder="Name, email or mobile..."
+                                        className="h-10 border-gray-200 rounded-sm text-sm pl-10 focus:ring-1 focus:ring-[#1e463a]"
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex gap-3">
+                                <Button className="bg-[#1e3a8a] text-white h-10 px-8 rounded-sm font-bold flex items-center gap-2 border-none uppercase tracking-wider text-xs shadow-md transition-all active:scale-95">
+                                    <Filter size={14} />
+                                    Filter
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    className="border-[#c08457]/30 text-[#c08457] hover:bg-orange-50/30 h-10 px-8 rounded-sm font-bold bg-[#c08457]/10 flex items-center gap-2 uppercase tracking-wider text-xs"
+                                >
+                                    <RotateCcw size={14} />
+                                    Reset
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* Table */}
+                        <div className="bg-white rounded-sm border border-gray-100 overflow-hidden min-h-[400px]">
+                            <div className="overflow-x-auto">
+                                <Table className="border-collapse">
+                                    <TableHeader>
+                                        <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-100">
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 px-6 w-16 text-center border-r border-gray-100">#</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Applicant</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Contact Info</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Job Details</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Experience/Skills</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Status</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 text-center px-6">Actions</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell colSpan={7} className="py-32 text-center border-b border-gray-100">
+                                                <div className="flex flex-col items-center justify-center gap-4 text-gray-300">
+                                                    <div className="bg-gray-50 p-8 rounded-full border border-gray-100/50">
+                                                        <ClipboardList size={48} className="text-gray-200" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-bold text-red-500 italic text-base">No job applications found</p>
+                                                        <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Adjust your filters and try again</p>
+                                                    </div>
                                                 </div>
-                                                <p className="font-bold text-gray-400 italic">No job applications found</p>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </div>
                         </div>
                     </div>
                 </div>

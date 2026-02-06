@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Check, Info } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBannerSettings } from '@/store/websiteSlice';
 
@@ -12,110 +11,133 @@ export default function WebsiteBannersPage() {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState(settings);
 
+    const bannerFileRef = useRef(null);
+
     const handleUpdate = () => {
         dispatch(updateBannerSettings(formData));
         alert("Banner settings updated successfully!");
     };
 
-    return (
-        <div className="space-y-6 pb-10">
-            <h1 className="text-xl font-bold text-gray-800 font-sans">Banner / Slider Management</h1>
+    const triggerFileSelect = (ref) => {
+        if (ref.current) ref.current.click();
+    };
 
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-8">
-                {/* Display Mode Toggle */}
-                <div className="flex items-center gap-4 bg-gray-50/50 p-4 rounded-xl border border-gray-100 w-fit">
-                    <span className="text-sm font-bold text-gray-700">Display Mode: <span className="text-amber-500 ml-2 uppercase tracking-wider">{formData.displayMode}</span></span>
-                    <Switch
-                        checked={formData.displayMode === 'slider'}
-                        onCheckedChange={(checked) => setFormData({ ...formData, displayMode: checked ? 'slider' : 'banner' })}
-                        className="data-[state=checked]:bg-blue-600"
-                    />
-                    <span className="text-sm font-medium text-gray-400">Slider Mode</span>
+    return (
+        <div className="space-y-6 font-sans relative pb-10 px-6 pt-4">
+
+            <div className="bg-white rounded-sm border border-gray-100 shadow-sm overflow-hidden">
+                <div className="p-4 border-b border-gray-100 bg-gray-50/30">
+                    <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">
+                        Banner / Slider Management
+                    </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 font-sans">
-                    {/* Main Image */}
-                    <div className="space-y-3">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1">
-                            Main Image URL <span className="text-red-500 font-bold">*</span>
-                        </label>
-                        <Input
-                            value={formData.image}
-                            onChange={e => setFormData({ ...formData, image: e.target.value })}
-                            placeholder="https://..."
-                            className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                        />
-                        <p className="text-[10px] text-gray-400 italic">Recommended: 1200x1400 pixels.</p>
+                <div className="p-8 space-y-8">
+                    {/* Display Mode Toggle */}
+                    <div className="flex items-center gap-4">
+                        <span className="text-[11px] font-bold text-gray-700 uppercase tracking-widest">Display Mode:</span>
+                        <div className="flex items-center gap-2">
+                            <span className={`text-[11px] font-bold uppercase tracking-wider ${formData.displayMode === 'banner' ? 'text-orange-400' : 'text-gray-300'}`}>Banner</span>
+                            <Switch
+                                checked={formData.displayMode === 'slider'}
+                                onCheckedChange={(checked) => setFormData({ ...formData, displayMode: checked ? 'slider' : 'banner' })}
+                                className="data-[state=checked]:bg-gray-400 data-[state=unchecked]:bg-gray-200"
+                            />
+                            <span className={`text-[11px] font-bold uppercase tracking-wider ${formData.displayMode === 'slider' ? 'text-orange-400' : 'text-gray-300'}`}>Slider</span>
+                        </div>
                     </div>
 
-                    {/* Badge Text */}
-                    <div className="space-y-3">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1">
-                            Badge Text <span className="text-red-500 font-bold">*</span>
-                        </label>
-                        <Input
-                            value={formData.badgeText}
-                            onChange={e => setFormData({ ...formData, badgeText: e.target.value })}
-                            className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                        />
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Main Image */}
+                        <div className="space-y-1">
+                            <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">
+                                Main Image <span className="text-red-500">*</span>
+                            </label>
+                            <div className="flex flex-col gap-2">
+                                <div className="flex items-center h-10 border border-gray-200 rounded-sm overflow-hidden text-sm bg-gray-50/20">
+                                    <input type="file" ref={bannerFileRef} className="hidden" onChange={() => { }} />
+                                    <button
+                                        type="button"
+                                        onClick={() => triggerFileSelect(bannerFileRef)}
+                                        className="px-3 h-full bg-gray-200 border-r border-gray-200 text-[11px] font-bold text-gray-700 hover:bg-gray-300 transition-colors"
+                                    >
+                                        Choose File
+                                    </button>
+                                    <span className="px-3 text-gray-400 text-[11px] italic">No file chosen</span>
+                                </div>
+                                <p className="text-[9px] text-gray-400 italic px-1 font-sans font-bold leading-tight">
+                                    Leave blank to keep existing Image. Image must be 1200x1400 pixels.
+                                </p>
+                            </div>
+                        </div>
 
-                    {/* Badge Icon */}
-                    <div className="space-y-3">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1">
-                            Badge Icon (Emoji) <span className="text-red-500 font-bold">*</span>
-                        </label>
-                        <div className="relative">
+                        {/* Badge Text */}
+                        <div className="space-y-1">
+                            <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">
+                                Badge Text <span className="text-red-500">*</span>
+                            </label>
                             <Input
-                                value={formData.badgeIcon}
-                                onChange={e => setFormData({ ...formData, badgeIcon: e.target.value })}
-                                className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
+                                value={formData.badgeText}
+                                onChange={e => setFormData({ ...formData, badgeText: e.target.value })}
+                                placeholder="The Leader in Online Learning"
+                                className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
                             />
                         </div>
-                        <p className="text-[10px] text-gray-400 italic">Enter an emoji (e.g. 🏆, ⭐, 🎓).</p>
+                    </div>
+
+                    {/* Badge Icon (Emoji) */}
+                    <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">
+                            Badge Icon (Emoji) <span className="text-red-500">*</span>
+                        </label>
+                        <Input
+                            value={formData.badgeIcon}
+                            onChange={e => setFormData({ ...formData, badgeIcon: e.target.value })}
+                            placeholder="👤"
+                            className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] max-w-sm"
+                        />
+                        <p className="text-[9px] text-gray-400 italic px-1 font-bold">
+                            Enter an emoji (e.g., 👤, ⭐, 🎓).
+                        </p>
                     </div>
 
                     {/* Title */}
-                    <div className="md:col-span-2 space-y-3">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1">
-                            Title <span className="text-red-500 font-bold">*</span>
+                    <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">
+                            Title <span className="text-red-500">*</span>
                         </label>
-                        <Input
+                        <Textarea
                             value={formData.title}
                             onChange={e => setFormData({ ...formData, title: e.target.value })}
-                            className="h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
+                            placeholder="Build The Skills <br /> To Drive Your Career."
+                            className="min-h-[80px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
                         />
-                        <div className="flex items-center gap-1 text-[10px] text-gray-400 italic bg-blue-50/50 px-2 py-1 rounded w-fit">
-                            <Info size={12} className="text-blue-500" />
-                            Use &lt;br /&gt; for line breaks
-                        </div>
+                        <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;br /&gt; for line breaks.</p>
                     </div>
 
                     {/* Description */}
-                    <div className="md:col-span-2 space-y-3">
-                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1">
-                            Description <span className="text-red-500 font-bold">*</span>
+                    <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">
+                            Description <span className="text-red-500">*</span>
                         </label>
                         <Textarea
-                            className="min-h-[120px] bg-gray-50/50 border-gray-100 rounded-xl text-sm leading-relaxed"
                             value={formData.description}
                             onChange={e => setFormData({ ...formData, description: e.target.value })}
+                            placeholder="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. <strong>Velit officia consequat.</strong>"
+                            className="min-h-[100px] rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e] leading-relaxed p-3 bg-gray-50/20"
                         />
-                        <div className="flex items-center gap-1 text-[10px] text-gray-400 italic bg-blue-50/50 px-2 py-1 rounded w-fit">
-                            <Info size={12} className="text-blue-500" />
-                            Use &lt;strong&gt; for bold text.
-                        </div>
+                        <p className="text-[9px] text-gray-400 italic px-1 font-bold">Use &lt;strong&gt; for bold text.</p>
                     </div>
-                </div>
 
-                <div className="pt-4">
-                    <Button
-                        onClick={handleUpdate}
-                        className="bg-[#f2ca52] hover:bg-[#e0bb43] text-[#0f172a] px-10 h-12 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all active:scale-95 border-none"
-                    >
-                        <Check size={18} />
-                        Update Banner & Slider Settings
-                    </Button>
+                    {/* Update Button */}
+                    <div className="flex justify-start pt-6 border-t border-gray-100">
+                        <Button
+                            onClick={handleUpdate}
+                            className="bg-[#ebca52] hover:bg-[#d9b942] text-white h-10 text-[11px] font-bold px-10 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
+                        >
+                            Update Banner Section
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check, X, Globe, Link, Share2, Info } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSocialMediaSettings } from '@/store/websiteSlice';
 
-const SocialIconLayout = ({ children, title, icon: Icon, color }) => (
-    <div className="space-y-3 font-sans group">
-        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
-            <div className={`p-1.5 rounded-lg ${color} text-white group-hover:scale-110 transition-transform`}>
-                {Icon ? <Icon size={14} /> : <div className="w-3.5 h-3.5 flex items-center justify-center font-bold text-[8px]">?</div>}
-            </div>
-            {title} URL
+const SocialField = ({ label, subtext, value, onChange, placeholder }) => (
+    <div className="space-y-1.5">
+        <label className="text-[12px] font-bold text-gray-700 tracking-tight">
+            {label} URL
         </label>
-        {children}
+        <Input
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            className="h-10 border-gray-200 rounded-sm text-xs focus:ring-1 focus:ring-[#1a237e]"
+        />
+        <p className="text-[11px] text-gray-400 italic font-medium">
+            {subtext}
+        </p>
     </div>
 );
 
@@ -28,76 +32,66 @@ export default function WebsiteSocialMediaPage() {
     };
 
     return (
-        <div className="space-y-6 max-w-5xl font-sans">
-            <h1 className="text-xl font-bold text-gray-800">Manage Social Media Links</h1>
+        <div className="space-y-6 font-sans relative pb-10 pt-4 px-6">
+            <div className="bg-white rounded-sm border border-gray-100 shadow-sm p-10 space-y-10">
+                <h2 className="text-[16px] font-bold text-gray-800 tracking-tight -mt-2">
+                    Social Media Links
+                </h2>
 
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-8">
-                <div className="border-b border-gray-50 pb-4">
-                    <h2 className="text-base font-bold text-gray-800 uppercase tracking-tighter">Connect your platforms</h2>
-                    <p className="text-xs text-gray-400 mt-1 italic font-sans uppercase tracking-[0.05em]">Paste the full URLs of your social media profiles below.</p>
+                <div className="space-y-8">
+                    <SocialField
+                        label="Facebook"
+                        subtext="Enter the Facebook profile or page URL (e.g., https://facebook.com/yourpage)"
+                        value={formData.facebook}
+                        onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
+                        placeholder=""
+                    />
+
+                    <SocialField
+                        label="X"
+                        subtext="Enter the X profile URL (e.g., https://x.com/yourprofile)"
+                        value={formData.x}
+                        onChange={(e) => setFormData({ ...formData, x: e.target.value })}
+                        placeholder=""
+                    />
+
+                    <SocialField
+                        label="Instagram"
+                        subtext="Enter the Instagram profile URL (e.g., https://instagram.com/yourprofile)."
+                        value={formData.instagram}
+                        onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
+                        placeholder=""
+                    />
+
+                    <SocialField
+                        label="Linkedin"
+                        subtext="Enter the LinkedIn profile or company URL (e.g., https://linkedin.com/in/yourprofile)."
+                        value={formData.linkedin}
+                        onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+                        placeholder=""
+                    />
+
+                    <SocialField
+                        label="YouTube"
+                        subtext="Enter the YouTube channel URL (e.g., https://youtube.com/@yourchannel)."
+                        value={formData.youtube}
+                        onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
+                        placeholder=""
+                    />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <SocialIconLayout title="Facebook" icon={Globe} color="bg-[#1877F2]">
-                        <Input
-                            value={formData.facebook}
-                            onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
-                            placeholder="https://facebook.com/..."
-                            className="h-12 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                        />
-                    </SocialIconLayout>
-
-                    <SocialIconLayout title="X (Twitter)" icon={Share2} color="bg-black">
-                        <Input
-                            value={formData.x}
-                            onChange={(e) => setFormData({ ...formData, x: e.target.value })}
-                            placeholder="https://x.com/..."
-                            className="h-12 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                        />
-                    </SocialIconLayout>
-
-                    <SocialIconLayout title="Instagram" icon={Link} color="bg-[#E4405F]">
-                        <Input
-                            value={formData.instagram}
-                            onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                            placeholder="https://instagram.com/..."
-                            className="h-12 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                        />
-                    </SocialIconLayout>
-
-                    <SocialIconLayout title="LinkedIn" icon={Info} color="bg-[#0A66C2]">
-                        <Input
-                            value={formData.linkedin}
-                            onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                            placeholder="https://linkedin.com/in/..."
-                            className="h-12 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                        />
-                    </SocialIconLayout>
-
-                    <SocialIconLayout title="YouTube" icon={Globe} color="bg-[#FF0000]">
-                        <Input
-                            value={formData.youtube}
-                            onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
-                            placeholder="https://youtube.com/@..."
-                            className="h-12 bg-gray-50/50 border-gray-100 rounded-xl text-sm"
-                        />
-                    </SocialIconLayout>
-                </div>
-
-                <div className="flex gap-3 pt-6 border-t border-gray-50">
+                <div className="flex items-center gap-4 pt-4">
                     <Button
                         onClick={() => setFormData(settings)}
-                        variant="outline"
-                        className="h-11 px-8 rounded-xl font-bold bg-[#c08457]/10 text-orange-700 border-[#c08457]/20 hover:bg-[#c08457]/20"
+                        className="bg-[#b9875a] hover:bg-[#a6764a] text-white border-none h-10 text-[11px] font-bold px-12 rounded-sm shadow-sm transition-all uppercase tracking-wider"
                     >
-                        Reset Changes
+                        Cancel
                     </Button>
                     <Button
                         onClick={handleUpdate}
-                        className="h-11 px-10 rounded-xl font-bold bg-[#1e3a8a] text-white hover:bg-blue-900 border-none flex items-center gap-2 shadow-lg transition-all transform hover:scale-105"
+                        className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 text-[11px] font-bold px-12 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
                     >
-                        <Check size={18} />
-                        Save Professional Links
+                        Save Changes
                     </Button>
                 </div>
             </div>

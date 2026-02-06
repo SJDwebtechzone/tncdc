@@ -104,10 +104,12 @@ import WebsiteSocialMediaPage from '@/components/WebsiteSocialMediaPage';
 import WebsiteSiteSettingPage from '@/components/WebsiteSiteSettingPage';
 import WebsiteJobApplicationsPage from '@/components/WebsiteJobApplicationsPage';
 import WebsiteJobsPage from '@/components/WebsiteJobsPage';
+import WebsiteAddJobPage from '@/components/WebsiteAddJobPage';
 import WebsiteStudyMaterialsPage from '@/components/WebsiteStudyMaterialsPage';
 import WebsiteMissionVisionPage from '@/components/WebsiteMissionVisionPage';
 import WebsiteContactPage from '@/components/WebsiteContactPage';
 import WebsitePostsPage from '@/components/WebsitePostsPage';
+import WebsiteAddPostPage from '@/components/WebsiteAddPostPage';
 import WebsiteGalleryPage from '@/components/WebsiteGalleryPage';
 import WebsitePartnersPage from '@/components/WebsitePartnersPage';
 
@@ -222,10 +224,12 @@ function App() {
           <Route path="website/site-setting" element={<WebsiteSiteSettingPage />} />
           <Route path="website/job-applications" element={<WebsiteJobApplicationsPage />} />
           <Route path="website/jobs" element={<WebsiteJobsPage />} />
+          <Route path="website/jobs/add" element={<WebsiteAddJobPage />} />
           <Route path="website/study-materials" element={<WebsiteStudyMaterialsPage />} />
           <Route path="website/mission-vision" element={<WebsiteMissionVisionPage />} />
           <Route path="website/contact" element={<WebsiteContactPage />} />
           <Route path="website/posts" element={<WebsitePostsPage />} />
+          <Route path="website/posts/add" element={<WebsiteAddPostPage />} />
           <Route path="website/gallery" element={<WebsiteGalleryPage />} />
           <Route path="website/partners" element={<WebsitePartnersPage />} />
 

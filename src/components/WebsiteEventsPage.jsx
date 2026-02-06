@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, Plus, Edit2, Trash2, X, Calendar, MapPin, Clock } from "lucide-react";
+import { Search, Plus, Edit2, Trash2, X, Monitor } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
-import { addEvent, deleteEvent } from '@/store/websiteSlice';
+import { addEvent, editEvent, deleteEvent } from '@/store/websiteSlice';
 
 export default function WebsiteEventsPage() {
     const events = useSelector((state) => state.website.events || []);
     const dispatch = useDispatch();
+
     const [searchQuery, setSearchQuery] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
@@ -19,232 +20,247 @@ export default function WebsiteEventsPage() {
         year: '',
         image: ''
     });
+    const [editingId, setEditingId] = useState(null);
+
+    const modalFileRef = useRef(null);
 
     const filteredEvents = events.filter(event =>
         event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         event.location.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        dispatch(addEvent(formData));
-        setIsModalOpen(false);
-        setFormData({ title: '', location: '', time: '', date: '', year: '', image: '' });
+    const handleEditEvent = (event) => {
+        setFormData({
+            title: event.title,
+            location: event.location,
+            time: event.time,
+            date: event.date,
+            year: event.year || '',
+            image: event.image
+        });
+        setEditingId(event.id);
+        setIsModalOpen(true);
     };
 
-    const handleDelete = (id) => {
+    const handleSaveEvent = (e) => {
+        e.preventDefault();
+        if (editingId) {
+            dispatch(editEvent({ ...formData, id: editingId }));
+        } else {
+            dispatch(addEvent(formData));
+        }
+        setIsModalOpen(false);
+        resetForm();
+    };
+
+    const resetForm = () => {
+        setFormData({ title: '', location: '', time: '', date: '', year: '', image: '' });
+        setEditingId(null);
+    };
+
+    const handleDeleteEvent = (id) => {
         if (window.confirm("Are you sure you want to delete this event?")) {
             dispatch(deleteEvent(id));
         }
     };
 
+    const triggerFileSelect = (ref) => {
+        if (ref.current) ref.current.click();
+    };
+
     return (
-        <div className="space-y-6 relative">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <h1 className="text-xl font-bold text-gray-800">Manage Events</h1>
-                <Button
-                    onClick={() => setIsModalOpen(true)}
-                    className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-2 rounded-lg flex items-center gap-2 border-none transition-all shadow-md"
-                >
-                    <Plus size={18} />
-                    Add New Event
-                </Button>
-            </div>
+        <div className="space-y-6 font-sans relative pb-10 px-6 pt-4">
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 italic">
-                <div className="flex flex-col md:flex-row gap-4 items-center">
-                    <div className="flex-1 relative w-full italic">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                            <Search size={16} />
-                        </div>
-                        <Input
-                            placeholder="Search by title..."
-                            className="pl-10 h-11 bg-gray-50/50 border-gray-100 rounded-xl text-sm italic"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-                    <Button className="bg-[#1e40af] hover:bg-blue-900 text-white h-11 px-10 rounded-xl font-bold transition-all shadow-md">
-                        Search
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="border-orange-100 text-orange-600 hover:bg-orange-50 h-11 px-10 rounded-xl font-bold"
-                        onClick={() => setSearchQuery("")}
-                    >
-                        Reset
-                    </Button>
-                </div>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden min-h-[400px]">
-                <div className="overflow-x-auto">
-                    <Table>
-                        <TableHeader>
-                            <TableRow className="bg-[#f8fafc] border-b border-gray-100">
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 px-6 w-16 text-center">#</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Image</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Title</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Location</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Time</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Date</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Year</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5">Created At</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-5 text-center px-6">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredEvents.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={9} className="py-24 text-center">
-                                        <div className="flex flex-col items-center justify-center gap-4 text-gray-400">
-                                            <div className="bg-gray-50 p-6 rounded-3xl">
-                                                <Plus size={48} className="text-gray-300" />
-                                            </div>
-                                            <p className="font-bold text-gray-400 italic">No events found. Click "Add New Event" to start.</p>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                filteredEvents.map((row, index) => (
-                                    <TableRow key={row.id} className="hover:bg-gray-50/30 transition-colors">
-                                        <TableCell className="py-4 px-6 text-center font-medium text-gray-500">{index + 1}</TableCell>
-                                        <TableCell className="py-4">
-                                            <div className="w-12 h-10 rounded-lg bg-gray-100 overflow-hidden border border-gray-200">
-                                                {row.image ? (
-                                                    <img src={row.image} alt={row.title} className="w-full h-full object-cover" />
-                                                ) : (
-                                                    <div className="w-full h-full flex items-center justify-center">
-                                                        <Plus size={16} className="text-gray-300" />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="py-4 font-semibold text-gray-700">{row.title}</TableCell>
-                                        <TableCell className="py-4 text-sm text-gray-500">{row.location}</TableCell>
-                                        <TableCell className="py-4 text-sm text-gray-500">{row.time}</TableCell>
-                                        <TableCell className="py-4 text-sm text-gray-500">{row.date}</TableCell>
-                                        <TableCell className="py-4 text-sm text-gray-500">{row.year}</TableCell>
-                                        <TableCell className="py-4 text-sm text-gray-500">{row.createdAt}</TableCell>
-                                        <TableCell className="py-4">
-                                            <div className="flex items-center justify-center gap-2">
-                                                <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">
-                                                    <Edit2 size={18} />
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(row.id)}
-                                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                                                >
-                                                    <Trash2 size={18} />
-                                                </button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
-            </div>
-
-            {/* Add Event Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-                    <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative animate-in fade-in zoom-in duration-200">
-                        <button
-                            onClick={() => setIsModalOpen(false)}
-                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
-                        >
-                            <X size={24} />
-                        </button>
-
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                            <Plus size={24} className="text-blue-600" />
-                            Add New Event
+            <div className="space-y-6">
+                {/* Manage Events Card */}
+                <div className="bg-white rounded-sm border border-gray-100 overflow-hidden shadow-sm">
+                    <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+                        <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">
+                            Manage Events
                         </h2>
+                        <Button
+                            onClick={() => {
+                                resetForm();
+                                setIsModalOpen(true);
+                            }}
+                            className="bg-[#1a237e] hover:bg-[#151c63] text-white gap-2 rounded-sm h-9 text-[11px] font-bold transition-all border-none uppercase tracking-wider px-6"
+                        >
+                            <Plus size={16} /> Add New Event
+                        </Button>
+                    </div>
+                    <div className="p-6 space-y-6">
+                        {/* Search Area */}
+                        <div className="flex flex-col md:flex-row gap-4 items-center">
+                            <div className="flex-1 relative w-full">
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold">
+                                    <Search size={16} />
+                                </div>
+                                <Input
+                                    placeholder="Search by title..."
+                                    className="pl-10 h-10 border-gray-200 rounded-sm text-sm focus:ring-1 focus:ring-[#1a237e]"
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                            <Button className="bg-[#1a237e] hover:bg-[#151c63] text-white h-10 px-16 rounded-sm font-bold border-none transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm">
+                                Search
+                            </Button>
+                            <Button
+                                variant="outline"
+                                className="bg-white hover:bg-orange-50/30 text-[#b9875a] border border-orange-200 h-10 px-16 rounded-sm font-bold transition-all uppercase tracking-wider text-xs w-full md:w-auto shadow-sm"
+                                onClick={() => setSearchQuery("")}
+                            >
+                                Reset
+                            </Button>
+                        </div>
 
-                        <form onSubmit={handleSave} className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Event Title <span className="text-red-500">*</span></label>
-                                    <Input
-                                        required
-                                        value={formData.title}
-                                        onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                        placeholder="e.g. Annual Hackathon"
-                                        className="h-11 rounded-xl bg-gray-50/50"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Location</label>
-                                    <div className="relative">
-                                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                                        <Input
-                                            value={formData.location}
-                                            onChange={e => setFormData({ ...formData, location: e.target.value })}
-                                            placeholder="e.g. Chennai"
-                                            className="h-11 pl-10 rounded-xl bg-gray-50/50"
-                                        />
+                        {/* Table */}
+                        <div className="bg-white rounded-sm border border-gray-100 overflow-hidden min-h-[300px]">
+                            <div className="overflow-x-auto font-sans">
+                                <Table className="border-collapse">
+                                    <TableHeader>
+                                        <TableRow className="bg-[#f8fafc] hover:bg-[#f8fafc] border-b border-gray-100">
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 px-6 w-16 text-center border-r border-gray-100">#</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 text-center px-6">Image</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Title</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Location</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Time</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Date</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Year</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 border-r border-gray-100 px-6">Created At</TableHead>
+                                            <TableHead className="font-bold text-gray-800 text-[11px] uppercase py-4 text-center px-6">Actions</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredEvents.length === 0 ? (
+                                            <TableRow>
+                                                <TableCell colSpan={9} className="py-20 text-center font-sans border-b border-gray-100">
+                                                    <p className="text-gray-400 font-bold italic text-xs uppercase tracking-widest">No Data Available</p>
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            filteredEvents.map((row, index) => (
+                                                <TableRow key={row.id} className="hover:bg-gray-50/50 outline-none border-b border-gray-100">
+                                                    <TableCell className="py-4 px-6 text-center font-medium text-gray-500 border-r border-gray-100 text-xs">{index + 1}</TableCell>
+                                                    <TableCell className="py-4 border-r border-gray-100">
+                                                        <div className="w-12 h-10 rounded-sm bg-gray-50 overflow-hidden border border-gray-200 mx-auto flex items-center justify-center">
+                                                            {row.image ? <img src={row.image} alt={row.title} className="w-full h-full object-cover" /> : <Monitor size={18} className="text-gray-300" />}
+                                                        </div>
+                                                    </TableCell>
+                                                    <TableCell className="py-4 font-semibold text-gray-700 border-r border-gray-100 text-xs px-6">{row.title}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-gray-600 border-r border-gray-100 px-6">{row.location}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-gray-600 border-r border-gray-100 px-6">{row.time}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-gray-600 border-r border-gray-100 px-6">{row.date}</TableCell>
+                                                    <TableCell className="py-4 text-xs text-gray-600 border-r border-gray-100 px-6">{row.year || '-'}</TableCell>
+                                                    <TableCell className="py-4 text-[10px] text-gray-400 border-r border-gray-100 px-6 uppercase whitespace-nowrap">{row.createdAt}</TableCell>
+                                                    <TableCell className="py-4 px-6 text-center">
+                                                        <div className="flex items-center justify-center gap-2">
+                                                            <button onClick={() => handleEditEvent(row)} className="h-8 w-8 text-[#1a237e] border border-blue-100/30 rounded-sm flex items-center justify-center hover:bg-blue-50 transition-colors">
+                                                                <Edit2 size={14} />
+                                                            </button>
+                                                            <button onClick={() => handleDeleteEvent(row.id)} className="h-8 w-8 text-red-500 border border-red-100/30 rounded-sm flex items-center justify-center hover:bg-red-50 transition-colors">
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-[2px] p-4 font-sans">
+                    <div className="bg-white w-full max-w-lg rounded-sm shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-200">
+                        <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/30">
+                            <h2 className="text-[14px] font-bold text-gray-800 uppercase tracking-widest">{editingId ? 'Edit Event' : 'Add New Event'}</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSaveEvent} className="p-6 space-y-5">
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Image <span className="text-red-500">*</span></label>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center h-10 border border-gray-200 rounded-sm overflow-hidden text-sm bg-gray-50/20">
+                                        <input type="file" ref={modalFileRef} className="hidden" onChange={() => { }} />
+                                        <button
+                                            type="button"
+                                            onClick={() => triggerFileSelect(modalFileRef)}
+                                            className="px-3 h-full bg-gray-200 border-r border-gray-200 text-[11px] font-bold text-gray-700 hover:bg-gray-300 transition-colors"
+                                        >
+                                            Choose File
+                                        </button>
+                                        <span className="px-3 text-gray-400 text-[11px] italic">No file chosen</span>
                                     </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Time</label>
-                                    <div className="relative">
-                                        <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                                        <Input
-                                            value={formData.time}
-                                            onChange={e => setFormData({ ...formData, time: e.target.value })}
-                                            placeholder="e.g. 8:00 AM - 5:00 PM"
-                                            className="h-11 pl-10 rounded-xl bg-gray-50/50"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Date</label>
-                                    <div className="relative">
-                                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                                        <Input
-                                            type="date"
-                                            value={formData.date}
-                                            onChange={e => setFormData({ ...formData, date: e.target.value })}
-                                            className="h-11 pl-10 rounded-xl bg-gray-50/50"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Year</label>
-                                    <Input
-                                        value={formData.year}
-                                        onChange={e => setFormData({ ...formData, year: e.target.value })}
-                                        placeholder="e.g. 2026"
-                                        className="h-11 rounded-xl bg-gray-50/50"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-gray-600 uppercase">Image URL</label>
-                                    <Input
-                                        value={formData.image}
-                                        onChange={e => setFormData({ ...formData, image: e.target.value })}
-                                        placeholder="https://..."
-                                        className="h-11 rounded-xl bg-gray-50/50"
-                                    />
+                                    <p className="text-[9px] text-gray-400 italic px-1 font-sans font-bold">Image must be 355x240 pixels.</p>
                                 </div>
                             </div>
 
-                            <div className="flex justify-end gap-3 mt-8">
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Title <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.title}
+                                    onChange={e => setFormData({ ...formData, title: e.target.value })}
+                                    placeholder="Event Title"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Location <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.location}
+                                    onChange={e => setFormData({ ...formData, location: e.target.value })}
+                                    placeholder="Vancouver"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Time <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.time}
+                                    onChange={e => setFormData({ ...formData, time: e.target.value })}
+                                    placeholder="8.00 am - 5.00 pm"
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Event Date <span className="text-red-500">*</span></label>
+                                <Input
+                                    type="date"
+                                    required
+                                    value={formData.date}
+                                    onChange={e => setFormData({ ...formData, date: e.target.value })}
+                                    className="h-10 rounded-sm border-gray-200 text-xs focus:ring-1 focus:ring-[#1a237e]"
+                                />
+                            </div>
+
+                            <div className="flex justify-center gap-4 pt-4 border-t border-gray-100 -mx-6 px-6 mt-4">
                                 <Button
                                     type="button"
-                                    variant="outline"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="px-6 h-11 rounded-xl"
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white border-none h-10 text-[11px] font-bold px-10 rounded-sm shadow-sm transition-all uppercase tracking-wider"
                                 >
                                     Cancel
                                 </Button>
                                 <Button
                                     type="submit"
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 h-11 rounded-xl font-bold shadow-lg"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white h-10 text-[11px] font-bold px-10 rounded-sm border-none shadow-sm transition-all uppercase tracking-wider"
                                 >
-                                    Save Event
+                                    {editingId ? 'Update Event' : 'Add Event'}
                                 </Button>
                             </div>
                         </form>
@@ -254,4 +270,3 @@ export default function WebsiteEventsPage() {
         </div>
     );
 }
-
