@@ -17,7 +17,10 @@ import {
     Download,
     CreditCard,
     Database,
-    KeyRound
+    KeyRound,
+    Check,
+    Play,
+    Info
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -318,6 +321,9 @@ function PrefixesSettings() {
 }
 
 function MobileAppSettings() {
+    const [appType, setAppType] = useState('native');
+    const [distribution, setDistribution] = useState('playstore');
+
     return (
         <div className="space-y-8 animate-in fade-in duration-300">
             <div>
@@ -330,28 +336,46 @@ function MobileAppSettings() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* PWA Card */}
-                    <div className="relative p-8 rounded-lg border-2 border-blue-100 bg-blue-50/10 hover:shadow-md transition-all duration-300 cursor-pointer group">
-                        <div className="absolute top-4 right-4 w-5 h-5 rounded-full bg-[#0f172a] flex items-center justify-center">
-                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                            </svg>
+                    <div
+                        onClick={() => setAppType('pwa')}
+                        className={cn(
+                            "relative p-8 rounded-lg border-2 transition-all duration-300 cursor-pointer group",
+                            appType === 'pwa' ? "border-blue-200 bg-blue-50/10" : "border-gray-100 bg-white hover:border-blue-50"
+                        )}
+                    >
+                        <div className={cn(
+                            "absolute top-4 right-4 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors",
+                            appType === 'pwa' ? "bg-blue-600 border-blue-600" : "border-gray-200"
+                        )}>
+                            {appType === 'pwa' && <Check size={12} className="text-white" />}
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-[#0f172a] flex items-center justify-center text-white mb-6">
+                        <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white mb-6 shadow-blue-200 shadow-lg">
                             <Globe size={18} />
                         </div>
                         <h4 className="text-[17px] font-bold text-gray-800 tracking-tight">Progressive Web App</h4>
                         <p className="text-[12px] text-gray-500 mt-2 leading-relaxed">Modern web app that works across all devices without app store downloads</p>
 
                         <div className="flex gap-2 mt-6">
-                            <span className="px-3 py-1 bg-blue-100 text-[#0f172a] text-[9px] font-bold rounded-sm uppercase tracking-wider">Cross-Platform</span>
+                            <span className="px-3 py-1 bg-blue-100 text-blue-700 text-[9px] font-bold rounded-sm uppercase tracking-wider">Cross-Platform</span>
                             <span className="px-3 py-1 bg-purple-100 text-purple-700 text-[9px] font-bold rounded-sm uppercase tracking-wider">Always Updated</span>
                         </div>
                     </div>
 
                     {/* Native Card */}
-                    <div className="relative p-8 rounded-lg border-2 border-gray-100 bg-white hover:border-blue-100 hover:shadow-md transition-all duration-300 cursor-pointer group">
-                        <div className="absolute top-4 right-4 w-5 h-5 rounded-full border-2 border-[#0f172a] flex items-center justify-center" />
-                        <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-6">
+                    <div
+                        onClick={() => setAppType('native')}
+                        className={cn(
+                            "relative p-8 rounded-lg border-2 transition-all duration-300 cursor-pointer group",
+                            appType === 'native' ? "border-blue-200 bg-blue-50/10" : "border-gray-100 bg-white hover:border-blue-50"
+                        )}
+                    >
+                        <div className={cn(
+                            "absolute top-4 right-4 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors",
+                            appType === 'native' ? "bg-blue-600 border-blue-600" : "border-gray-200"
+                        )}>
+                            {appType === 'native' && <Check size={12} className="text-white" />}
+                        </div>
+                        <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white mb-6 shadow-green-200 shadow-lg">
                             <Smartphone size={18} />
                         </div>
                         <h4 className="text-[17px] font-bold text-gray-800 tracking-tight">Native Mobile App</h4>
@@ -364,6 +388,86 @@ function MobileAppSettings() {
                     </div>
                 </div>
             </div>
+
+            {/* Distribution Section - Only visible for Native App */}
+            {appType === 'native' && (
+                <div className="animate-in slide-in-from-top-4 duration-500 space-y-8">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Mobile App Distribution</h1>
+                        <p className="text-[13px] text-gray-500 mt-1 leading-relaxed">Choose how users will download your mobile application</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white border border-gray-100 rounded-sm p-8">
+                        {/* Play Store Card */}
+                        <div
+                            onClick={() => setDistribution('playstore')}
+                            className={cn(
+                                "flex items-start gap-4 p-6 rounded-lg border-2 cursor-pointer transition-all duration-200",
+                                distribution === 'playstore' ? "border-orange-200 bg-orange-50/10" : "border-gray-100 hover:border-orange-100"
+                            )}
+                        >
+                            <div className="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center shrink-0">
+                                <Play size={24} className="fill-orange-500 text-orange-500 ml-1" />
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex items-center justify-between mb-1">
+                                    <h4 className="text-[15px] font-bold text-gray-800">Google Play Store</h4>
+                                    {distribution === 'playstore' ? (
+                                        <div className="w-4 h-4 rounded-full bg-orange-500 flex items-center justify-center">
+                                            <Check size={10} className="text-white" />
+                                        </div>
+                                    ) : (
+                                        <div className="w-4 h-4 rounded-full border border-gray-200" />
+                                    )}
+                                </div>
+                                <p className="text-[11px] text-gray-500 font-medium leading-relaxed">Link to Play Store listing</p>
+                            </div>
+                        </div>
+
+                        {/* Direct APK Card */}
+                        <div
+                            onClick={() => setDistribution('apk')}
+                            className={cn(
+                                "flex items-start gap-4 p-6 rounded-lg border-2 cursor-pointer transition-all duration-200",
+                                distribution === 'apk' ? "border-blue-200 bg-blue-50/10" : "border-gray-100 hover:border-blue-100"
+                            )}
+                        >
+                            <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
+                                <Download size={24} className="text-blue-600" />
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex items-center justify-between mb-1">
+                                    <h4 className="text-[15px] font-bold text-gray-800">Direct APK Download</h4>
+                                    {distribution === 'apk' ? (
+                                        <div className="w-4 h-4 rounded-full bg-blue-600 flex items-center justify-center">
+                                            <Check size={10} className="text-white" />
+                                        </div>
+                                    ) : (
+                                        <div className="w-4 h-4 rounded-full border border-gray-200" />
+                                    )}
+                                </div>
+                                <p className="text-[11px] text-gray-500 font-medium leading-relaxed">Upload APK file for direct download</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Play Store URL Input */}
+                    {distribution === 'playstore' && (
+                        <div className="bg-white border border-gray-100 rounded-sm p-8 animate-in fade-in duration-300">
+                            <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Play Store URL <span className="text-red-500">*</span></label>
+                            <div className="mt-2 relative">
+                                <div className="absolute left-3 top-2.5 text-gray-400">
+                                    <Play size={10} className="fill-gray-300 text-gray-300" />
+                                </div>
+                                <Input className="pl-8 h-10 rounded-sm border-gray-200 text-xs font-medium focus:ring-1 focus:ring-[#0f172a] placeholder:text-gray-300" placeholder="https://play.google.com/store/apps/details?id=your.app" />
+                            </div>
+                            <p className="text-[10px] text-gray-400 font-bold mt-2 flex items-center gap-1 ml-1">
+                                <Info size={12} /> Enter the complete URL to your app on Google Play Store
+                            </p>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
