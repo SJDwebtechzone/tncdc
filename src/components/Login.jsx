@@ -20,7 +20,7 @@ const Login = () => {
             localStorage.setItem('isAuthenticated', 'true');
             navigate('/dashboard');
         } else {
-            setError('Invalid credentials. Please use admin@tncdc.in / admin123');
+            setError('Invalid credentials. Please try again.');
         }
     };
 
