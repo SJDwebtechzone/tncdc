@@ -1,31 +1,27 @@
 import React, { useState } from 'react';
-import { Plus, Download, Search, Eye, FileEdit } from 'lucide-react';
+import { Plus, Download, Search, Eye, FileEdit, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch'; // Assuming there is a switch component or I'll implement a simple one
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Subjects = () => {
+    const subjects = useSelector((state) => state.courses.subjects);
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Dummy data based on screenshot
-    const subjects = [
-        {
-            id: 1,
-            name: 'computer fundamental',
-            totalQuestions: 0,
-            status: true,
-            createdAt: '28 Jan 2026'
-        }
-    ];
+    const filteredSubjects = subjects ? subjects.filter(subject =>
+        subject.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ) : [];
 
     return (
-        <div className="w-full missing-demos space-y-6">
+        <div className="w-full missing-demos space-y-6 relative">
             <h1 className="text-2xl font-bold text-gray-800">Subjects</h1>
 
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                 {/* Top Actions */}
                 <div className="flex justify-between items-center mb-6">
-                    <Button className="bg-[#0f172a] hover:bg-[#1e293b] text-white">
+                    <Button onClick={() => navigate('/dashboard/add-subject')} className="bg-[#0f172a] hover:bg-[#1e293b] text-white">
                         <Plus className="w-4 h-4 mr-2" />
                         Add Subject
                     </Button>
@@ -49,7 +45,7 @@ const Subjects = () => {
                     <Button className="bg-[#5d5fef] hover:bg-[#4b4dcf] text-white min-w-[100px]">
                         Submit
                     </Button>
-                    <Button className="bg-[#ea5455] hover:bg-[#d63e3f] text-white min-w-[100px]">
+                    <Button className="bg-[#ea5455] hover:bg-[#d63e3f] text-white min-w-[100px]" onClick={() => setSearchTerm('')}>
                         Reset
                     </Button>
                 </div>
@@ -69,13 +65,13 @@ const Subjects = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
-                            {subjects.map((subject) => (
+                            {filteredSubjects.map((subject, index) => (
                                 <tr key={subject.id} className="hover:bg-gray-50/50 transition-colors">
-                                    <td className="p-4 text-sm text-gray-600">{subject.id}</td>
+                                    <td className="p-4 text-sm text-gray-600">{index + 1}</td>
                                     <td className="p-4 text-sm font-semibold text-gray-900">{subject.name}</td>
                                     <td className="p-4 text-center">
                                         <span className="inline-flex items-center justify-center min-w-[30px] h-[30px] rounded-full bg-gray-50 border border-gray-200 text-xs font-medium text-gray-600">
-                                            {subject.totalQuestions}
+                                            {subject.totalQuestions || 0}
                                         </span>
                                     </td>
                                     <td className="p-4 text-center">
@@ -102,8 +98,15 @@ const Subjects = () => {
                     </table>
                 </div>
             </div>
+
         </div>
     );
 };
 
 export default Subjects;
+
+
+
+
+
+

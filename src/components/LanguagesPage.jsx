@@ -1,15 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Pencil, Plus, Search, RotateCcw, Download } from "lucide-react"
+import { Pencil, Plus, Search, RotateCcw, Download, X } from "lucide-react"
 import { useState } from "react"
-
-const initialLanguages = [
-    { id: 1, name: "English", status: true },
-    { id: 2, name: "Marathi", status: true },
-    { id: 3, name: "Hindi", status: true },
-    { id: 4, name: "tamil", status: true },
-]
+import { useSelector, useDispatch } from 'react-redux';
+import { addLanguage } from '@/store/courseSlice';
 
 const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
     <button
@@ -19,32 +14,38 @@ const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
         onClick={() => onCheckedChange(!checked)}
         className={`
             relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 transition-colors focus-visible:outline-none 
-            ${checked ? 'bg-white border-[#1a237e]' : 'bg-gray-200 border-transparent'}
+            ${checked ? 'bg-white border-[#0f172a]' : 'bg-gray-200 border-transparent'}
         `}
     >
         <span
             className={`
                 pointer-events-none block h-4 w-4 rounded-full shadow-lg ring-0 transition-transform 
-                ${checked ? 'translate-x-4 bg-[#1a237e]' : 'translate-x-0.5 bg-white'}
+                ${checked ? 'translate-x-4 bg-[#0f172a]' : 'translate-x-0.5 bg-white'}
             `}
         />
     </button>
 )
 
 export default function LanguagesPage() {
-    const [data, setData] = useState(initialLanguages)
+    const languages = useSelector((state) => state.courses.languages);
+    const dispatch = useDispatch();
     const [searchQuery, setSearchQuery] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({ name: '' });
 
-    const toggleStatus = (id) => {
-        setData(data.map(item => item.id === id ? { ...item, status: !item.status } : item))
-    }
-
-    const filteredData = data.filter(item =>
+    const filteredData = languages ? languages.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    ) : [];
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        dispatch(addLanguage({ ...formData, status: true }));
+        setIsModalOpen(false);
+        setFormData({ name: '' });
+    };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 relative">
             <div className="rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 border-b border-gray-100/50">
@@ -53,7 +54,7 @@ export default function LanguagesPage() {
                         <Button className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
                             <Download size={14} /> Export
                         </Button>
-                        <Button className="bg-[#1a237e] hover:bg-[#1a237e]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
+                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#0f172a] hover:bg-[#0f172a]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
                             <Plus size={14} /> Add Language
                         </Button>
                     </div>
@@ -95,8 +96,8 @@ export default function LanguagesPage() {
                                 <TableCell className="font-medium text-gray-700 text-sm border-r border-gray-200">{row.name}</TableCell>
                                 <TableCell className="border-r border-gray-200">
                                     <CustomBlueSwitch
-                                        checked={row.status}
-                                        onCheckedChange={() => toggleStatus(row.id)}
+                                        checked={row.status !== false}
+                                        onCheckedChange={() => { }}
                                     />
                                 </TableCell>
                                 <TableCell className="text-center pr-6">
@@ -109,6 +110,38 @@ export default function LanguagesPage() {
                     </TableBody>
                 </Table>
             </div>
+
+            {/* Add Language Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                    <div className="bg-white w-full max-w-sm rounded-xl shadow-2xl p-6 relative">
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        <h2 className="text-xl font-bold text-gray-800 mb-4">Add Language</h2>
+                        <form onSubmit={handleSave} className="space-y-4">
+                            <div>
+                                <label className="text-sm font-bold text-gray-700">Language Name</label>
+                                <Input required value={formData.name} onChange={e => setFormData({ name: e.target.value })} placeholder="e.g. French" />
+                            </div>
+                            <div className="flex justify-end gap-3 mt-6">
+                                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                                <Button type="submit" className="bg-[#0f172a] text-white">Save</Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
+
+
+
+
+
+

@@ -82,3 +82,4 @@ export const VerificationPage = () => <VerificationPageContent />;
 export const LoginPage = () => <Login />;
 
 export default Home;
+

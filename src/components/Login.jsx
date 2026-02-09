@@ -6,13 +6,22 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [error, setError] = useState('');
+
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle login logic here
-        console.log('Login attempt:', { email, password });
-        navigate('/dashboard');
+        setError('');
+
+        if (email === 'admin@tncdc.in' && password === 'admin123') {
+            console.log('Login successful');
+            // In a real app, you would store auth tokens here
+            localStorage.setItem('isAuthenticated', 'true');
+            navigate('/dashboard');
+        } else {
+            setError('Invalid credentials. Please use admin@tncdc.in / admin123');
+        }
     };
 
     return (
@@ -44,6 +53,12 @@ const Login = () => {
                     <div className="max-w-md mx-auto w-full">
                         <h2 className="text-4xl font-bold text-gray-900 mb-2 text-center">Welcome Back</h2>
                         <p className="text-lg text-gray-500 text-center mb-8">Please login to your account to continue</p>
+
+                        {error && (
+                            <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-6 text-sm font-medium text-center border border-red-100">
+                                {error}
+                            </div>
+                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
@@ -99,3 +114,9 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+

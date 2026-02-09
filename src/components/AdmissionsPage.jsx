@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addStudent } from '@/store/studentSlice';
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from 'react-router-dom';
 import {
     Plus,
     Download,
     Search,
-    RotateCcw,
     Banknote,
     CheckCircle2,
     Tag,
@@ -15,55 +17,23 @@ import {
     Users,
     FileText,
     CreditCard,
-    Eye,
     Edit,
-    Phone,
-    User,
-    Trash2
+    X
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 export default function AdmissionsPage() {
+    const students = useSelector((state) => state.students.students);
+    const navigate = useNavigate();
+
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 relative">
             {/* Stats Components - Row 1 */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatsCard
-                    icon={Banknote}
-                    label="TOTAL AMOUNT"
-                    value="₹18,000.00"
-                    color="text-blue-600"
-                    iconColor="text-blue-600"
-                    iconBg="bg-blue-50"
-                    borderColor="border-l-blue-500"
-                />
-                <StatsCard
-                    icon={CheckCircle2}
-                    label="PAID AMOUNT"
-                    value="₹0.00"
-                    color="text-green-600"
-                    iconColor="text-green-600"
-                    iconBg="bg-green-50"
-                    borderColor="border-l-green-500"
-                />
-                <StatsCard
-                    icon={Tag}
-                    label="DISCOUNT AMOUNT"
-                    value="₹0.00"
-                    color="text-orange-500"
-                    iconColor="text-orange-500"
-                    iconBg="bg-orange-50"
-                    borderColor="border-l-orange-500"
-                />
-                <StatsCard
-                    icon={Hourglass}
-                    label="REMAINING BALANCE"
-                    value="₹18,000.00"
-                    color="text-red-500"
-                    iconColor="text-red-500"
-                    iconBg="bg-red-50"
-                    borderColor="border-l-red-500"
-                />
+                <StatsCard icon={Banknote} label="TOTAL AMOUNT" value="₹0.00" color="text-blue-600" iconColor="text-blue-600" iconBg="bg-blue-50" borderColor="border-l-blue-500" />
+                <StatsCard icon={CheckCircle2} label="PAID AMOUNT" value="₹0.00" color="text-green-600" iconColor="text-green-600" iconBg="bg-green-50" borderColor="border-l-green-500" />
+                <StatsCard icon={Tag} label="DISCOUNT AMOUNT" value="₹0.00" color="text-orange-500" iconColor="text-orange-500" iconBg="bg-orange-50" borderColor="border-l-orange-500" />
+                <StatsCard icon={Hourglass} label="REMAINING BALANCE" value="₹0.00" color="text-red-500" iconColor="text-red-500" iconBg="bg-red-50" borderColor="border-l-red-500" />
             </div>
 
             {/* Stats Components - Row 2 */}
@@ -78,16 +48,7 @@ export default function AdmissionsPage() {
                         <Button variant="outline" className="h-6 text-[10px] mt-1 border-blue-900 text-blue-900 px-2">View Details</Button>
                     </div>
                 </div>
-
-                <StatsCard
-                    icon={Users}
-                    label="TOTAL ADMISSIONS"
-                    value="1"
-                    color="text-gray-800"
-                    iconColor="text-blue-500"
-                    iconBg="bg-blue-50"
-                    borderColor="border-l-blue-400"
-                />
+                <StatsCard icon={Users} label="TOTAL ADMISSIONS" value={students.length} color="text-gray-800" iconColor="text-blue-500" iconBg="bg-blue-50" borderColor="border-l-blue-400" />
             </div>
 
             {/* Main Content */}
@@ -95,7 +56,7 @@ export default function AdmissionsPage() {
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-bold text-gray-800">Manage Admissions</h2>
                     <div className="flex gap-2">
-                        <Button className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white gap-2 text-xs">
+                        <Button onClick={() => navigate('/dashboard/students/admissions/add')} className="bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white gap-2 text-xs">
                             <Plus size={14} /> Add Admission
                         </Button>
                         <Button className="bg-[#065f46] hover:bg-[#065f46]/90 text-white gap-2 text-xs">
@@ -115,29 +76,11 @@ export default function AdmissionsPage() {
                             <option>All Batches</option>
                         </select>
                     </div>
-                    <div className="md:col-span-2 relative">
-                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                            <span className="text-gray-400 text-xs">📅</span>
-                        </div>
-                        <input type="text" className="w-full h-10 rounded-lg border border-gray-200 pl-8 px-3 text-xs text-gray-400" placeholder="dd-mm-yyyy" />
-                    </div>
-                    <div className="md:col-span-2 relative">
-                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                            <span className="text-gray-400 text-xs">📅</span>
-                        </div>
-                        <input type="text" className="w-full h-10 rounded-lg border border-gray-200 pl-8 px-3 text-xs text-gray-400" placeholder="dd-mm-yyyy" />
-                    </div>
-                    <div className="md:col-span-1">
-                        <Button variant="outline" className="w-full h-10 border-blue-900 text-blue-900 hover:bg-blue-50 text-xs">
-                            Submit
-                        </Button>
-                    </div>
-                    <div className="md:col-span-1 px-0">
-                        {/* Using px-0 to fit simpler grid */}
-                        <Button variant="outline" className="w-full h-10 border-orange-200 text-orange-500 hover:bg-orange-50 text-xs">
-                            Reset
-                        </Button>
-                    </div>
+                    {/* Date inputs placeholder */}
+                    <div className="md:col-span-2"><Input className="w-full h-10 text-xs" placeholder="Start Date" /></div>
+                    <div className="md:col-span-2"><Input className="w-full h-10 text-xs" placeholder="End Date" /></div>
+                    <div className="md:col-span-1"><Button variant="outline" className="w-full h-10 border-blue-900 text-blue-900 hover:bg-blue-50 text-xs">Submit</Button></div>
+                    <div className="md:col-span-1"><Button variant="outline" className="w-full h-10 border-orange-200 text-orange-500 hover:bg-orange-50 text-xs">Reset</Button></div>
                 </div>
 
                 {/* Table */}
@@ -151,87 +94,60 @@ export default function AdmissionsPage() {
                                 <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[150px]">Course Name</TableHead>
                                 <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Batch Name</TableHead>
                                 <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Admission Date</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Admission Fees</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Referred By</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[120px]">Fees Details</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[120px]">Payment Details</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Final Amount</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Details</TableHead>
-                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Downloads</TableHead>
+                                <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Fees Details</TableHead>
                                 <TableHead className="font-bold text-gray-800 text-[10px] uppercase">Status</TableHead>
                                 <TableHead className="font-bold text-gray-800 text-[10px] uppercase min-w-[100px]">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow className="border-b border-gray-50 hover:bg-gray-50">
-                                <TableCell className="text-blue-600 font-medium text-xs align-top">1</TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col">
-                                        <span className="text-xs font-medium text-gray-700">Sathish S/O Mani Kanna</span>
-                                        <span className="text-[10px] text-gray-500 bg-gray-100 px-1 rounded w-fit mt-1">28 Jan 2026</span>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <div className="w-8 h-8 bg-gray-200 rounded overflow-hidden">
-                                        <div className="flex items-center justify-center w-full h-full text-[8px] text-gray-500 text-center leading-tight">Sathish S/O</div>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top text-[10px] text-gray-600 uppercase">
-                                    ADVANCE DIPLOMA IN COMPUTER SCIENCE(M-CS-7090)
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <span className="bg-[#1e3a8a] text-white text-[10px] px-2 py-0.5 rounded">Premium</span>
-                                </TableCell>
-                                <TableCell className="align-top text-[10px] text-gray-600">
-                                    28 Jan 2026
-                                </TableCell>
-                                <TableCell className="align-top text-[10px] text-gray-600">-</TableCell>
-                                <TableCell className="align-top text-[10px] text-gray-600">-</TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col text-[10px] text-gray-600">
-                                        <span>Course Fees:</span>
-                                        <span className="font-bold">₹18000.00</span>
-                                        <span>GST: ₹0.00</span>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col text-[10px]">
-                                        <span className="text-green-600">Paid: ₹0</span>
-                                        <span className="text-orange-500">Discount: ₹0</span>
-                                        <span className="text-red-500">Remaining:</span>
-                                        <span className="text-red-500 font-bold">₹18000</span>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top text-xs font-bold text-gray-700">
-                                    18000
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex flex-col gap-1">
-                                        <Button variant="outline" className="h-5 text-[9px] border-blue-900 text-blue-900 px-1">View</Button>
-                                        <Button variant="outline" className="h-5 text-[9px] border-blue-900 text-blue-900 px-1">Manage</Button>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <div className="flex gap-1">
-                                        <div className="bg-gray-800 p-1 rounded text-white cursor-pointer"><FileText size={12} /></div>
-                                        <div className="bg-gray-800 p-1 rounded text-white cursor-pointer"><CreditCard size={12} /></div>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <Switch checked={true} className="data-[state=checked]:bg-[#1e3a8a]" />
-                                </TableCell>
-                                <TableCell className="align-top">
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-[#1e3a8a]">
-                                        <Edit size={14} />
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
+                            {students.length === 0 ? (
+                                <TableRow>
+                                    <TableCell colSpan={9} className="h-32 text-center text-gray-500">
+                                        No admissions found. Add a new admission to get started.
+                                    </TableCell>
+                                </TableRow>
+                            ) : (
+                                students.map((student, index) => (
+                                    <TableRow key={student.id} className="border-b border-gray-50 hover:bg-gray-50">
+                                        <TableCell className="text-blue-600 font-medium text-xs align-top">{index + 1}</TableCell>
+                                        <TableCell className="align-top">
+                                            <div className="flex flex-col">
+                                                <span className="text-xs font-medium text-gray-700">{student.name}</span>
+                                                <span className="text-[10px] text-gray-500 bg-gray-100 px-1 rounded w-fit mt-1">{student.admissionDate || '28 Jan 2026'}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            <div className="w-8 h-8 bg-gray-200 rounded overflow-hidden flex items-center justify-center text-[10px] font-bold text-gray-500">
+                                                {student.initials}
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="align-top text-[10px] text-gray-600 uppercase">{student.course || 'N/A'}</TableCell>
+                                        <TableCell className="align-top text-[10px] text-gray-600">{student.batch || 'Batch A'}</TableCell>
+                                        <TableCell className="align-top text-[10px] text-gray-600">{student.admissionDate || '28 Jan 2026'}</TableCell>
+                                        <TableCell className="align-top">
+                                            <div className="flex flex-col text-[10px] text-gray-600">
+                                                <span>Fees: <span className="font-bold">₹0</span></span>
+                                                <span className="text-red-500">Due: ₹0</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            <Switch checked={true} className="data-[state=checked]:bg-[#1e3a8a]" />
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            <div className="flex gap-2">
+                                                <Button variant="ghost" size="icon" className="h-6 w-6 text-[#1e3a8a]"><Edit size={14} /></Button>
+                                                <div className="bg-gray-800 p-1 rounded text-white cursor-pointer"><FileText size={12} /></div>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            )}
                         </TableBody>
                     </Table>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 function StatsCard({ icon: Icon, label, value, color, iconColor, iconBg, borderColor }) {
@@ -247,3 +163,9 @@ function StatsCard({ icon: Icon, label, value, color, iconColor, iconBg, borderC
         </div>
     )
 }
+
+
+
+
+
+

@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Pencil, Plus, Search, Download } from "lucide-react"
+import { Pencil, Plus, Search, Download, X } from "lucide-react"
 import { useState } from "react"
-
-const initialAwards = [
-    { id: 1, name: "Certificate", status: true },
-    { id: 2, name: "Advance diploma", status: true },
-]
+import { Input } from "@/components/ui/input"
+import { useSelector, useDispatch } from 'react-redux';
+import { addAwardCategory } from '@/store/courseSlice';
 
 const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
     <button
@@ -16,32 +14,38 @@ const CustomBlueSwitch = ({ checked, onCheckedChange }) => (
         onClick={() => onCheckedChange(!checked)}
         className={`
             relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 transition-colors focus-visible:outline-none 
-            ${checked ? 'bg-white border-[#1a237e]' : 'bg-gray-200 border-transparent'}
+            ${checked ? 'bg-white border-[#0f172a]' : 'bg-gray-200 border-transparent'}
         `}
     >
         <span
             className={`
                 pointer-events-none block h-4 w-4 rounded-full shadow-lg ring-0 transition-transform 
-                ${checked ? 'translate-x-4 bg-[#1a237e]' : 'translate-x-0.5 bg-white'}
+                ${checked ? 'translate-x-4 bg-[#0f172a]' : 'translate-x-0.5 bg-white'}
             `}
         />
     </button>
 )
 
 export default function CourseAwardCategoriesPage() {
-    const [data, setData] = useState(initialAwards)
+    const awardCategories = useSelector((state) => state.courses.awardCategories || []);
+    const dispatch = useDispatch();
     const [searchQuery, setSearchQuery] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({ name: '' });
 
-    const toggleStatus = (id) => {
-        setData(data.map(item => item.id === id ? { ...item, status: !item.status } : item))
-    }
-
-    const filteredData = data.filter(item =>
+    const filteredData = awardCategories.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    );
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        dispatch(addAwardCategory({ ...formData, status: true }));
+        setIsModalOpen(false);
+        setFormData({ name: '' });
+    };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 relative">
             <div className="rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 border-b border-gray-100/50">
@@ -50,7 +54,7 @@ export default function CourseAwardCategoriesPage() {
                         <Button className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
                             <Download size={14} /> Export
                         </Button>
-                        <Button className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
+                        <Button onClick={() => setIsModalOpen(true)} className="bg-[#14532d] hover:bg-[#14532d]/90 text-white gap-2 rounded-lg px-4 h-9 text-sm font-normal">
                             <Plus size={14} /> Add New Category
                         </Button>
                     </div>
@@ -93,7 +97,7 @@ export default function CourseAwardCategoriesPage() {
                                 <TableCell className="border-r border-gray-200">
                                     <CustomBlueSwitch
                                         checked={row.status}
-                                        onCheckedChange={() => toggleStatus(row.id)}
+                                        onCheckedChange={() => { }}
                                     />
                                 </TableCell>
                                 <TableCell className="text-center pr-6">
@@ -106,6 +110,55 @@ export default function CourseAwardCategoriesPage() {
                     </TableBody>
                 </Table>
             </div>
+
+            {/* Add Category Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                    <div className="bg-white w-full max-w-sm rounded-xl shadow-2xl p-6 relative">
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        <h2 className="text-lg font-bold text-gray-800 uppercase tracking-tight text-[15px]">Add New Category</h2>
+                        <form onSubmit={handleSave} className="p-8 space-y-6">
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-bold text-gray-700 uppercase tracking-widest ml-1">Category Name <span className="text-red-500">*</span></label>
+                                <Input
+                                    required
+                                    value={formData.name}
+                                    onChange={e => setFormData({ name: e.target.value })}
+                                    placeholder="Enter Category Name"
+                                    className="h-10 rounded-sm border-gray-200 text-xs font-medium focus:ring-1 focus:ring-blue-900 transition-all"
+                                />
+                            </div>
+                            <div className="flex justify-end gap-3 pt-6 border-t font-bold">
+                                <Button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-8 rounded-sm h-10 text-[11px] uppercase tracking-widest transition-all active:scale-95 shadow-md font-bold"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-[#1e463a] hover:bg-[#153229] text-white px-8 rounded-sm h-10 text-[11px] uppercase tracking-widest transition-all active:scale-95 shadow-md font-bold"
+                                >
+                                    Add Category
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
+
+
+
+
+
+
