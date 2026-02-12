@@ -150,9 +150,9 @@ export default function WebsiteSiteSettingPage() {
                                 <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Primary Color <span className="text-red-500">*</span></label>
                                 <div className="flex h-10 w-full rounded-sm border border-gray-200 overflow-hidden shadow-sm">
                                     <div className="flex items-center px-4 bg-[#0f172a] text-white text-[10px] font-bold w-24">
-                                        {formData.primaryColor || '#FF5733'}
+                                        {formData.primaryColor || '#10b981'}
                                     </div>
-                                    <div className="flex-1" style={{ backgroundColor: formData.primaryColor || '#FF5733' }}></div>
+                                    <div className="flex-1" style={{ backgroundColor: formData.primaryColor || '#10b981' }}></div>
                                 </div>
                                 <p className="text-[10px] text-gray-400 italic">This color will be used for buttons, links, and accents.</p>
                             </div>
@@ -160,9 +160,9 @@ export default function WebsiteSiteSettingPage() {
                                 <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">Secondary Color <span className="text-red-500">*</span></label>
                                 <div className="flex h-10 w-full rounded-sm border border-gray-200 overflow-hidden shadow-sm">
                                     <div className="flex items-center px-4 bg-black text-white text-[10px] font-bold w-24">
-                                        {formData.secondaryColor || '#C70039'}
+                                        {formData.secondaryColor || '#059669'}
                                     </div>
-                                    <div className="flex-1" style={{ backgroundColor: formData.secondaryColor || '#C70039' }}></div>
+                                    <div className="flex-1" style={{ backgroundColor: formData.secondaryColor || '#059669' }}></div>
                                 </div>
                                 <p className="text-[10px] text-gray-400 italic">This color will be used for secondary elements and highlights.</p>
                             </div>

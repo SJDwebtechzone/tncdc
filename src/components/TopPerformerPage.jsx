@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Navbar from './Navbar';
+import Marquee from './Marquee';
 import Footer from './Footer';
 import bannerImg from '../assets/new_performance_bg.png';
 
@@ -8,6 +9,7 @@ const TopPerformerPage = () => {
     return (
         <div className="min-h-screen bg-white font-sans flex flex-col">
             <Navbar />
+            <Marquee />
 
             <main className="flex-grow">
                 {/* Hero Banner Section with Text Overlay */}

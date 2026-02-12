@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import Navbar from './Navbar';
+import Marquee from './Marquee';
 import Footer from './Footer';
 
 import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -46,6 +47,7 @@ const GalleryPage = () => {
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
             <Navbar />
+            <Marquee />
 
 
             <main className="flex-grow container mx-auto px-4 py-12">

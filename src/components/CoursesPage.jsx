@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Search, Grid, List, ChevronDown, ChevronRight, ChevronLeft, Star } from 'lucide-react';
 import Navbar from './Navbar';
-import Footer from './Footer';
 import Marquee from './Marquee';
+import Footer from './Footer';
 
 const MOCK_COURSES = [
     {

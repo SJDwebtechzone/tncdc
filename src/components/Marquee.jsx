@@ -8,7 +8,7 @@ const Marquee = () => {
     ];
 
     return (
-        <div className="marquee-gradient-container">
+        <div className="marquee-gradient-container mt-[140px]">
             <div className="marquee-gradient-content flex gap-12">
                 {messages.map((msg, index) => (
                     <span key={index} className="whitespace-nowrap flex items-center">

@@ -25,10 +25,10 @@ import VerificationPageContent from './components/VerificationPage';
 // A simple layout wrapper for our interior pages
 const PageLayout = ({ children, title }) => (
     <div className="min-h-screen bg-white">
-        {/* Navbar moved above Marquee */}
         <Navbar />
+        <Marquee />
 
-        <main className="py-24">
+        <main className="pt-[160px] pb-24">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h1 className="text-5xl font-bold text-gray-900 mb-4">{title}</h1>
@@ -46,8 +46,12 @@ const PageLayout = ({ children, title }) => (
 );
 
 const Home = () => (
-    <div className="min-h-screen bg-white">
-        {/* Navbar moved above Marquee */}
+    <div className="
+    min-h-screen
+    bg-gradient-to-br
+    from-pink-100 via-purple-100 to-blue-100
+    ">
+
         <Navbar />
         <Marquee />
         <main>

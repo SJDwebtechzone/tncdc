@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trophy, ArrowRight, Play, MessageCircle, Heart, BookOpen, Monitor } from 'lucide-react';
 import Navbar from './Navbar';
+import Marquee from './Marquee';
 import Footer from './Footer';
 
 
@@ -8,12 +9,13 @@ const AboutPage = () => {
     return (
         <div className="min-h-screen bg-white font-sans flex flex-col">
             <Navbar />
+            <Marquee />
 
 
             <main className="flex-grow container mx-auto px-4 py-16 flex flex-col items-center text-center">
 
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 bg-orange-50 text-orange-600 px-5 py-2 rounded-full text-sm font-bold mb-8 shadow-sm border border-orange-100">
+                <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-600 px-5 py-2 rounded-full text-sm font-bold mb-8 shadow-sm border border-emerald-100">
                     <Trophy size={16} />
                     <span>The Leader in Online Learning</span>
                 </div>
@@ -30,7 +32,7 @@ const AboutPage = () => {
 
                 {/* Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 mb-20 w-full sm:w-auto justify-center">
-                    <button className="bg-gradient-to-r from-[#FF512F] to-[#DD2476] text-white px-8 py-3.5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <button className="bg-gradient-to-r from-[#10b981] to-[#059669] text-white px-8 py-3.5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105 transition-all duration-300">
                         Our Courses <ArrowRight size={20} />
                     </button>
                     <button className="bg-white text-gray-700 border border-gray-200 px-8 py-3.5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-gray-50 hover:border-gray-300 transition-all duration-300">
@@ -46,7 +48,7 @@ const AboutPage = () => {
                     {/* Play Button */}
                     <div className="w-24 h-24 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center z-10 group-hover:scale-110 transition-transform duration-300">
                         <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-xl">
-                            <Play size={32} className="text-[#FF512F] ml-1 fill-current" />
+                            <Play size={32} className="text-[#10b981] ml-1 fill-current" />
                         </div>
                     </div>
                 </div>
@@ -88,7 +90,7 @@ const AboutPage = () => {
 
                         {/* Right Content */}
                         <div className="w-full lg:w-1/2 text-left flex flex-col justify-center">
-                            <span className="inline-block bg-orange-100 text-orange-600 px-4 py-1 rounded-md text-xs font-bold tracking-wider mb-6 w-fit">
+                            <span className="inline-block bg-emerald-100 text-emerald-600 px-4 py-1 rounded-md text-xs font-bold tracking-wider mb-6 w-fit">
                                 OUR VISION
                             </span>
                             <h2 className="text-4xl font-extrabold text-[#0f172a] mb-6 leading-tight">
@@ -102,8 +104,8 @@ const AboutPage = () => {
                             <div className="space-y-8">
                                 {/* Feature 1 */}
                                 <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 text-pink-500">
-                                        <Heart size={20} fill="currentColor" className="text-pink-500" />
+                                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-500">
+                                        <Heart size={20} fill="currentColor" className="text-emerald-500" />
                                     </div>
                                     <div>
                                         <h4 className="text-xl font-bold text-gray-900 mb-2">Flexible Classes</h4>
@@ -124,7 +126,7 @@ const AboutPage = () => {
 
                                 {/* Feature 3 */}
                                 <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 text-orange-500">
+                                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-500">
                                         <Monitor size={20} />
                                     </div>
                                     <div>
@@ -145,7 +147,7 @@ const AboutPage = () => {
 
                             {/* Left Content (Text) */}
                             <div className="w-full lg:w-1/2 text-left flex flex-col justify-center order-2 lg:order-1">
-                                <span className="inline-block bg-orange-100 text-orange-600 px-4 py-1 rounded-md text-xs font-bold tracking-wider mb-6 w-fit">
+                                <span className="inline-block bg-emerald-100 text-emerald-600 px-4 py-1 rounded-md text-xs font-bold tracking-wider mb-6 w-fit">
                                     OUR MISSION
                                 </span>
                                 <h2 className="text-4xl font-extrabold text-[#0f172a] mb-6 leading-tight">
@@ -159,8 +161,8 @@ const AboutPage = () => {
                                 <div className="space-y-8">
                                     {/* Feature 1 */}
                                     <div className="flex items-start gap-4">
-                                        <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 text-pink-500">
-                                            <Heart size={20} fill="currentColor" className="text-pink-500" />
+                                        <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 text-teal-500">
+                                            <Heart size={20} fill="currentColor" className="text-teal-500" />
                                         </div>
                                         <div>
                                             <h4 className="text-xl font-bold text-gray-900 mb-2">Flexible Classes</h4>
@@ -181,7 +183,7 @@ const AboutPage = () => {
 
                                     {/* Feature 3 */}
                                     <div className="flex items-start gap-4">
-                                        <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 text-orange-500">
+                                        <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 text-emerald-500">
                                             <Monitor size={20} />
                                         </div>
                                         <div>

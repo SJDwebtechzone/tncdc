@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
+import Marquee from './Marquee';
 import Footer from './Footer';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +8,7 @@ const ServicesPage = () => {
     return (
         <div className="min-h-screen bg-white">
             <Navbar />
+            <Marquee />
 
             {/* Hero Section */}
             <div className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] flex items-center bg-gray-900 overflow-hidden">

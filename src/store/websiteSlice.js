@@ -52,8 +52,8 @@ const initialState = {
         favicon: '',
         playStoreLink: 'https://play.google.com/store/apps/details?id=com.example.app',
         appStoreLink: 'https://www.apple.com/app-store/',
-        primaryColor: '#ff5733',
-        secondaryColor: '#c70039',
+        primaryColor: '#10b981',
+        secondaryColor: '#059669',
         marqueeEntries: [
             "Welcome to TamilNadu Career Development Council",
             "Join our courses today!",

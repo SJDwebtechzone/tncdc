@@ -216,7 +216,7 @@ export default function ProfilePage() {
                 {/* Certificate Information */}
                 <section>
                     <h2 className="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
-                        <span className="p-1.5 bg-orange-100 text-orange-600 rounded-lg"><FileText size={18} /></span>
+                        <span className="p-1.5 bg-emerald-100 text-emerald-600 rounded-lg"><FileText size={18} /></span>
                         Certificate Information
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -390,7 +390,7 @@ export default function ProfilePage() {
                         <FileText size={16} className="mr-2" />
                         Update Profile
                     </Button>
-                    <Button variant="outline" className="bg-[#b45309] hover:bg-[#92400e] text-white border-none px-8 py-2 h-11 rounded-lg">
+                    <Button variant="outline" className="bg-[#059669] hover:bg-[#047857] text-white border-none px-8 py-2 h-11 rounded-lg">
                         Cancel
                     </Button>
                 </div>

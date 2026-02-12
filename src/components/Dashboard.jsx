@@ -57,7 +57,7 @@ export default function Dashboard() {
         <div className="space-y-8">
 
             {/* 0. Welcome Banner */}
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#6366f1] via-[#8b5cf6] to-[#a855f7] p-10 text-white shadow-xl">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#10b981] via-[#059669] to-[#047857] p-10 text-white shadow-xl">
                 <div className="relative z-10 flex flex-col md:flex-row justify-between md:items-center gap-6">
                     <div>
                         <h1 className="text-4xl font-bold mb-2">Welcome to Dashboard</h1>
@@ -107,8 +107,8 @@ export default function Dashboard() {
                 {[
                     { label: "TOTAL ADMISSIONS", count: data.stats.admissions, color: "from-[#6366f1] to-[#8b5cf6]" },
                     { label: "TOTAL ENQUIRIES", count: data.stats.enquiries, color: "from-[#10b981] to-[#34d399]", icon: MessageCircle },
-                    { label: "TOTAL FRANCHISES", count: data.stats.franchises, color: "from-[#ef4444] to-[#f87171]" },
-                    { label: "TOTAL COURSES", count: data.stats.courses, color: "from-[#f59e0b] to-[#fbbf24]" }
+                    { label: "TOTAL FRANCHISES", count: data.stats.franchises, color: "from-[#0d9488] to-[#2dd4bf]" },
+                    { label: "TOTAL COURSES", count: data.stats.courses, color: "from-[#84cc16] to-[#a3e635]" }
                 ].map((stat, i) => (
                     <Card key={i} className="border-none shadow-sm rounded-xl p-6 flex flex-col justify-between h-32 bg-white">
                         <div className="flex justify-between items-start">
@@ -149,7 +149,7 @@ export default function Dashboard() {
 
                 {/* Remaining Admission - Pink */}
                 <Link to="/dashboard/students/list" className="block transform hover:scale-[1.02] transition-all">
-                    <Card className="bg-gradient-to-r from-[#f472b6] to-[#fb7185] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
+                    <Card className="bg-gradient-to-r from-[#0d9488] to-[#0f766e] border-none text-white shadow-lg overflow-hidden relative min-h-[180px]">
                         <div className="absolute top-0 right-0 p-10 opacity-10 transform scale-150 rotate-12">
                             <FileText size={120} />
                         </div>

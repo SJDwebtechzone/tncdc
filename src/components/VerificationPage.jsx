@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import Navbar from './Navbar';
+import Marquee from './Marquee';
 import Footer from './Footer';
 import { Search, ShieldCheck, Zap, CheckCircle, Headphones, Edit3, Database, Star, Loader2, AlertCircle } from 'lucide-react';
 
@@ -58,6 +59,7 @@ const VerificationPage = () => {
     return (
         <div className="min-h-screen bg-gray-50 font-sans flex flex-col overflow-x-hidden">
             <Navbar />
+            <Marquee />
 
             <main className="flex-grow">
                 {/* Hero Section */}

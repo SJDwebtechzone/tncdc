@@ -33,7 +33,17 @@ const Navbar = () => {
 
     return (
         <>
-            <header className={`rbt-header rbt-header-10 ${isSticky ? 'header-sticky fixed top-0 w-full z-[1000] bg-white shadow-md' : 'relative'}`}>
+            <header
+                className={`
+rbt-header rbt-header-10
+fixed top-0 left-0 w-full z-[1000]
+transition-all duration-500 ease-in-out
+${isSticky
+                        ? 'bg-white/80 backdrop-blur-xl shadow-lg border-b border-white/30 py-3'
+                        : 'bg-white/40 backdrop-blur-md py-5'}
+`}
+            >
+
                 <div className="rbt-header-wrapper header-space-betwween">
                     <div className="container-fluid px-4">
                         <div className="mainbar-row rbt-navigation-center flex items-center justify-between py-4">
@@ -103,7 +113,7 @@ const Navbar = () => {
             </header>
 
             {/* Mobile Menu Sidebar */}
-            <div className={`popup-mobile-menu fixed top-0 right-0 h-full w-[300px] bg-white z-[2000] shadow-2xl transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className={`popup-mobile-menu fixed top-0 right-0 h-full w-[300px] bg-white/70 backdrop-blur-md shadow-md z-[2000] shadow-2xl transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="inner-wrapper p-8 h-full flex flex-col">
                     <div className="inner-top flex justify-between items-center mb-10">
                         <div className="logo">

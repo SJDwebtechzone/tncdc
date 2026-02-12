@@ -233,7 +233,7 @@ export default function HolidaysPage() {
                             <Button
                                 type="button"
                                 onClick={() => setView('list')}
-                                className="bg-[#b9875a] hover:bg-[#a6764a] text-white px-10 h-10 rounded-sm text-[11px] font-bold uppercase tracking-widest border-none transition-all shadow-md active:scale-95 flex items-center justify-center p-0"
+                                className="bg-[#059669] hover:bg-[#047857] text-white px-10 h-10 rounded-sm text-[11px] font-bold uppercase tracking-widest border-none transition-all shadow-md active:scale-95 flex items-center justify-center p-0"
                             >
                                 <X size={16} className="mr-2" />
                                 Cancel
@@ -328,7 +328,7 @@ export default function HolidaysPage() {
                                 <Search size={16} className="mr-2" />
                                 Apply Filters
                             </Button>
-                            <Button variant="outline" className="border-orange-100 text-[#b9875a] hover:bg-orange-50 min-w-[120px] h-10 rounded-sm font-bold uppercase tracking-widest text-xs transition-all active:scale-95 bg-orange-50/10 p-0">
+                            <Button variant="outline" className="border-emerald-100 text-[#059669] hover:bg-emerald-50 min-w-[120px] h-10 rounded-sm font-bold uppercase tracking-widest text-xs transition-all active:scale-95 bg-emerald-50/10 p-0">
                                 <RotateCcw size={16} className="mr-2" />
                                 Reset
                             </Button>

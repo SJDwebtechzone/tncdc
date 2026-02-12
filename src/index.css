@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --color-primary: #ff5733;
-    --color-secondary: #c70039;
+    --color-primary: #10b981;
+    --color-secondary: #059669;
   }
 }
 
@@ -142,7 +142,7 @@
 
 .bannerSlider .swiper-pagination-bullet-active {
   opacity: 1;
-  background: var(--color-primary, #ff5421);
+  background: var(--color-primary, #10b981);
 }
 
 /* Brand Section Styles */
@@ -237,7 +237,7 @@
   gap: 8px;
   min-width: 110px;
   transition: all 0.3s ease;
-  shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .language-dropdown:hover {
@@ -297,7 +297,7 @@
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
-  background: linear-gradient(to right, #ff5733, #c70039, #c70039, #ff5733);
+  background: linear-gradient(to right, #10b981, #059669, #059669, #10b981);
   padding: 10px 0;
 }
 
@@ -331,12 +331,12 @@
 }
 
 .btn-gradient {
-  background: linear-gradient(90deg, #ff5733 0%, #c70039 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
   @apply text-white;
 }
 
 .btn-gradient:hover {
-  background: linear-gradient(90deg, #c70039 0%, #ff5733 100%);
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
 }
 
 .section-title .subtitle {
@@ -344,23 +344,23 @@
 }
 
 .bg-primary-opacity {
-  background-color: rgba(255, 87, 51, 0.1);
-  color: #ff5733;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
 }
 
 .bg-secondary-opacity {
-  background-color: rgba(199, 0, 57, 0.1);
-  color: #c70039;
+  background-color: rgba(5, 150, 105, 0.1);
+  color: #059669;
 }
 
 .bg-coral-opacity {
-  background-color: rgba(255, 127, 80, 0.1);
-  color: #ff7f50;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
 }
 
 .bg-pink-opacity {
-  background-color: rgba(255, 192, 203, 0.1);
-  color: #ffc0cb;
+  background-color: rgba(20, 184, 166, 0.1);
+  color: #14b8a6;
 }
 
 .rbt-section-gap {

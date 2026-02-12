@@ -4,49 +4,77 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+
   theme: {
     extend: {
+
+      /* 🌸 Aesthetic Color System */
       colors: {
-        primary: "#ff5733",
-        secondary: "#c70039",
-        "bg-coral": "rgba(255, 127, 80, 0.1)",
-        "bg-pink": "rgba(255, 192, 203, 0.1)",
-        "bg-primary-opacity": "rgba(255, 87, 51, 0.1)",
-        "bg-secondary-opacity": "rgba(199, 0, 57, 0.1)",
+        primary: "#6366f1",       // Indigo Premium
+        secondary: "#a855f7",     // Purple
+        accent: "#ec4899",        // Pink Accent
+
+        glass: "rgba(255,255,255,0.6)",
+
+        "bg-primary-opacity": "rgba(99,102,241,0.12)",
+        "bg-secondary-opacity": "rgba(168,85,247,0.12)",
       },
+
+      /* ✨ Premium Fonts */
       fontFamily: {
-        sans: ['Euclid Circular A', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'Poppins', 'system-ui', 'sans-serif'],
       },
+
+      /* 🌊 Animations */
       animation: {
         'scroll-infinite': 'scroll-infinite 40s linear infinite',
         'marquee-gradient': 'marquee-gradient 30s linear infinite',
         blob: "blob 7s infinite",
+        float: "float 6s ease-in-out infinite",
       },
+
+      /* 🎬 Keyframes */
       keyframes: {
+
         blob: {
-          "0%": {
-            transform: "translate(0px, 0px) scale(1)",
-          },
-          "33%": {
-            transform: "translate(30px, -50px) scale(1.1)",
-          },
-          "66%": {
-            transform: "translate(-20px, 20px) scale(0.9)",
-          },
-          "100%": {
-            transform: "translate(0px, 0px) scale(1)",
-          },
+          "0%": { transform: "translate(0px, 0px) scale(1)" },
+          "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+          "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+          "100%": { transform: "translate(0px, 0px) scale(1)" },
         },
+
+        float: {
+          "0%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-15px)" },
+          "100%": { transform: "translateY(0px)" },
+        },
+
         'scroll-infinite': {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+
         'marquee-gradient': {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-100%)' },
-        }
-      }
+        },
+      },
+
+      /* 🌸 Shadows */
+      boxShadow: {
+        glass: "0 10px 40px rgba(0,0,0,0.08)",
+        glow: "0 0 30px rgba(99,102,241,0.35)",
+      },
+
+      /* 🎨 Border Radius Premium */
+      borderRadius: {
+        xl: "1rem",
+        "2xl": "1.5rem",
+        "3xl": "2rem",
+      },
+
     },
   },
+
   plugins: [],
-}
+};

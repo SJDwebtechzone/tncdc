@@ -30,7 +30,7 @@ const FAQ = () => {
                     {/* FAQ List */}
                     <div className="w-full lg:w-1/2 order-2 lg:order-1">
                         <div className="mb-12">
-                            <span className="px-4 py-1.5 bg-pink-100 text-pink-600 font-bold text-xs uppercase tracking-widest rounded-full mb-4 inline-block">
+                            <span className="px-4 py-1.5 bg-emerald-100 text-emerald-600 font-bold text-xs uppercase tracking-widest rounded-full mb-4 inline-block">
                                 FAQ
                             </span>
                             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mt-4 leading-tight">

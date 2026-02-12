@@ -95,7 +95,7 @@ const Login = () => {
                             <div className="flex items-center justify-center space-x-2 text-gray-600">
                                 <Smartphone size={20} className="text-purple-600" />
                                 <span className="text-sm">Install as Progressive Web App (Mobile App) for Students</span>
-                                <span className="bg-orange-100 text-orange-600 text-xs px-2 py-0.5 rounded font-bold">FREE</span>
+                                <span className="bg-emerald-100 text-emerald-600 text-xs px-2 py-0.5 rounded font-bold">FREE</span>
                             </div>
                             <p className="text-sm text-center text-gray-400 mt-2">Access your courses anytime, anywhere with our mobile app experience</p>
 

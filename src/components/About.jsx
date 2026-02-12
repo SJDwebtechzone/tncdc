@@ -2,33 +2,36 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div className="rbt-about-area bg-color-white rbt-section-gapTop pb_md--80 pb_sm--80 about-style-1 pt-[100px] py-16">
+        <div className="rbt-about-area bg-white rbt-section-gapTop pb_md--80 pb_sm--80 about-style-1 pt-[100px] py-16">
             <div className="container mx-auto px-4">
                 <div className="row flex flex-col lg:flex-row items-center gap-16">
 
-                    <div className="col-lg-6 w-full lg:w-1/2 relative min-h-[500px]">
-                        <div className="thumbnail-wrapper relative">
-                            <div className="thumbnail image-1 w-4/5">
+                    <div className="col-lg-6 w-full lg:w-1/2 relative">
+                        <div className="thumbnail-wrapper relative w-full h-[600px]">
+                            {/* Image 1: Large left - woman with purple background */}
+                            <div className="thumbnail image-1 absolute left-0 top-0 w-[55%] h-[75%] z-10">
                                 <img
                                     src="https://tncdc.in/website/assets/images/about/about-01.png"
                                     alt="Education Images"
-                                    className="rounded-3xl shadow-2xl"
+                                    className="w-full h-full object-contain rounded-3xl shadow-2xl"
                                 />
                             </div>
 
-                            <div className="thumbnail image-2 hidden xl:block absolute top-[20%] -right-10 w-1/2 z-10">
+                            {/* Image 2: Top right - man with glasses */}
+                            <div className="thumbnail image-2 hidden xl:block absolute right-0 top-0 w-[42%] h-[45%] z-20">
                                 <img
                                     src="https://tncdc.in/website/assets/images/about/about-02.png"
                                     alt="Education Images"
-                                    className="rounded-3xl shadow-2xl border-8 border-white"
+                                    className="w-full h-full object-contain rounded-3xl shadow-2xl border-4 border-white"
                                 />
                             </div>
 
-                            <div className="thumbnail image-3 hidden md:block absolute -bottom-10 right-10 w-2/5 -z-10">
+                            {/* Image 3: Bottom center - woman with glasses */}
+                            <div className="thumbnail image-3 absolute left-[15%] bottom-0 w-[55%] h-[55%] z-30">
                                 <img
                                     src="https://tncdc.in/website/assets/images/about/about-03.png"
                                     alt="Education Images"
-                                    className="rounded-3xl shadow-xl"
+                                    className="w-full h-full object-contain rounded-3xl shadow-2xl border-4 border-white"
                                 />
                             </div>
                         </div>
@@ -50,8 +53,8 @@ const About = () => {
 
                             <div className="rbt-feature-wrapper mt-10">
                                 <div className="rbt-feature feature-style-2 flex items-start gap-6 mb-8 hover:bg-gray-50 p-4 rounded-2xl transition-all">
-                                    <div className="icon bg-pink-opacity p-4 rounded-xl text-primary text-2xl">
-                                        <span className="feather-heart">❤</span>
+                                    <div className="icon bg-emerald-opacity p-4 rounded-xl text-primary text-2xl">
+                                        <span className="feather-heart text-emerald-500">❤</span>
                                     </div>
                                     <div className="feature-content">
                                         <h6 className="feature-title font-bold text-xl mb-2">Flexible Classes</h6>
