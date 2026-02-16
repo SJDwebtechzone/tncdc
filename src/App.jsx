@@ -117,6 +117,7 @@ import ChangePasswordPage from '@/components/ChangePasswordPage';
 import PaymentSettingsPage from '@/components/PaymentSettingsPage';
 import SecureBackupPage from '@/components/SecureBackupPage';
 import WhatsAppTemplatesPage from '@/components/WhatsAppTemplatesPage';
+import PWAHome from '@/components/PWAHome';
 
 function App() {
   return (
@@ -130,6 +131,7 @@ function App() {
         <Route path="/our_services" element={<ServicesPage />} />
         <Route path="/student_verification" element={<VerificationPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/pwa" element={<PWAHome />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="exam-grade" element={<ExamGrade />} />

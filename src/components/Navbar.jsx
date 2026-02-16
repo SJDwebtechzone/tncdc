@@ -82,9 +82,9 @@ ${isSticky
                                             <span role="img" aria-label="login">🔑</span> Login
                                         </Link>
                                     </li>
-                                    <li className="account-access hidden xl:block">
-                                        <Link to="/pwa">
-                                            <img src="https://tncdc.in/assets/images/download_icon.svg" alt="Download" className="w-[18px] h-[18px]" />
+                                    <li className="account-access">
+                                        <Link to="/pwa" title="Open PWA">
+                                            <img src="https://tncdc.in/assets/images/download_icon.svg" alt="Open PWA" className="w-[18px] h-[18px]" />
                                         </Link>
                                     </li>
                                     <li className="access-icon xl:hidden">
@@ -134,11 +134,17 @@ ${isSticky
                                     </Link>
                                 </li>
                             ))}
+                            <li>
+                                <Link to="/pwa" className="text-indigo-600 font-bold flex items-center gap-2">
+                                    <span role="img" aria-label="pwa">📱</span> Open PWA
+                                </Link>
+                            </li>
                         </ul>
                     </nav>
 
-                    <div className="mobile-menu-bottom mt-10">
+                    <div className="mobile-menu-bottom mt-10 space-y-4">
                         <Link className="rbt-btn btn-gradient w-full text-center" to="/courses">Enroll Now</Link>
+                        <Link className="rbt-btn bg-gray-100 text-gray-800 w-full text-center border" to="/login">Login</Link>
                     </div>
                 </div>
             </div>
